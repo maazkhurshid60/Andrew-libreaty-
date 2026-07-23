@@ -40,7 +40,7 @@
 
   /* Layout */
   --container: 1200px;
-  --header-h: 96px;
+  --header-h: 84px;
 }
 
 /* ---------- Reset & base ---------- */
@@ -246,10 +246,12 @@ ul, ol { list-style: none; }
   border-bottom-color: var(--line-soft);
   box-shadow: 0 1px 24px rgba(23, 20, 15, 0.06);
 }
-.site-header.is-scrolled .header-inner { height: 82px; }
+.site-header.is-scrolled .header-inner { height: 64px; }
 
-.wordmark { display: flex; flex-direction: row; align-items: center; line-height: 1; }
-.wordmark-full { height: 72px; width: auto; flex: none; display: block; margin-left: -10px; }
+.wordmark { display: flex; flex-direction: row; align-items: center; gap: 13px; line-height: 1; }
+.wordmark-logo { width: 34px; height: auto; flex: none; display: block; }
+.wordmark-text { display: flex; align-items: center; gap: 9px; }
+.wordmark-word { height: 19px; width: auto; display: block; }
 
 /* Footer keeps the original stacked wordmark treatment */
 .wordmark-name {
@@ -261,11 +263,10 @@ ul, ol { list-style: none; }
   text-transform: uppercase; color: var(--gold-deep);
 }
 
-@media (max-width: 640px) {
-  .wordmark-full { height: 46px; }
-}
 @media (max-width: 400px) {
-  .wordmark-full { height: 40px; }
+  .wordmark { gap: 9px; }
+  .wordmark-logo { width: 28px; }
+  .wordmark-word { height: 16px; }
 }
 
 .main-nav { display: flex; gap: 4px; }
@@ -1190,7 +1191,7 @@ ul, ol { list-style: none; }
 }
 
 @media (max-width: 640px) {
-  :root { --header-h: 76px; }
+  :root { --header-h: 68px; }
   .section { padding: 68px 0; }
   .container { width: min(var(--container), 100% - 40px); }
 

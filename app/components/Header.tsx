@@ -70,13 +70,13 @@ export default function Header() {
         <div className="header-inner">
           <a href="/#top" className="wordmark" aria-label="Andrew Liberty Team — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/al-logo-lockup.png"
-              alt="Andrew Liberty"
-              className="wordmark-full"
-              width={1024}
-              height={533}
-            />
+            <img src="/logo.png" alt="" className="wordmark-logo" width={34} height={39} />
+            <span className="wordmark-text">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-andrew.png" alt="" className="wordmark-word" width={99} height={21} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-liberty.png" alt="" className="wordmark-word" width={91} height={21} />
+            </span>
           </a>
 
           <nav className="main-nav" aria-label="Primary">

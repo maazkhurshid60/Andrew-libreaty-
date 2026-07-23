@@ -11,7 +11,7 @@
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
   border-bottom: 1px solid var(--line-soft);
 }
-:root { --header-solid: 88px; }
+:root { --header-solid: 68px; }
 .site-header.is-solid .header-inner { height: var(--header-solid); }
 
 .search-page { display: flex; flex-direction: column; min-height: 100vh; }
@@ -425,7 +425,7 @@
 
 @media (max-width: 768px) {
   .filter-bar { flex-wrap: wrap; top: var(--header-solid); }
-  :root { --header-solid: 68px; }
+  :root { --header-solid: 60px; }
   .filter-search { flex: 1 1 100%; max-width: none; order: -1; }
   .filter-right { width: 100%; }
   .view-toggle { display: inline-flex; }
