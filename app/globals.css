@@ -40,7 +40,7 @@
 
   /* Layout */
   --container: 1200px;
-  --header-h: 84px;
+  --header-h: 96px;
 }
 
 /* ---------- Reset & base ---------- */
@@ -246,12 +246,10 @@ ul, ol { list-style: none; }
   border-bottom-color: var(--line-soft);
   box-shadow: 0 1px 24px rgba(23, 20, 15, 0.06);
 }
-.site-header.is-scrolled .header-inner { height: 64px; }
+.site-header.is-scrolled .header-inner { height: 82px; }
 
-.wordmark { display: flex; flex-direction: row; align-items: center; gap: 13px; line-height: 1; }
-.wordmark-logo { width: 34px; height: auto; flex: none; display: block; }
-.wordmark-text { display: flex; align-items: center; gap: 9px; }
-.wordmark-word { height: 19px; width: auto; display: block; }
+.wordmark { display: flex; flex-direction: row; align-items: center; line-height: 1; }
+.wordmark-full { height: 72px; width: auto; flex: none; display: block; margin-left: -10px; }
 
 /* Footer keeps the original stacked wordmark treatment */
 .wordmark-name {
@@ -263,10 +261,11 @@ ul, ol { list-style: none; }
   text-transform: uppercase; color: var(--gold-deep);
 }
 
+@media (max-width: 640px) {
+  .wordmark-full { height: 46px; }
+}
 @media (max-width: 400px) {
-  .wordmark { gap: 9px; }
-  .wordmark-logo { width: 28px; }
-  .wordmark-word { height: 16px; }
+  .wordmark-full { height: 40px; }
 }
 
 .main-nav { display: flex; gap: 4px; }
@@ -1045,11 +1044,9 @@ ul, ol { list-style: none; }
 }
 
 /* Whitened logo lockup for the dark footer */
-.footer-logo { display: inline-flex; align-items: center; gap: 11px; }
-.footer-logo-mark { height: 36px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
-.footer-logo-word { display: inline-flex; align-items: center; gap: 7px; }
-.footer-logo-img { height: 19px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
-.footer-tagline { margin-top: 20px; font-size: 14px; color: var(--on-dark-muted); max-width: 30ch; }
+.footer-logo { display: inline-flex; align-items: center; margin: -12px 0 0 -10px; }
+.footer-logo-full { height: 84px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+.footer-tagline { margin-top: 8px; font-size: 14px; color: var(--on-dark-muted); max-width: 30ch; }
 
 /* Licensing block (left column, under the socials) */
 .footer-licensing { margin-top: 30px; }
@@ -1193,7 +1190,7 @@ ul, ol { list-style: none; }
 }
 
 @media (max-width: 640px) {
-  :root { --header-h: 68px; }
+  :root { --header-h: 76px; }
   .section { padding: 68px 0; }
   .container { width: min(var(--container), 100% - 40px); }
 

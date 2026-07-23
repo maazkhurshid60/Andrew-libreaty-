@@ -5,13 +5,13 @@ export default function Footer() {
         <div className="footer-brand">
           <a className="footer-logo" href="/#top" aria-label="Andrew Liberty Team — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="" className="footer-logo-mark" width={34} height={39} />
-            <span className="footer-logo-word">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-andrew.png" alt="Andrew" className="footer-logo-img" width={99} height={21} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-liberty.png" alt="Liberty" className="footer-logo-img" width={91} height={21} />
-            </span>
+            <img
+              src="/al-logo-lockup.png"
+              alt="Andrew Liberty"
+              className="footer-logo-full"
+              width={1024}
+              height={533}
+            />
           </a>
           <p className="footer-tagline">
             Strategic real estate guidance for Los Angeles buyers, sellers, and investors.

@@ -113,8 +113,10 @@ export default function PropertiesPage() {
           <h1 className="prop-hero-title">Properties</h1>
           <div className="prop-hero-gallery">
             {HERO_GALLERY.map((g) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={g.src} src={g.src} alt={g.alt} loading="eager" />
+              <div className="prop-tile" key={g.src}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={g.src} alt={g.alt} loading="eager" />
+              </div>
             ))}
           </div>
         </div>
