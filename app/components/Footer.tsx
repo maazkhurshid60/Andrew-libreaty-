@@ -5,13 +5,13 @@ export default function Footer() {
         <div className="footer-brand">
           <a className="footer-logo" href="/#top" aria-label="Andrew Liberty Team — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/al-logo-lockup.png"
-              alt="Andrew Liberty"
-              className="footer-logo-full"
-              width={1024}
-              height={533}
-            />
+            <img src="/logo.png" alt="" className="footer-logo-mark" width={34} height={39} />
+            <span className="footer-logo-word">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-andrew.png" alt="Andrew" className="footer-logo-img" width={99} height={21} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-liberty.png" alt="Liberty" className="footer-logo-img" width={91} height={21} />
+            </span>
           </a>
           <p className="footer-tagline">
             Strategic real estate guidance for Los Angeles buyers, sellers, and investors.
@@ -42,16 +42,6 @@ export default function Footer() {
                 <path d="m9.75 15.02 5.75-3.27-5.75-3.27v6.54z" fill="currentColor" stroke="none" />
               </svg>
             </a>
-          </div>
-
-          <div className="footer-licensing">
-            <h3>Licensing</h3>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/AL logo 2.png" alt="Compass" className="footer-compass-logo" width={150} height={22} />
-            <ul>
-              <li>Andrew Ruric Liberty II | CA DRE# 01965696</li>
-              <li>Compass California, Inc. | CA DRE# 01991628</li>
-            </ul>
           </div>
         </div>
 
@@ -110,19 +100,29 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="footer-col footer-col-wide">
-          <p className="footer-disclaimer">
-            Andrew Liberty Team is a team of real estate agents licensed by the state of California
-            affiliated with Compass. Compass is a licensed real estate broker licensed by the state
-            of California and abides by equal housing opportunity laws. All material presented herein
-            is intended for informational purposes only. Information is compiled from sources deemed
-            reliable but is subject to errors, omissions, changes in price, condition, sale, or
-            withdrawal without notice. No statement is made as to accuracy of any description. All
-            measurements and square footages are approximate. This is not intended to solicit
-            property already listed. Nothing herein shall be construed as legal, accounting or other
-            professional advice outside the realm of real estate brokerage.
-          </p>
+      </div>
+
+      <div className="container footer-license-row">
+        <div className="footer-licensing">
+          <h3>Licensing</h3>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/AL logo 2.png" alt="Compass" className="footer-compass-logo" width={150} height={22} />
+          <ul>
+            <li>Andrew Ruric Liberty II | CA DRE# 01965696</li>
+            <li>Compass California, Inc. | CA DRE# 01991628</li>
+          </ul>
         </div>
+        <p className="footer-disclaimer">
+          Andrew Liberty Team is a team of real estate agents licensed by the state of California
+          affiliated with Compass. Compass is a licensed real estate broker licensed by the state of
+          California and abides by equal housing opportunity laws. All material presented herein is
+          intended for informational purposes only. Information is compiled from sources deemed
+          reliable but is subject to errors, omissions, changes in price, condition, sale, or
+          withdrawal without notice. No statement is made as to accuracy of any description. All
+          measurements and square footages are approximate. This is not intended to solicit property
+          already listed. Nothing herein shall be construed as legal, accounting or other
+          professional advice outside the realm of real estate brokerage.
+        </p>
       </div>
 
       <div className="container footer-bottom">

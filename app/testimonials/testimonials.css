@@ -1,0 +1,214 @@
+/* ==========================================================================
+   Testimonials page styles — Staggered hero gallery, masonry list, pagination
+   Builds on the base design system (globals.css).
+   ========================================================================== */
+
+.test-hero {
+  background: var(--dark);
+  color: var(--on-dark);
+  text-align: center;
+  padding: 64px 0 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.test-hero-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(44px, 5.6vw, 74px);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--gold-tint);
+  left: -5%;
+}
+
+/* Figma dev-mode sizes: left tile 828×336, right tile 424×440 */
+.test-hero-gallery {
+  display: grid;
+  grid-template-columns: 828fr 424fr;
+  gap: 20px;
+  align-items: end;
+  position: relative;
+  z-index: 1;
+  margin-top: -46px;
+}
+
+.test-tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: var(--shadow-float);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.test-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Left image reads horizontal (828×336); right is near-square/vertical (424×440).
+   Bottoms are leveled (gallery align-items: end) so the right tile rises above
+   the left one and up behind the title. */
+.test-tile-h { aspect-ratio: 828 / 336; }
+.test-tile-v { aspect-ratio: 424 / 440; }
+
+.test-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(8, 68, 70, 0.42) 0%,
+      rgba(8, 68, 70, 0.24) 45%,
+      rgba(8, 68, 70, 0.5) 100%),
+    rgba(8, 68, 70, 0.14);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---------- Testimonials Masonry ---------- */
+.test-section {
+  padding: 80px 0;
+  background: var(--ivory);
+}
+
+.test-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.test-col {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.test-card {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: 44px 40px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 320ms var(--ease-out), box-shadow 320ms var(--ease-out);
+}
+
+.test-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-float);
+}
+
+.test-card-type {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.2vw, 32px);
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.test-card-quote-mark {
+  font-family: var(--font-display);
+  font-size: 84px;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.35;
+  margin-top: -18px;
+  margin-bottom: -16px;
+  display: block;
+  user-select: none;
+}
+
+.test-card-text {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  white-space: pre-line;
+}
+
+/* ---------- Pagination ---------- */
+.test-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 64px;
+}
+
+.test-page-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--dur) var(--ease-out);
+}
+
+.test-page-btn.is-active {
+  background: var(--brand);
+  color: var(--on-dark);
+  border-color: var(--brand);
+}
+
+.test-page-btn:hover:not(.is-active) {
+  background: var(--ivory-deep);
+  border-color: var(--muted);
+}
+
+.test-next-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  height: 36px;
+  border-radius: 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all var(--dur) var(--ease-out);
+}
+
+.test-next-btn:hover {
+  background: var(--ivory-deep);
+  border-color: var(--muted);
+}
+
+.test-next-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .test-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .test-col {
+    gap: 20px;
+  }
+  .test-card {
+    padding: 32px 28px;
+  }
+}
+
+@media (max-width: 575px) {
+  .test-hero-gallery {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

@@ -14,14 +14,26 @@ import {
   type SearchState,
 } from "./listings";
 import FiltersDrawer from "./FiltersDrawer";
+import MapPanel from "./MapPanel";
 
-const clamp = (v: number) => Math.max(6, Math.min(94, v));
-const pinPos = (l: Listing) => ({ gx: 12 + ((l.id * 37) % 76), gy: 12 + ((l.id * 53) % 74) });
-const imgError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-  const img = e.currentTarget;
-  img.onerror = null;
-  img.src = PLACEHOLDER;
-};
+/** Thumbnail that falls back to the branded placeholder — also catches images
+ *  that already failed before React hydrated (MLS hotlink blocks). */
+function Thumb({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={failed ? PLACEHOLDER : src}
+      alt={alt}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+      ref={(node) => {
+        if (node && !failed && node.complete && node.naturalWidth === 0) setFailed(true);
+      }}
+    />
+  );
+}
 
 type PopKey = "status" | "price" | "type" | "beds" | "baths";
 const STATUS_OPTS = [
@@ -211,48 +223,6 @@ export default function HomeSearchClient() {
     }
   };
 
-  /* ---------- Map pins (deterministic pseudo-layout + clustering) ---------- */
-  const cells = useMemo(() => {
-    const list = visibleResults.slice(0, 32);
-    const map = new Map<string, { x: number; y: number; items: Listing[] }>();
-    list.forEach((l) => {
-      const p = pinPos(l);
-      const cx = Math.round(p.gx / 13) * 13;
-      const cy = Math.round(p.gy / 13) * 13;
-      const key = cx + ":" + cy;
-      if (!map.has(key)) map.set(key, { x: cx, y: cy, items: [] });
-      map.get(key)!.items.push(l);
-    });
-    return [...map.values()];
-  }, [visibleResults]);
-
-  const [preview, setPreview] = useState<{
-    items: Listing[];
-    index: number;
-    left: string;
-    top: string;
-  } | null>(null);
-  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isFine = () => typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
-
-  const showPreview = (cell: { x: number; y: number; items: Listing[] }) => {
-    setPreview({
-      items: cell.items,
-      index: 0,
-      left: `${clamp(cell.x)}%`,
-      top: `calc(${clamp(cell.y)}% - 16px)`,
-    });
-  };
-  const scheduleHide = () => {
-    if (!isFine()) return;
-    hideTimer.current = setTimeout(() => setPreview(null), 200);
-  };
-  const cancelHide = () => {
-    if (hideTimer.current) clearTimeout(hideTimer.current);
-  };
-  const setSlide = (i: number) =>
-    setPreview((p) => (p ? { ...p, index: (i + p.items.length) % p.items.length } : p));
-
   /* ---------- Reset ---------- */
   const resetAll = () => {
     setState(DEFAULT_STATE);
@@ -406,98 +376,7 @@ export default function HomeSearchClient() {
 
           <aside className="map-col" aria-label="Map of listings">
             <div className="map-panel">
-              <div
-                className={`map-canvas${mapType === "satellite" ? " is-satellite" : ""}`}
-                onClick={(e) => {
-                  const t = e.target as HTMLElement;
-                  if (!t.closest(".map-pin") && !t.closest(".map-preview")) setPreview(null);
-                }}
-              >
-                <svg className="map-texture" viewBox="0 0 800 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                  <g fill="none" stroke="currentColor" strokeWidth="1.2">
-                    <path d="M-20 140 C180 110 320 220 520 180 S 760 110 840 150" />
-                    <path d="M-20 300 C160 280 340 360 560 320 S 740 250 840 300" />
-                    <path d="M-20 470 C200 430 360 520 580 470 S 760 410 840 460" />
-                    <path d="M-20 640 C190 620 380 690 600 640 S 760 580 840 630" />
-                    <path d="M-20 800 C190 780 380 850 600 800 S 760 740 840 790" />
-                    <path d="M150 -20 C170 180 100 380 160 560 S 220 720 200 940" />
-                    <path d="M360 -20 C380 160 310 360 370 540 S 430 700 410 940" />
-                    <path d="M560 -20 C580 180 510 380 570 560 S 620 720 600 940" />
-                    <path d="M700 -20 C720 160 650 360 710 540 S 760 700 740 940" />
-                  </g>
-                </svg>
-
-                <div className="map-pins" onMouseLeave={scheduleHide} onMouseEnter={cancelHide}>
-                  {cells.map((c, i) => {
-                    const multi = c.items.length > 1;
-                    const active =
-                      preview && preview.items === c.items ? true : false;
-                    return (
-                      <button
-                        key={i}
-                        className={`map-pin${multi ? " is-cluster" : ""}${active ? " is-active" : ""}`}
-                        style={{ left: `${clamp(c.x)}%`, top: `${clamp(c.y)}%` }}
-                        aria-label={multi ? `${c.items.length} homes here` : c.items[0].addr}
-                        onMouseEnter={() => {
-                          if (isFine()) {
-                            cancelHide();
-                            showPreview(c);
-                          }
-                        }}
-                        onClick={() => showPreview(c)}
-                      >
-                        {multi ? abbr(Math.min(...c.items.map((x) => x.price))) : abbr(c.items[0].price)}
-                        {multi && <span className="pin-count">{c.items.length}</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {preview && (
-                  <div
-                    className={`map-preview${preview.items.length === 1 ? " is-single" : ""}`}
-                    style={{ left: preview.left, top: preview.top }}
-                    onMouseLeave={scheduleHide}
-                    onMouseEnter={cancelHide}
-                  >
-                    <button className="mp-nav mp-prev" aria-label="Previous property" onClick={(e) => { e.stopPropagation(); setSlide(preview.index - 1); }}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
-                    </button>
-                    <div className="mp-viewport">
-                      <div className="mp-track" style={{ transform: `translateX(-${preview.index * 100}%)` }}>
-                        {preview.items.map((l) => (
-                          <div className="mp-card" key={l.id}>
-                            <div className="mp-inner" role="button" tabIndex={0} onClick={() => openDetails(l)}>
-                              <div className="mp-media">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={l.img} alt={l.addr} referrerPolicy="no-referrer" onError={imgError} />
-                                <span className="mp-status">{l.status}</span>
-                              </div>
-                              <div className="mp-body">
-                                <div className="mp-price">{money(l.price)}</div>
-                                <div className="mp-specs">
-                                  {l.type === "Land"
-                                    ? `${l.lot} · Lot`
-                                    : `${l.beds} bd · ${l.baths} ba · ${l.sqft?.toLocaleString()} sqft`}
-                                </div>
-                                <div className="mp-addr">{l.addr}, {l.city}</div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <button className="mp-nav mp-next" aria-label="Next property" onClick={(e) => { e.stopPropagation(); setSlide(preview.index + 1); }}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
-                    </button>
-                    <div className="mp-dots">
-                      {preview.items.map((_, i) => (
-                        <button key={i} className={`mp-dot${i === preview.index ? " is-active" : ""}`} aria-label={`Property ${i + 1}`} onClick={() => setSlide(i)} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <MapPanel items={visibleResults} mapType={mapType} onOpen={openDetails} />
 
               <div className="map-controls-tl">
                 <button className={`map-chip${drawActive ? " is-active" : ""}`} onClick={() => { setDrawActive((v) => !v); toast(!drawActive ? "Draw mode — sketch an area on the live map" : "Draw mode off"); }}>
@@ -738,7 +617,7 @@ function ListingCard({
     <article className="listing-card">
       <div className="lc-media" onClick={onCard}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={l.img} alt={`${l.addr}, ${l.city}`} loading="lazy" referrerPolicy="no-referrer" onError={imgError} />
+        <Thumb src={l.img} alt={`${l.addr}, ${l.city}`} />
         <span className={`lc-status${l.status === "Coming Soon" ? " is-coming" : ""}`}>{l.status}</span>
         <div className="lc-quick">
           <button

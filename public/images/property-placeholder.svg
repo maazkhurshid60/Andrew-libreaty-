@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#eeeade"/>
+  <g fill="none" stroke="#a9834f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <path d="M150 156 L200 112 L250 156"/>
+    <path d="M164 148 V190 H236 V148"/>
+    <path d="M188 190 V166 H212 V190"/>
+  </g>
+  <text x="200" y="224" font-family="Onest, Inter, system-ui, sans-serif" font-size="13" fill="#8d6b3d" text-anchor="middle" opacity="0.85">Photo available via MLS&#174;</text>
+</svg>

@@ -13,11 +13,8 @@ export default function WhatsTheMove() {
         <div className="move-grid">
           <article className="move-card reveal">
             <div className="move-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 10.5 12 3l9 7.5" />
-                <path d="M5 9.5V21h14V9.5" />
-                <path d="M9 21v-6h6v6" />
-              </svg>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icons/home-hashtag.png" alt="" className="move-icon-img" />
             </div>
             <h3>Buy a Home</h3>
             <p>
@@ -32,10 +29,8 @@ export default function WhatsTheMove() {
 
           <article className="move-card move-card-featured reveal" data-reveal-delay="100">
             <div className="move-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 22V3" />
-                <path d="M6 4h11.5L21 7.5 17.5 11H6" />
-              </svg>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icons/dollar-square.png" alt="" className="move-icon-img" />
             </div>
             <h3>Sell a Home</h3>
             <p>
@@ -51,12 +46,8 @@ export default function WhatsTheMove() {
 
           <article className="move-card reveal" data-reveal-delay="200">
             <div className="move-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 21h18" />
-                <path d="M5 21V8l6-4v17" />
-                <path d="M11 21V12h8v9" />
-                <path d="M8 9h.01M8 13h.01M8 17h.01M15 15h.01M15 18h.01" />
-              </svg>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icons/favorite-chart.png" alt="" className="move-icon-img" />
             </div>
             <h3>Invest Strategically</h3>
             <p>From duplexes to development lots, every deal gets evaluated on the numbers first.</p>

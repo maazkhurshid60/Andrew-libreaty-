@@ -118,7 +118,7 @@ export default function Testimonials() {
             </button>
           </div>
 
-          <a href="#" className="btn btn-secondary testimonial-all">
+          <a href="/testimonials" className="btn btn-secondary testimonial-all">
             View All Testimonials
           </a>
         </div>

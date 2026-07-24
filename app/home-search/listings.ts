@@ -20,6 +20,21 @@ export type Listing = {
   img: string;
   status: "Active" | "Coming Soon";
   order: number;
+  lat: number;
+  lng: number;
+};
+
+// Approximate neighborhood centers — until the MLS/IDX feed supplies real
+// geocoordinates, listings are placed near their city center with a small
+// deterministic offset so pins don't stack.
+const CITY_COORDS: Record<string, [number, number]> = {
+  Burbank: [34.1808, -118.309],
+  "Sherman Oaks": [34.1508, -118.4489],
+  "Los Angeles": [34.101, -118.34],
+  "West Hollywood": [34.09, -118.3617],
+  "Studio City": [34.1397, -118.387],
+  "Beverly Hills": [34.0901, -118.4065],
+  "Toluca Lake": [34.1517, -118.352],
 };
 
 const T = (n: string) => `https://mediaservice.themls.com/large/${n}`;
@@ -82,22 +97,30 @@ const RAW: Raw[] = [
 // Mark a couple as Coming Soon for realism (source query includes COMING_SOON)
 const COMING = new Set([4, 27]);
 
-export const LISTINGS: Listing[] = RAW.map((r, i) => ({
-  id: i,
-  price: r[0],
-  beds: r[1],
-  baths: r[2],
-  sqft: r[3],
-  lot: r[4],
-  addr: r[5],
-  city: r[6],
-  zip: r[7],
-  mls: r[8],
-  type: r[9],
-  img: r[10],
-  status: COMING.has(i) ? "Coming Soon" : "Active",
-  order: i,
-}));
+export const LISTINGS: Listing[] = RAW.map((r, i) => {
+  const base = CITY_COORDS[r[6]] ?? [34.101, -118.34];
+  // deterministic jitter (~±0.012°) keyed off id so pins spread out
+  const jLat = (((i * 37) % 25) - 12) / 1000;
+  const jLng = (((i * 53) % 25) - 12) / 1000;
+  return {
+    id: i,
+    price: r[0],
+    beds: r[1],
+    baths: r[2],
+    sqft: r[3],
+    lot: r[4],
+    addr: r[5],
+    city: r[6],
+    zip: r[7],
+    mls: r[8],
+    type: r[9],
+    img: r[10],
+    status: COMING.has(i) ? "Coming Soon" : "Active",
+    order: i,
+    lat: base[0] + jLat,
+    lng: base[1] + jLng,
+  };
+});
 
 // Total results as reported by the source feed for this boundary
 export const TOTAL_RESULTS = 1744;
@@ -107,15 +130,7 @@ export const abbr = (n: number) =>
   n >= 1e6 ? "$" + (n / 1e6).toFixed(n % 1e6 === 0 ? 0 : 1) + "M" : "$" + Math.round(n / 1e3) + "K";
 
 // Branded fallback for MLS photos that block cross-origin hotlinking (e.g. CRMLS).
-export const PLACEHOLDER =
-  "data:image/svg+xml," +
-  encodeURIComponent(
-    "<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300'>" +
-      "<rect width='400' height='300' fill='#eeeade'/>" +
-      "<g fill='none' stroke='#a9834f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='0.5'>" +
-      "<path d='M158 152 L200 116 L242 152'/><path d='M170 146 V182 H230 V146'/><path d='M192 182 V164 H208 V182'/></g>" +
-      "<text x='200' y='214' font-family='Onest,Inter,sans-serif' font-size='13' fill='#8d6b3d' text-anchor='middle' opacity='0.85'>Photo available via MLS®</text></svg>"
-  );
+export const PLACEHOLDER = "/images/property-placeholder.svg";
 
 export type SearchState = {
   status: string[];

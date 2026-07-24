@@ -9,7 +9,21 @@ const NAV_LINKS = [
   { href: "/home-search", label: "Home Search" },
   { href: "/neighborhoods", label: "Neighborhoods" },
   { href: "/home-valuation", label: "Home Valuation" },
-  { href: "#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
+];
+
+// Full site navigation shown in the slide-out side drawer
+const SIDE_LINKS = [
+  { href: "/team", label: "Meet the Team" },
+  { href: "/property", label: "Properties" },
+  { href: "/home-search", label: "Home Search" },
+  { href: "/home-valuation", label: "Home Valuation" },
+  { href: "/neighborhoods", label: "Neighborhoods" },
+  { href: "/testimonials", label: "Testimonials" },
+  { href: "/compass-concierge", label: "Compass Concierge" },
+  { href: "#", label: "Blog" },
+  { href: "/contact", label: "Contact Us" },
+  { href: "#", label: "My Search Portal" },
 ];
 
 export default function Header() {
@@ -101,54 +115,61 @@ export default function Header() {
               <PhoneIcon />
               <span>(310) 709-0581</span>
             </a>
-            <a href="#contact" className="btn btn-primary btn-magnetic header-cta">
+            <a href="/contact" className="btn btn-primary btn-magnetic header-cta">
               <span>Contact Us</span>
               <ArrowRight />
             </a>
             <button
-              className={`menu-toggle${menuOpen ? " is-open" : ""}`}
+              className="menu-toggle"
               id="menu-toggle"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               onClick={() => setMenuOpen((v) => !v)}
             >
-              <span></span>
-              <span></span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/line-md_menu-unfold-left.png" alt="" className="menu-toggle-icon" />
             </button>
           </div>
         </div>
       </header>
 
       <div
-        className={`mobile-menu${menuOpen ? " is-open" : ""}`}
+        className={`side-scrim${menuOpen ? " is-open" : ""}`}
+        aria-hidden="true"
+        onClick={() => setMenuOpen(false)}
+      />
+      <aside
+        className={`side-drawer${menuOpen ? " is-open" : ""}`}
         id="mobile-menu"
+        aria-label="Site navigation"
         aria-hidden={!menuOpen}
         onClick={(e) => {
           if ((e.target as HTMLElement).closest("a")) setMenuOpen(false);
         }}
       >
-        <nav className="mobile-nav" aria-label="Mobile">
-          {NAV_LINKS.map((link, i) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="mobile-link"
-              style={{ transitionDelay: menuOpen ? `${80 + i * 60}ms` : "0ms" }}
-            >
+        <div className="side-head">
+          <span className="side-head-label">Menu</span>
+          <button className="side-close" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <nav className="side-nav" aria-label="Site">
+          {SIDE_LINKS.map((link) => (
+            <a key={link.label} href={link.href} className="side-item">
               {link.label}
             </a>
           ))}
         </nav>
-        <div className="mobile-menu-footer">
-          <a href="#contact" className="btn btn-primary">
-            Contact Us
-          </a>
-          <a href="tel:+13107090581" className="mobile-phone">
-            (310) 709-0581
+        <div className="side-foot">
+          <p className="side-foot-label">Get in Touch</p>
+          <a href="/contact" className="btn btn-primary side-connect">
+            Let&rsquo;s Connect
           </a>
         </div>
-      </div>
+      </aside>
     </>
   );
 }

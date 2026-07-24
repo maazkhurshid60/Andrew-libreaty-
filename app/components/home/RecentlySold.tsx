@@ -70,7 +70,15 @@ const TABS = [
   { filter: "seller", label: "Seller Success" },
 ];
 
-export default function RecentlySold() {
+export default function RecentlySold({
+  title = "Recently Sold",
+  subtitle,
+  showTabs = true,
+}: {
+  title?: string;
+  subtitle?: string;
+  showTabs?: boolean;
+} = {}) {
   const [activeFilter, setActiveFilter] = useState("sold");
   const carouselRef = useRef<HTMLDivElement>(null);
   const drag = useRef({ isDown: false, startX: 0, startScroll: 0, moved: false });
@@ -117,7 +125,8 @@ export default function RecentlySold() {
       <div className="container">
         <div className="section-head section-head-split reveal">
           <div>
-            <h2 className="section-title">Recently Sold</h2>
+            <h2 className="section-title">{title}</h2>
+            {subtitle && <p className="section-sub">{subtitle}</p>}
           </div>
           <div className="carousel-controls">
             <button
@@ -137,6 +146,7 @@ export default function RecentlySold() {
           </div>
         </div>
 
+        {showTabs && (
         <div className="filter-tabs reveal" role="tablist" aria-label="Property filters">
           {TABS.map((tab) => (
             <button
@@ -150,6 +160,7 @@ export default function RecentlySold() {
             </button>
           ))}
         </div>
+        )}
       </div>
 
       <div
