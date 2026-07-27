@@ -12,7 +12,7 @@
   --ivory: #f6f3ec;
   --ivory-deep: #eeeade;
   --paper: #fffdf8;
-  --gold: #d2994b;           /* brand muted gold — accents/fills */
+  --gold: #D19852;           /* brand gold — accents/fills/icons */
   --gold-deep: #9a6c2e;      /* darkened gold for text/eyebrow contrast (AA) */
   --gold-tint: #f6ecd6;
   --sage: #4f7a6a;
@@ -349,13 +349,23 @@ ul, ol { list-style: none; }
 
 .side-nav { flex: 1; overflow-y: auto; display: flex; flex-direction: column; text-align: center; }
 .side-item {
+  position: relative;
   font-family: var(--font-display); font-size: 20px; font-weight: 400;
   color: var(--ink); padding: 17px 24px;
   border-bottom: 1px solid var(--line-soft);
   transition: color var(--dur), background-color var(--dur);
 }
-.side-item:first-child { border-bottom-color: var(--gold); }
+/* Growing gold underline on hover; stays full-width for the current page */
+.side-item::after {
+  content: ""; position: absolute; left: 50%; bottom: -1px;
+  width: 0; height: 2px; background: var(--gold);
+  transform: translateX(-50%);
+  transition: width var(--dur) var(--ease-out);
+}
+.side-item:hover::after,
+.side-item.is-active::after { width: min(120px, 60%); }
 .side-item:hover { color: var(--gold-deep); background: var(--ivory); }
+.side-item.is-active { color: var(--gold-deep); font-weight: 500; }
 
 .side-foot {
   padding: 24px 24px calc(26px + env(safe-area-inset-bottom));
@@ -455,7 +465,7 @@ ul, ol { list-style: none; }
   padding: 12px 20px; border-radius: 999px;
   transition: background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
-.capsule-item svg { width: 18px; height: 18px; color: var(--gold-deep); transition: color var(--dur); }
+.capsule-item svg { width: 18px; height: 18px; color: var(--gold); transition: color var(--dur); }
 .capsule-icon { flex: none; }
 .capsule-item:hover { background: var(--ink); color: var(--on-dark); }
 .capsule-item:hover svg { color: var(--on-dark); }
@@ -509,7 +519,7 @@ ul, ol { list-style: none; }
 .valuation-ring {
   flex: none; width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center;
-  background: var(--gold-tint); color: var(--gold-deep);
+  background: var(--gold-tint); color: var(--gold);
 }
 .valuation-ring svg { width: 20px; height: 20px; }
 
@@ -598,7 +608,7 @@ ul, ol { list-style: none; }
 .move-icon {
   width: 56px; height: 56px; border-radius: 16px;
   display: grid; place-items: center;
-  background: var(--gold-tint); color: var(--gold-deep);
+  background: var(--gold-tint); color: var(--gold);
   margin-bottom: 26px;
   transition: transform 320ms var(--ease-out);
 }
@@ -892,7 +902,7 @@ ul, ol { list-style: none; }
   display: flex; align-items: center; gap: 9px;
   font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
 }
-.trust-bullets svg { flex: none; width: 16px; height: 16px; color: var(--gold-deep); }
+.trust-bullets svg { flex: none; width: 16px; height: 16px; color: var(--gold); }
 
 .valuation-form { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-field-full { grid-column: 1 / -1; }

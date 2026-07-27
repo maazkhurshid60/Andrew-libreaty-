@@ -3,33 +3,48 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Hero background video that reveals itself only once it can actually play —
- * so the viewer never sees a poster-image "flash" that then swaps to video.
- * With JS on: the video starts hidden and fades in the moment it's buffered
- * enough to play. With JS off: the CSS leaves it visible so it still shows.
+ * Hero background video.
+ *
+ * - Desktop: the video source is attached, then faded in the moment it can play
+ *   (no jarring poster→video swap).
+ * - Mobile / data-saver / reduced-motion: the video is NEVER downloaded — only
+ *   the lightweight poster image shows. This keeps mobile fast and avoids the
+ *   large media download that tanks the mobile performance score / LCP.
  */
 export default function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
+  const [src, setSrc] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
+    const mq = window.matchMedia("(min-width: 768px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const conn = (navigator as unknown as { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    const slow = conn?.saveData || /2g/.test(conn?.effectiveType ?? "");
 
+    // Poster-only on small screens, data-saver, slow links, or reduced motion.
+    if (!mq.matches || reducedMotion || slow) {
+      setReady(true); // reveal the element so its poster shows; no video is loaded
+      return;
+    }
+    // Desktop: attach and play the video.
+    setSrc("/video/hero.mp4");
+  }, []);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!src || !v) return;
     const reveal = () => {
       setReady(true);
-      // Muted autoplay is allowed; kick it in case the attribute didn't fire.
       v.play().catch(() => {});
     };
-
-    // Already buffered enough (fast connection / cached)?
     if (v.readyState >= 3) {
       reveal();
       return;
     }
     v.addEventListener("canplay", reveal, { once: true });
     return () => v.removeEventListener("canplay", reveal);
-  }, []);
+  }, [src]);
 
   return (
     <video
@@ -39,11 +54,11 @@ export default function HeroVideo() {
       loop
       playsInline
       autoPlay
-      preload="auto"
+      preload="none"
       poster="/images/hero-la-aerial.jpg"
       aria-hidden="true"
     >
-      <source src="/video/hero.mp4" type="video/mp4" />
+      {src && <source src={src} type="video/mp4" />}
     </video>
   );
 }

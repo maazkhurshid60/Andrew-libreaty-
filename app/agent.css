@@ -155,7 +155,7 @@
   width: 40px; height: 40px;
   border-radius: 11px;
   display: grid; place-items: center;
-  background: var(--gold-tint); color: var(--gold-deep);
+  background: var(--gold-tint); color: var(--gold);
   margin-bottom: 16px;
 }
 .ag-card-ic svg { width: 19px; height: 19px; }

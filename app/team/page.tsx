@@ -18,9 +18,17 @@ const HERO_GALLERY = [
   { src: "/images/sold-canyon-midcentury.jpg", alt: "Mid-century home, Los Angeles" },
 ];
 
-type Member = { name: string; role: string; meta: string; img: string; href?: string };
+type Member = {
+  name: string; role: string; meta: string; img: string;
+  href?: string; bio?: string; specialties?: string[];
+};
 const TEAM: Member[] = [
-  { name: "Andrew Liberty", role: "REALTOR®", meta: "License #01965696", img: "/team/andrew-liberty.png", href: "/team/andrew-liberty" },
+  {
+    name: "Andrew Liberty", role: "REALTOR®", meta: "License #01965696",
+    img: "/team/andrew-liberty.png", href: "/team/andrew-liberty",
+    bio: "A Los Angeles based REALTOR® and certified Real Estate Negotiation Expert who brings a strong mix of strategy and real-world experience.",
+    specialties: ["Luxury Residential", "Historic Estates", "Relocation"],
+  },
   { name: "Liza Calzoni", role: "REALTOR®", meta: "License Number # 02246252", img: "/team/lisa-cabrera.png" },
   { name: "Seda Naumenko", role: "Marketing and Operations", meta: "License Number # 02246252", img: "/team/sonia-naumenko.png" },
   { name: "Andrew Coleman", role: "Designer", meta: "License Number # 02246252", img: "/team/andrew-coleman.png" },
@@ -59,17 +67,30 @@ export default function TeamPage() {
           <div className="team-grid">
             {TEAM.map((m) => (
               <article className="team-card reveal" key={m.name}>
-                {m.href ? (
-                  <a className="team-photo" href={m.href} aria-label={`View ${m.name}'s profile`}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} loading="lazy" />
-                  </a>
-                ) : (
-                  <div className="team-photo">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={m.img} alt={m.name} loading="lazy" />
+                <div className="team-photo">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={m.img} alt={m.name} loading="lazy" />
+                  <div className="team-overlay">
+                    {m.bio ? (
+                      <>
+                        <p className="team-bio">{m.bio}</p>
+                        {m.specialties && (
+                          <div className="team-tags">
+                            {m.specialties.map((s) => <span key={s}>{s}</span>)}
+                          </div>
+                        )}
+                        {m.href && (
+                          <a className="team-view" href={m.href}>
+                            View Profile
+                            <ArrowRight />
+                          </a>
+                        )}
+                      </>
+                    ) : (
+                      <span className="team-soon">Coming Soon</span>
+                    )}
                   </div>
-                )}
+                </div>
                 <div className="team-body">
                   <h3 className="team-name">
                     {m.href ? <a href={m.href}>{m.name}</a> : m.name}

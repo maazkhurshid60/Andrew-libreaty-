@@ -50,7 +50,7 @@
   flex: 1; min-width: 110px; display: flex; align-items: center; gap: 12px;
   background: var(--ivory); border: 1px solid var(--line-soft); border-radius: 14px; padding: 15px 16px;
 }
-.pd-stat-ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--gold-tint); color: var(--gold-deep); flex: none; }
+.pd-stat-ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--gold-tint); color: var(--gold); flex: none; }
 .pd-stat-ic svg { width: 19px; height: 19px; }
 .pd-stat b { display: block; font-size: 17px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
 .pd-stat span { font-size: 12px; color: var(--muted); }
@@ -131,7 +131,7 @@
 .pd-form .cf-field input:focus, .pd-form .cf-field textarea:focus { border-bottom-color: var(--gold); }
 .pd-form .btn-gold { width: 100%; justify-content: center; }
 .pd-form-alt { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; font-size: 13.5px; font-weight: 500; color: var(--ink); }
-.pd-form-alt svg { width: 16px; height: 16px; color: var(--gold-deep); }
+.pd-form-alt svg { width: 16px; height: 16px; color: var(--gold); }
 .pd-form-status { margin-top: 12px; font-size: 13px; color: var(--gold-deep); min-height: 16px; text-align: center; }
 
 /* ---------- Similar ---------- */

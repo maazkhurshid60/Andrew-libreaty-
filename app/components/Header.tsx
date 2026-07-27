@@ -158,7 +158,12 @@ export default function Header() {
         </div>
         <nav className="side-nav" aria-label="Site">
           {SIDE_LINKS.map((link) => (
-            <a key={link.label} href={link.href} className="side-item">
+            <a
+              key={link.label}
+              href={link.href}
+              className={`side-item${link.href.startsWith("/") && pathname === link.href ? " is-active" : ""}`}
+              aria-current={link.href.startsWith("/") && pathname === link.href ? "page" : undefined}
+            >
               {link.label}
             </a>
           ))}
