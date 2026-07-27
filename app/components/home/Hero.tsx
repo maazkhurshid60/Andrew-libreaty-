@@ -1,21 +1,11 @@
 import { ArrowRight } from "../icons";
 import { HomeHashtagIcon, DollarSquareIcon, FavoriteChartIcon, LocationIcon } from "../vuesax";
+import HeroVideo from "./HeroVideo";
 
 export default function Hero() {
   return (
     <section className="hero" id="top">
-      <video
-        className="hero-bg-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster="/images/hero-la-aerial.jpg"
-        aria-hidden="true"
-      >
-        <source src="/video/hero.mp4" type="video/mp4" />
-      </video>
+      <HeroVideo />
       <div className="hero-video-overlay" aria-hidden="true" />
 
       <div className="hero-map-texture" aria-hidden="true">

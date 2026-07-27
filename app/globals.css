@@ -382,6 +382,10 @@ ul, ol { list-style: none; }
   background: var(--ivory);
   pointer-events: none;
 }
+/* With JS: hold the video hidden over the ivory hero, then fade it in the
+   instant it can play — no jarring poster→video swap. (No-JS keeps it visible.) */
+.js .hero-bg-video { opacity: 0; transition: opacity 650ms var(--ease-out); }
+.js .hero-bg-video.is-ready { opacity: 1; }
 .hero-video-overlay {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
