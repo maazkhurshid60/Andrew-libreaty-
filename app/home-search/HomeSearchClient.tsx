@@ -174,7 +174,10 @@ export default function HomeSearchClient() {
   };
   const openDetails = (l: Listing) => {
     setMenuOpen(null);
-    toast(`Detail page for ${l.addr} — build next`);
+    // Individual MLS detail pages come from the IDX feed in production; for now
+    // every card opens the built demo detail page.
+    void l;
+    window.location.href = "/property/735-n-stanley-ave";
   };
   const menuAction = (act: string, l: Listing) => {
     setMenuOpen(null);
