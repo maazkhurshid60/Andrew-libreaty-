@@ -249,6 +249,17 @@
 .cc-form-card h3 { font-family: var(--font-display); font-weight: 500; font-size: 22px; color: var(--ink); margin-bottom: 20px; }
 .cc-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
+/* The shared .cf-form is styled for a dark panel — retint it for this light card */
+.cc-form-card .cf-form { margin-top: 0; max-width: none; }
+.cc-form-card .cf-field > label { color: var(--gold-deep); }
+.cc-form-card .cf-field input,
+.cc-form-card .cf-field textarea { color: var(--ink); border-bottom-color: var(--line); }
+.cc-form-card .cf-field input::placeholder,
+.cc-form-card .cf-field textarea::placeholder { color: var(--muted); }
+.cc-form-card .cf-field input:focus,
+.cc-form-card .cf-field textarea:focus { border-bottom-color: var(--gold); }
+.cc-form-card .cf-status { color: var(--gold-deep); }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .cc-sell-grid, .cc-steps-grid, .cc-touch-grid { grid-template-columns: 1fr; }

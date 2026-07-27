@@ -1,4 +1,5 @@
 import { ArrowRight } from "../icons";
+import { HomeHashtagIcon, DollarSquareIcon, FavoriteChartIcon } from "../vuesax";
 
 export default function WhatsTheMove() {
   return (
@@ -13,8 +14,7 @@ export default function WhatsTheMove() {
         <div className="move-grid">
           <article className="move-card reveal">
             <div className="move-icon" aria-hidden="true">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/home-hashtag.png" alt="" className="move-icon-img" />
+              <HomeHashtagIcon />
             </div>
             <h3>Buy a Home</h3>
             <p>
@@ -29,8 +29,7 @@ export default function WhatsTheMove() {
 
           <article className="move-card move-card-featured reveal" data-reveal-delay="100">
             <div className="move-icon" aria-hidden="true">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/dollar-square.png" alt="" className="move-icon-img" />
+              <DollarSquareIcon />
             </div>
             <h3>Sell a Home</h3>
             <p>
@@ -46,8 +45,7 @@ export default function WhatsTheMove() {
 
           <article className="move-card reveal" data-reveal-delay="200">
             <div className="move-icon" aria-hidden="true">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/favorite-chart.png" alt="" className="move-icon-img" />
+              <FavoriteChartIcon />
             </div>
             <h3>Invest Strategically</h3>
             <p>From duplexes to development lots, every deal gets evaluated on the numbers first.</p>

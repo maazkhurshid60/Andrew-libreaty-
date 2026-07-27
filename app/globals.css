@@ -451,11 +451,10 @@ ul, ol { list-style: none; }
   padding: 12px 20px; border-radius: 999px;
   transition: background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
 }
-.capsule-item svg { width: 17px; height: 17px; color: var(--gold-deep); transition: color var(--dur); }
-.capsule-icon { width: 18px; height: 18px; object-fit: contain; flex: none; }
-.capsule-item:hover .capsule-icon { filter: brightness(0) invert(1); }
+.capsule-item svg { width: 18px; height: 18px; color: var(--gold-deep); transition: color var(--dur); }
+.capsule-icon { flex: none; }
 .capsule-item:hover { background: var(--ink); color: var(--on-dark); }
-.capsule-item:hover svg { color: var(--gold); }
+.capsule-item:hover svg { color: var(--on-dark); }
 .capsule-item + .capsule-item { position: relative; }
 .capsule-item + .capsule-item::before {
   content: ""; position: absolute; left: 0; top: 25%; bottom: 25%;

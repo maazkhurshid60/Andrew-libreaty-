@@ -21,9 +21,9 @@ const SIDE_LINKS = [
   { href: "/neighborhoods", label: "Neighborhoods" },
   { href: "/testimonials", label: "Testimonials" },
   { href: "/compass-concierge", label: "Compass Concierge" },
-  { href: "#", label: "Blog" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact Us" },
-  { href: "#", label: "My Search Portal" },
+  { href: "/my-search-portal", label: "My Search Portal" },
 ];
 
 export default function Header() {

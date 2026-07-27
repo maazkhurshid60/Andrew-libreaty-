@@ -1,4 +1,5 @@
 import { ArrowRight } from "../icons";
+import { HomeHashtagIcon, DollarSquareIcon, FavoriteChartIcon, LocationIcon } from "../vuesax";
 
 export default function Hero() {
   return (
@@ -60,23 +61,19 @@ export default function Hero() {
             aria-label="Quick actions"
           >
             <a href="/home-search" className="capsule-item">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/home-hashtag.png" alt="" className="capsule-icon" />
+              <HomeHashtagIcon className="capsule-icon" />
               <span>Buy</span>
             </a>
             <a href="/home-valuation" className="capsule-item">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/dollar-square.png" alt="" className="capsule-icon" />
+              <DollarSquareIcon className="capsule-icon" />
               <span>Sell</span>
             </a>
             <a href="/home-valuation" className="capsule-item">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/Icon.png" alt="" className="capsule-icon" />
+              <FavoriteChartIcon className="capsule-icon" />
               <span>Home Value</span>
             </a>
             <a href="/neighborhoods" className="capsule-item">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icons/location.png" alt="" className="capsule-icon" />
+              <LocationIcon className="capsule-icon" />
               <span>Neighborhoods</span>
             </a>
           </div>

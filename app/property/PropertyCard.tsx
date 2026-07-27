@@ -32,8 +32,8 @@ const AreaIcon = () => (
   </svg>
 );
 
-export default function PropertyCard({ p }: { p: PropertyItem }) {
-  const [saved, setSaved] = useState(false);
+export default function PropertyCard({ p, href = "#", initialSaved = false }: { p: PropertyItem; href?: string; initialSaved?: boolean }) {
+  const [saved, setSaved] = useState(initialSaved);
 
   return (
     <article className="pl-card">
@@ -70,7 +70,7 @@ export default function PropertyCard({ p }: { p: PropertyItem }) {
           <span><BathIcon /> {p.baths} Baths</span>
           <span><AreaIcon /> {p.sqft} SqFt</span>
         </p>
-        <a href="#" className="pl-link">
+        <a href={href} className="pl-link">
           View Details
           <ArrowRight />
         </a>

@@ -134,7 +134,7 @@ export default function PropertiesPage() {
           </div>
           <div className="prop-grid">
             {FEATURED.map((p) => (
-              <PropertyCard key={p.address} p={p} />
+              <PropertyCard key={p.address} p={p} href="/property/735-n-stanley-ave" />
             ))}
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function PropertiesPage() {
           </div>
           <div className="prop-grid">
             {PAST.map((p) => (
-              <PropertyCard key={p.address} p={p} />
+              <PropertyCard key={p.address} p={p} href="/property/735-n-stanley-ave" />
             ))}
           </div>
         </div>
