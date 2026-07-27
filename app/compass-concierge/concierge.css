@@ -12,17 +12,32 @@
   position: relative;
   overflow: hidden;
 }
+/* Compass brand mark watermark — visible on the right, faint echo lower-left */
 .cc-hero::before {
   content: "";
   position: absolute;
-  top: 50%;
-  right: 14%;
-  transform: translate(50%, -50%);
-  width: clamp(320px, 34vw, 480px);
+  top: 44%;
+  right: 9%;
+  transform: translateY(-50%);
+  width: clamp(280px, 27vw, 374px);
   aspect-ratio: 1 / 1;
   background: url("/images/AL logo 2.png") center / contain no-repeat;
-  opacity: 0.06;
+  opacity: 0.12;
   pointer-events: none;
+  z-index: 0;
+}
+.cc-hero::after {
+  content: "";
+  position: absolute;
+  top: 62%;
+  left: -3%;
+  transform: translate(-50%, -50%);
+  width: clamp(380px, 40vw, 538px);
+  aspect-ratio: 1 / 1;
+  background: url("/images/AL logo 2.png") center / contain no-repeat;
+  opacity: 0.11;
+  pointer-events: none;
+  z-index: 0;
 }
 .cc-hero > .container { position: relative; z-index: 1; }
 .cc-hero .eyebrow { color: var(--gold); }

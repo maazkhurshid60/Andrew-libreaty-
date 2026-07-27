@@ -226,8 +226,11 @@ ul, ol { list-style: none; }
    ========================================================================== */
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(246, 243, 236, 0.34);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
   transition: background-color 300ms var(--ease-out), box-shadow 300ms var(--ease-out),
-              border-color 300ms var(--ease-out);
+              border-color 300ms var(--ease-out), backdrop-filter 300ms var(--ease-out);
   border-bottom: 1px solid transparent;
 }
 
@@ -240,9 +243,9 @@ ul, ol { list-style: none; }
 }
 
 .site-header.is-scrolled {
-  background: rgba(246, 243, 236, 0.78);
-  backdrop-filter: blur(16px) saturate(1.4);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(246, 243, 236, 0.85);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
   border-bottom-color: var(--line-soft);
   box-shadow: 0 1px 24px rgba(23, 20, 15, 0.06);
 }
@@ -383,10 +386,11 @@ ul, ol { list-style: none; }
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
     linear-gradient(90deg,
-      rgba(246, 243, 236, 0.86) 0%,
-      rgba(246, 243, 236, 0.72) 40%,
-      rgba(246, 243, 236, 0.4) 64%,
-      rgba(246, 243, 236, 0.14) 100%),
+      rgba(246, 243, 236, 0.96) 0%,
+      rgba(246, 243, 236, 0.9) 28%,
+      rgba(246, 243, 236, 0.68) 52%,
+      rgba(246, 243, 236, 0.34) 72%,
+      rgba(246, 243, 236, 0.12) 100%),
     linear-gradient(0deg, rgba(246, 243, 236, 0.4), transparent 30%);
 }
 .hero-map-texture {
@@ -1185,6 +1189,10 @@ ul, ol { list-style: none; }
     transition-delay: var(--reveal-delay, 0ms);
   }
   .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* Above-the-fold hero content must stay painted so it counts as the LCP
+     element — never hide it behind the reveal fade (fixes Lighthouse NO_LCP). */
+  .js .hero .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -10,6 +10,7 @@ export default function Hero() {
         loop
         playsInline
         preload="auto"
+        poster="/images/hero-la-aerial.jpg"
         aria-hidden="true"
       >
         <source src="/video/hero.mp4" type="video/mp4" />
