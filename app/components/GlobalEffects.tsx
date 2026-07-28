@@ -197,6 +197,19 @@ export default function GlobalEffects() {
     <>
       <div className="cursor-dot" aria-hidden="true"></div>
       <div className="cursor-glow" aria-hidden="true">
+        <svg
+          className="cursor-home"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 10.5 12 3l9 7.5" />
+          <path d="M5.5 9.3V20h13V9.3" />
+          <path d="M10 20v-5h4v5" />
+        </svg>
         <span className="cursor-label">Drag</span>
       </div>
     </>
