@@ -1,4 +1,4 @@
-import { HomeHashtagIcon, DollarSquareIcon } from "../vuesax";
+import { HomeHashtagIcon, DollarSquareIcon, FavoriteChartIcon } from "../vuesax";
 import HeroVideo from "./HeroVideo";
 
 export default function Hero() {
@@ -52,6 +52,10 @@ export default function Hero() {
             <a href="/home-valuation" className="capsule-item">
               <DollarSquareIcon className="capsule-icon" />
               <span>Sell</span>
+            </a>
+            <a href="/home-valuation" className="capsule-item">
+              <FavoriteChartIcon className="capsule-icon" />
+              <span>Home Value</span>
             </a>
           </div>
 
