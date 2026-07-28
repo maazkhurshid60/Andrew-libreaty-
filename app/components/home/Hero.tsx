@@ -1,5 +1,4 @@
-import { ArrowRight } from "../icons";
-import { HomeHashtagIcon, DollarSquareIcon, FavoriteChartIcon, LocationIcon } from "../vuesax";
+import { HomeHashtagIcon, DollarSquareIcon } from "../vuesax";
 import HeroVideo from "./HeroVideo";
 
 export default function Hero() {
@@ -25,6 +24,7 @@ export default function Hero() {
         </svg>
       </div>
 
+      <div className="hero-screen">
       <div className="hero-inner">
         <div className="hero-copy">
           <p className="eyebrow reveal">Los Angeles · Compass</p>
@@ -36,11 +36,6 @@ export default function Hero() {
           <p className="hero-sub reveal" data-reveal-delay="160">
             Strategic real estate guidance for buyers, sellers, and investors across
             Los&nbsp;Angeles.
-          </p>
-          <p className="hero-credentials reveal" data-reveal-delay="220">
-            Andrew Ruric Liberty II&nbsp;|&nbsp;CA DRE# 01965696
-            <br />
-            Compass California, Inc.&nbsp;|&nbsp;CA DRE# 01991628
           </p>
 
           {/* Search capsule */}
@@ -58,30 +53,32 @@ export default function Hero() {
               <DollarSquareIcon className="capsule-icon" />
               <span>Sell</span>
             </a>
-            <a href="/home-valuation" className="capsule-item">
-              <FavoriteChartIcon className="capsule-icon" />
-              <span>Home Value</span>
-            </a>
-            <a href="/neighborhoods" className="capsule-item">
-              <LocationIcon className="capsule-icon" />
-              <span>Neighborhoods</span>
-            </a>
           </div>
 
           <div className="hero-ctas reveal" data-reveal-delay="340">
-            <a href="#sold" className="btn btn-primary btn-magnetic">
-              <span>Browse Homes</span>
-              <ArrowRight />
-            </a>
-            <a href="#valuation" className="btn btn-secondary">
-              Get Home Value
-            </a>
-            <a href="#about" className="btn btn-tertiary">
+            <a href="#about" className="btn btn-ghost-light">
               Meet Andrew
             </a>
           </div>
         </div>
 
+      </div>
+
+      {/* Licensing credentials + Compass co-brand mark, bottom-right of the hero */}
+      <div className="hero-compass" aria-label="Licensing">
+        <p className="hero-compass-cred">
+          Andrew Ruric Liberty II&nbsp;|&nbsp;CA DRE# 01965696
+          <br />
+          Compass California, Inc.&nbsp;|&nbsp;CA DRE# 01991628
+        </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/AL logo 2.png" alt="Compass" className="hero-compass-logo" width={150} height={22} />
+      </div>
+
+      <a href="#move" className="scroll-indicator" aria-label="Scroll to next section">
+        <span className="scroll-indicator-line" aria-hidden="true"></span>
+        <span className="scroll-indicator-text">Scroll</span>
+      </a>
       </div>
 
       <ul className="hero-stats reveal" data-reveal-delay="380">
@@ -102,11 +99,6 @@ export default function Hero() {
           <span className="stat-label">Local market specialist</span>
         </li>
       </ul>
-
-      <a href="#move" className="scroll-indicator" aria-label="Scroll to next section">
-        <span className="scroll-indicator-line" aria-hidden="true"></span>
-        <span className="scroll-indicator-text">Scroll</span>
-      </a>
     </section>
   );
 }

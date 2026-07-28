@@ -36,6 +36,7 @@ export default function HeroVideo() {
     if (!src || !v) return;
     const reveal = () => {
       setReady(true);
+      v.playbackRate = 0.6; // gentle slow-motion
       v.play().catch(() => {});
     };
     if (v.readyState >= 3) {

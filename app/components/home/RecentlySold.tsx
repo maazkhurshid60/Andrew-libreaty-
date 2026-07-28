@@ -190,7 +190,7 @@ export default function RecentlySold({
                 <p className="property-location">{p.location}</p>
                 <h3 className="property-title">{p.title}</h3>
                 <p className="property-meta">{p.meta}</p>
-                <a href="#" className="btn btn-tertiary btn-sm">
+                <a href="/property/735-n-stanley-ave" className="btn btn-tertiary btn-sm">
                   <span>View Details</span>
                   <ArrowRight />
                 </a>

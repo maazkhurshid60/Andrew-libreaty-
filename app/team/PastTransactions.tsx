@@ -100,7 +100,7 @@ export default function PastTransactions() {
 
       <div className="pt-carousel" ref={trackRef}>
         {PAST.map((p, i) => (
-          <PropertyCard key={i} p={p} />
+          <PropertyCard key={i} p={p} href="/property/735-n-stanley-ave" />
         ))}
       </div>
 
