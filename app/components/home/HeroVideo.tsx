@@ -56,7 +56,7 @@ export default function HeroVideo() {
       playsInline
       autoPlay
       preload="none"
-      poster="/images/hero-la-aerial.jpg"
+      poster="/images/hero-poster.jpg"
       aria-hidden="true"
     >
       {src && <source src={src} type="video/mp4" />}

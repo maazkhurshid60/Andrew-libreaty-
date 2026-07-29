@@ -416,10 +416,10 @@ ul, ol { list-style: none; }
   background: var(--ivory);
   pointer-events: none;
 }
-/* With JS: hold the video hidden over the ivory hero, then fade it in the
-   instant it can play — no jarring poster→video swap. (No-JS keeps it visible.) */
-.js .hero-bg-video { opacity: 0; transition: opacity 650ms var(--ease-out); }
-.js .hero-bg-video.is-ready { opacity: 1; }
+/* Show the matching poster frame while the video buffers (looks like it's paused
+   and about to play), then it plays in place — seamless since the poster is a
+   frame from the same footage. */
+.js .hero-bg-video { opacity: 1; }
 /* Video plays at (near) full opacity — just a soft dark scrim on the left/bottom
    so the light hero text stays legible. The right side of the video is clear. */
 .hero-video-overlay {
