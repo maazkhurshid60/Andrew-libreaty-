@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
+    <>
     <section className="contact-page">
       {/* ============ LEFT: DETAILS ============ */}
       <div className="contact-left">
@@ -112,5 +113,18 @@ export default function ContactPage() {
         <ContactForm />
       </div>
     </section>
+
+    {/* ============ MAP ============ */}
+    <section className="contact-map-band">
+      <div className="container">
+        <div className="contact-map-head">
+          <p className="eyebrow">Find Us</p>
+          <h2 className="contact-map-title">Visit the Office</h2>
+          <p className="contact-map-addr">12001 Ventura Pl Ste 100, Studio City, CA 91604</p>
+        </div>
+        <PropertyMap lat={34.1479} lng={-118.396} label="Andrew Liberty Team" />
+      </div>
+    </section>
+    </>
   );
 }

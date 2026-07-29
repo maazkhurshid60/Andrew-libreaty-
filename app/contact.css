@@ -28,6 +28,12 @@
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
 }
 
+/* Map band below the two panels */
+.contact-map-band { background: var(--ivory); padding: clamp(44px, 6vw, 84px) 0; }
+.contact-map-head { margin-bottom: 24px; }
+.contact-map-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 3vw, 34px); color: var(--ink); margin-top: 6px; }
+.contact-map-addr { margin-top: 8px; color: var(--muted); font-size: 15px; }
+
 .contact-list { margin-top: 34px; display: flex; flex-direction: column; gap: 24px; }
 .contact-item { display: flex; gap: 16px; align-items: flex-start; }
 .contact-item-ic {

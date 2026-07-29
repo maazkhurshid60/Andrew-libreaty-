@@ -643,7 +643,7 @@ ul, ol { list-style: none; }
 }
 .move-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-float); border-color: transparent; background: var(--paper); }
 
-.move-card-featured { background: var(--paper); box-shadow: var(--shadow-float); }
+.move-card-featured { background: var(--ivory); box-shadow: var(--shadow-float); }
 .move-proof {
   font-size: 13px !important; font-weight: 600;
   color: var(--gold-deep) !important;
