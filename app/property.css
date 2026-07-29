@@ -203,19 +203,17 @@
 .hood-hero-gallery .hood-tile:nth-child(2),
 .hood-hero-gallery .hood-tile:nth-child(3) { height: clamp(245px, 25vw, 325px); }
 
-/* Areas of Expertise */
+/* Areas of Expertise — woven masonry.
+   Three columns, each a tall + a short tile (tall-short / short-tall / tall-short).
+   Tops align and every column totals the same height, so the middle column's
+   second tile rides up while all column bottoms line up. */
 .areas-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
   align-items: start; position: relative;
 }
-/* Woven masonry: middle column steps down, heights vary per tile */
-.areas-grid > .area-card:nth-child(3n + 2) { transform: translateY(42px); }
-.areas-grid > .area-card:nth-child(1) { height: clamp(300px, 34vw, 420px); }
-.areas-grid > .area-card:nth-child(2) { height: clamp(240px, 27vw, 330px); }
-.areas-grid > .area-card:nth-child(3) { height: clamp(300px, 34vw, 420px); }
-.areas-grid > .area-card:nth-child(4) { height: clamp(260px, 30vw, 360px); }
-.areas-grid > .area-card:nth-child(5) { height: clamp(310px, 35vw, 430px); }
-.areas-grid > .area-card:nth-child(6) { height: clamp(240px, 27vw, 330px); }
+.areas-col { display: flex; flex-direction: column; gap: 24px; }
+.area-card.is-tall  { aspect-ratio: 391 / 598; }
+.area-card.is-short { aspect-ratio: 391 / 448; }
 
 .area-card {
   position: relative; display: block; overflow: hidden;
@@ -234,15 +232,16 @@
 }
 
 @media (max-width: 900px) {
+  /* Flatten the columns so all six tiles flow into a simple 2-up grid */
   .areas-grid { grid-template-columns: repeat(2, 1fr); }
-  .areas-grid > .area-card:nth-child(3n + 2) { transform: none; }
-  .areas-grid > .area-card { height: clamp(280px, 42vw, 380px) !important; }
+  .areas-col { display: contents; }
+  .area-card.is-tall, .area-card.is-short { aspect-ratio: 4 / 3; }
 }
-@media (max-width: 680px) {
+@media (max-width: 560px) {
   .hood-hero-gallery { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
   .hood-hero-gallery .hood-tile { height: clamp(150px, 40vw, 240px) !important; }
   .areas-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
-  .areas-grid > .area-card { height: clamp(260px, 72vw, 380px) !important; }
+  .area-card.is-tall, .area-card.is-short { aspect-ratio: 16 / 11; }
 }
 
 /* ==========================================================================

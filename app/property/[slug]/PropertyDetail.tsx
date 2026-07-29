@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "../../components/icons";
 import { CallIcon, SmsIcon, ShareIcon } from "../../components/vuesax";
 import PropertyMap from "./PropertyMap";
@@ -28,6 +28,42 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
   const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState("");
+
+  /* ---------- Lightbox gallery ---------- */
+  const gallery = listing.gallery;
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [zoom, setZoom] = useState(false);
+  const [origin, setOrigin] = useState("center");
+
+  const openLightbox = (i: number) => { setLightbox(i); setZoom(false); };
+  const closeLightbox = () => { setLightbox(null); setZoom(false); };
+  const step = (dir: number) =>
+    setLightbox((i) => (i === null ? i : (i + dir + gallery.length) % gallery.length));
+
+  const onZoomMove = (e: React.MouseEvent<HTMLImageElement>) => {
+    if (!zoom) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    setOrigin(`${x}% ${y}%`);
+  };
+
+  // Keyboard nav + scroll lock while the lightbox is open
+  useEffect(() => {
+    if (lightbox === null) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      else if (e.key === "ArrowRight") { setZoom(false); step(1); }
+      else if (e.key === "ArrowLeft") { setZoom(false); step(-1); }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightbox]);
 
   const set = (k: keyof typeof form, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -68,18 +104,76 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
       <div className="pd-gallery-wrap">
         <div className="container">
           <div className="pd-gallery">
-            {listing.gallery.slice(0, 5).map((src, i) => (
-              <div className="pd-cell" key={src}>
+            {gallery.slice(0, 5).map((src, i) => (
+              <button
+                type="button"
+                className="pd-cell"
+                key={i}
+                onClick={() => openLightbox(i)}
+                aria-label={`View photo ${i + 1} of ${gallery.length}`}
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={src} alt={`${listing.address} photo ${i + 1}`} loading={i === 0 ? "eager" : "lazy"} />
-                {i === 4 && (
-                  <span className="pd-more"><AreaIcon />{listing.moreCount} More</span>
+                {i === 4 && gallery.length > 5 && (
+                  <span className="pd-more"><AreaIcon />{gallery.length - 5} More</span>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         </div>
       </div>
+
+      {/* ============ LIGHTBOX ============ */}
+      {lightbox !== null && (
+        <div className="pd-lightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" onClick={closeLightbox}>
+          <button className="pd-lb-close" onClick={closeLightbox} aria-label="Close gallery">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+          <span className="pd-lb-counter">{lightbox + 1} / {gallery.length}</span>
+
+          <button
+            className="pd-lb-nav pd-lb-prev"
+            onClick={(e) => { e.stopPropagation(); setZoom(false); step(-1); }}
+            aria-label="Previous photo"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+          </button>
+
+          <div className="pd-lb-stage" onClick={(e) => e.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className={`pd-lb-img${zoom ? " is-zoomed" : ""}`}
+              src={gallery[lightbox]}
+              alt={`${listing.address} photo ${lightbox + 1}`}
+              style={zoom ? { transformOrigin: origin } : undefined}
+              onClick={() => setZoom((z) => !z)}
+              onMouseMove={onZoomMove}
+            />
+          </div>
+
+          <button
+            className="pd-lb-nav pd-lb-next"
+            onClick={(e) => { e.stopPropagation(); setZoom(false); step(1); }}
+            aria-label="Next photo"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6" /></svg>
+          </button>
+
+          <div className="pd-lb-thumbs" onClick={(e) => e.stopPropagation()}>
+            {gallery.map((src, i) => (
+              <button
+                key={i}
+                className={`pd-lb-thumb${i === lightbox ? " is-active" : ""}`}
+                onClick={() => { setLightbox(i); setZoom(false); }}
+                aria-label={`Go to photo ${i + 1}`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ============ SUB-NAV ============ */}
       <nav className="pd-subnav" aria-label="Section navigation">
@@ -114,11 +208,11 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
 
             {/* Stats */}
             <div className="pd-stats">
-              <div className="pd-stat"><span className="pd-stat-ic"><BedIcon /></span><div><b>{listing.beds}</b><span>Beds</span></div></div>
-              <div className="pd-stat"><span className="pd-stat-ic"><BathIcon /></span><div><b>{listing.baths}</b><span>Baths</span></div></div>
-              <div className="pd-stat"><span className="pd-stat-ic"><AreaIcon /></span><div><b>{listing.sqft}</b><span>SqFt</span></div></div>
-              <div className="pd-stat"><span className="pd-stat-ic"><CalIcon /></span><div><b>{listing.built}</b><span>Built</span></div></div>
-              <div className="pd-stat"><span className="pd-stat-ic"><HomeTypeIcon /></span><div><b>{listing.type}</b><span>Type</span></div></div>
+              <div className="pd-stat"><b>{listing.beds}</b><span className="pd-stat-lbl"><BedIcon />Beds</span></div>
+              <div className="pd-stat"><b>{listing.baths}</b><span className="pd-stat-lbl"><BathIcon />Baths</span></div>
+              <div className="pd-stat"><b>{listing.sqft}</b><span className="pd-stat-lbl"><AreaIcon />Sq Ft</span></div>
+              <div className="pd-stat"><b>{listing.built}</b><span className="pd-stat-lbl"><CalIcon />Built</span></div>
+              <div className="pd-stat"><b>{listing.type}</b><span className="pd-stat-lbl"><HomeTypeIcon />Property Type</span></div>
             </div>
 
             {/* Actions */}
@@ -197,25 +291,19 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
             <div className="pd-agent-box">
               <div className="pd-agent-top">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/team/IMG-42.png" alt="Andrew Liberty" />
+                <img src="/f1955b4c-7280-45c9-87ab-f1e6103bfc65.avif" alt="Andrew Liberty" />
                 <div>
                   <b>Andrew Liberty</b>
-                  <span>Founder &amp; Lead Agent · Compass</span>
+                  <span>Founder &amp; Lead Agent</span>
                 </div>
               </div>
               <form className="cf-form pd-form" onSubmit={submit} noValidate>
-                <div className="pd-form-row">
-                  <div className="cf-field">
-                    <label htmlFor="pd-first">First Name</label>
-                    <input id="pd-first" type="text" placeholder="First name" value={form.first} onChange={(e) => set("first", e.target.value)} />
-                  </div>
-                  <div className="cf-field">
-                    <label htmlFor="pd-last">Last Name</label>
-                    <input id="pd-last" type="text" placeholder="Last name" value={form.last} onChange={(e) => set("last", e.target.value)} />
-                  </div>
+                <div className="cf-field">
+                  <label htmlFor="pd-name">Full Name <span className="pd-req">*</span></label>
+                  <input id="pd-name" type="text" placeholder="Your full name" value={form.first} onChange={(e) => set("first", e.target.value)} />
                 </div>
                 <div className="cf-field">
-                  <label htmlFor="pd-email">Email</label>
+                  <label htmlFor="pd-email">Email <span className="pd-req">*</span></label>
                   <input id="pd-email" type="email" placeholder="you@example.com" value={form.email} onChange={(e) => set("email", e.target.value)} />
                 </div>
                 <div className="cf-field">
@@ -223,12 +311,12 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
                   <input id="pd-phone" type="tel" placeholder="(555) 000-0000" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
                 </div>
                 <div className="cf-field">
-                  <label htmlFor="pd-msg">Message</label>
-                  <textarea id="pd-msg" rows={3} placeholder={`I'd like to know more about ${listing.address}.`} value={form.message} onChange={(e) => set("message", e.target.value)} />
+                  <label htmlFor="pd-msg">Message (optional)</label>
+                  <textarea id="pd-msg" rows={3} maxLength={100} placeholder="Message" value={form.message} onChange={(e) => set("message", e.target.value)} />
+                  <div className="pd-msg-count">{form.message.length}/100</div>
                 </div>
-                <button type="submit" className="btn btn-gold btn-magnetic">
+                <button type="submit" className="btn btn-primary btn-magnetic">
                   <span>Request Info</span>
-                  <ArrowRight />
                 </button>
                 <a href="tel:+13107090581" className="pd-form-alt">
                   <CallIcon />Contact Agent
@@ -243,10 +331,11 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
         <div className="pd-cta">
           <div className="pd-cta-agent">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/team/IMG-42.png" alt="Andrew Liberty" />
+            <img src="/f1955b4c-7280-45c9-87ab-f1e6103bfc65.avif" alt="Andrew Liberty" />
             <div>
               <p className="pd-cta-name">Andrew Liberty</p>
-              <p className="pd-cta-sub">Interested in {listing.address}? Let&rsquo;s talk strategy.</p>
+              <p className="pd-cta-dre">Compass · CA DRE# 01965696</p>
+              <p className="pd-cta-sub">Listed by Andrew R. Liberty with Compass · Listing contact: (310) 709-0581</p>
             </div>
           </div>
           <div className="pd-cta-btns">

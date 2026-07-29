@@ -123,7 +123,7 @@
 
 /* ---------- Real results ---------- */
 .cc-results { background: var(--paper); padding: 88px 0; text-align: center; }
-.cc-results .eyebrow { color: var(--gold-deep); }
+.cc-results .eyebrow { color: var(--gold); }
 .cc-results h2 {
   font-family: var(--font-display); font-weight: 400;
   font-size: clamp(28px, 3.8vw, 44px); color: var(--ink); margin-top: 8px;
@@ -206,7 +206,7 @@
 /* ---------- FAQ ---------- */
 .cc-faq { background: var(--paper); padding: 88px 0 72px; }
 .cc-faq-head { text-align: center; margin-bottom: 40px; }
-.cc-faq-head .eyebrow { color: var(--gold-deep); }
+.cc-faq-head .eyebrow { color: var(--gold); }
 .cc-faq-head h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(28px, 3.8vw, 44px); color: var(--ink); margin-top: 6px; }
 .cc-faq-list { max-width: 760px; margin: 0 auto; }
 .cc-faq-item { border-bottom: 1px solid var(--line); }
@@ -230,7 +230,7 @@
 /* ---------- Get in touch ---------- */
 .cc-touch { background: var(--ivory); padding: 88px 0 100px; }
 .cc-touch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 60px); align-items: start; }
-.cc-touch .eyebrow { color: var(--gold-deep); }
+.cc-touch .eyebrow { color: var(--gold); }
 .cc-touch h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 3.4vw, 38px); color: var(--ink); margin-top: 6px; }
 .cc-touch-intro { margin-top: 12px; font-size: 15px; line-height: 1.7; color: var(--ink-soft); max-width: 46ch; }
 .cc-touch-rows { margin-top: 26px; display: flex; flex-direction: column; gap: 18px; }

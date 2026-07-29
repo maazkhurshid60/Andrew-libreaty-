@@ -14,14 +14,22 @@ const HERO_GALLERY = [
   { src: "/images/sold-hollywood-hills.jpg", alt: "Hillside estate, Hollywood Hills" },
 ];
 
-type Area = { name: string; img: string; alt: string };
-const AREAS: Area[] = [
-  { name: "Studio City", img: "/images/studio-city.jpg", alt: "Studio City, Los Angeles" },
-  { name: "Laurel Canyon", img: "/images/laurel-canyon.jpg", alt: "Laurel Canyon, Los Angeles" },
-  { name: "Hollywood Hills", img: "/images/hollywood-hills.jpg", alt: "Hollywood Hills, Los Angeles" },
-  { name: "Sherman Oaks", img: "/images/sold-sherman-oaks.jpg", alt: "Sherman Oaks, Los Angeles" },
-  { name: "Valley Village", img: "/images/sold-valley-village.jpg", alt: "Valley Village, Los Angeles" },
-  { name: "Pasadena", img: "/images/hero-la-aerial.jpg", alt: "Pasadena, Los Angeles" },
+type Area = { name: string; img: string; alt: string; tall?: boolean };
+// Three columns, each with one tall + one short tile (tall-short / short-tall / tall-short)
+// so the middle column's second tile rides up — a woven masonry matching the Figma.
+const COLUMNS: Area[][] = [
+  [
+    { name: "Studio City", img: "/images/studio-city.jpg", alt: "Studio City, Los Angeles", tall: true },
+    { name: "Sherman Oaks", img: "/images/sold-sherman-oaks.jpg", alt: "Sherman Oaks, Los Angeles" },
+  ],
+  [
+    { name: "Laurel Canyon", img: "/images/laurel-canyon.jpg", alt: "Laurel Canyon, Los Angeles" },
+    { name: "Valley Village", img: "/images/sold-valley-village.jpg", alt: "Valley Village, Los Angeles", tall: true },
+  ],
+  [
+    { name: "Hollywood Hills", img: "/images/hollywood-hills.jpg", alt: "Hollywood Hills, Los Angeles", tall: true },
+    { name: "Pasadena", img: "/images/hero-la-aerial.jpg", alt: "Pasadena, Los Angeles" },
+  ],
 ];
 
 export default function NeighborhoodsPage() {
@@ -50,12 +58,21 @@ export default function NeighborhoodsPage() {
             <p className="section-sub">Insight into the areas we know best — and why they make sense.</p>
           </div>
           <div className="areas-grid">
-            {AREAS.map((a) => (
-              <a key={a.name} href="/home-search" className="area-card" aria-label={`Explore ${a.name}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={a.img} alt={a.alt} loading="lazy" />
-                <span className="area-name">{a.name}</span>
-              </a>
+            {COLUMNS.map((col, i) => (
+              <div className="areas-col" key={i}>
+                {col.map((a) => (
+                  <a
+                    key={a.name}
+                    href="/home-search"
+                    className={`area-card${a.tall ? " is-tall" : " is-short"}`}
+                    aria-label={`Explore ${a.name}`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={a.img} alt={a.alt} loading="lazy" />
+                    <span className="area-name">{a.name}</span>
+                  </a>
+                ))}
+              </div>
             ))}
           </div>
         </div>

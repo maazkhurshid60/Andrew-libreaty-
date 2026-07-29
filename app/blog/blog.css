@@ -6,7 +6,7 @@
 /* ---------- Hero ---------- */
 .bl-hero { background: var(--ivory); padding: 64px 0 40px; }
 .bl-hero-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; }
-.bl-hero .eyebrow { color: var(--gold-deep); }
+.bl-hero .eyebrow { color: var(--gold); }
 .bl-hero-title {
   font-family: var(--font-display); font-weight: 400;
   font-size: clamp(32px, 4.6vw, 54px); line-height: 1.05; color: var(--ink); margin-top: 8px;

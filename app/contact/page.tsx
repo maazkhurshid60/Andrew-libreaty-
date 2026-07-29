@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
+import PropertyMap from "../property/[slug]/PropertyMap";
 import { CallIcon, SmsIcon, LocationIcon, InstagramIcon } from "../components/vuesax";
 
 export const metadata: Metadata = {
@@ -107,11 +108,6 @@ export default function ContactPage() {
 
       {/* ============ RIGHT: MESSAGE FORM ============ */}
       <div className="contact-right">
-        <a className="contact-close" href="/" aria-label="Back to home">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <path d="M18 6 6 18M6 6l12 12" />
-          </svg>
-        </a>
         <h2 className="contact-heading">Submit a Message</h2>
         <ContactForm />
       </div>
