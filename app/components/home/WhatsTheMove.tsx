@@ -37,7 +37,7 @@ export default function WhatsTheMove() {
               offers.
             </p>
             <p className="move-proof">Positioning · pricing · negotiation, handled</p>
-            <a href="#valuation" className="btn btn-primary btn-magnetic btn-card">
+            <a href="#valuation" className="btn btn-secondary btn-card">
               <span>Get Home Value</span>
               <ArrowRight />
             </a>

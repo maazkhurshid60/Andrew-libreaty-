@@ -58,7 +58,7 @@
   transition: box-shadow 320ms var(--ease-out), transform 320ms var(--ease-out);
   will-change: transform;
 }
-.pl-card:hover { box-shadow: var(--shadow-float); transform: translateY(-3px); }
+.pl-card:hover { box-shadow: 0 16px 36px -8px rgba(23, 20, 15, 0.2); transform: translateY(-3px); }
 
 .pl-media { position: relative; aspect-ratio: 4 / 4.7; overflow: hidden; background: var(--ivory-deep); }
 .pl-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-out); }
@@ -360,7 +360,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 4px max(24px, calc((100vw - var(--container)) / 2)) 8px;
+  /* Extra top/bottom room so the hover shadow isn't clipped by overflow-x */
+  padding: 14px max(24px, calc((100vw - var(--container)) / 2)) 56px;
   scrollbar-width: none;
 }
 .pt-carousel::-webkit-scrollbar { display: none; }

@@ -668,6 +668,9 @@ ul, ol { list-style: none; }
 }
 .move-card p { font-size: 15px; color: var(--muted); flex: 1; margin-bottom: 26px; }
 .btn-card { align-self: flex-start; }
+/* All "What's the Move" buttons: normal (outline) by default, brand green on hover */
+.move-card .btn-card:hover { background: var(--brand); border-color: var(--brand); color: var(--on-dark); }
+.move-card .btn-card:hover svg { color: var(--on-dark); }
 
 /* ==========================================================================
    Meet Andrew
@@ -770,7 +773,8 @@ ul, ol { list-style: none; }
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 8px max(24px, calc((100vw - var(--container)) / 2)) 32px;
+  /* Extra top/bottom room so the hover shadow isn't clipped by overflow-x */
+  padding: 16px max(24px, calc((100vw - var(--container)) / 2)) 64px;
   cursor: grab;
   scrollbar-width: none;
 }
@@ -788,7 +792,7 @@ ul, ol { list-style: none; }
   transition: box-shadow 320ms var(--ease-out), transform 320ms var(--ease-out), opacity 320ms var(--ease-out);
   will-change: transform;
 }
-.property-card:hover { box-shadow: var(--shadow-float); }
+.property-card:hover { box-shadow: 0 16px 36px -8px rgba(23, 20, 15, 0.2); }
 .property-card.is-hidden { display: none; }
 
 .property-media { position: relative; overflow: hidden; aspect-ratio: 4 / 4.3; }
