@@ -249,18 +249,21 @@
    ========================================================================== */
 .team-hero {
   background: var(--dark); color: var(--on-dark); text-align: center;
-  padding: 22px 0 72px; position: relative;
+  /* Pure breathing room — .site-header is sticky (not fixed) on inner pages, so
+     it already occupies flow space and the title can never tuck under it.
+     The rendered font adds ~20px of leading above the caps on top of this. */
+  padding: 28px 0 72px; position: relative;
 }
 .team-hero-title {
   position: relative; z-index: 2;
   font-family: var(--font-instrument), "Instrument Serif", Georgia, serif;
   font-weight: 400; letter-spacing: 0.04em;
   font-size: clamp(40px, 5.6vw, 74px); line-height: 1.05; color: var(--gold-tint);
-  bottom: 17px;
 }
 .team-hero-gallery {
   display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
-  align-items: end; position: relative; z-index: 1; margin-top: -18px;
+  /* was -18px, which pulled the tallest centre tile up over the title */
+  align-items: end; position: relative; z-index: 1; margin-top: 30px;
 }
 /* symmetric arch — center tile tallest, stepping down to the edges (portrait) */
 .team-hero-gallery .prop-tile:nth-child(1),
@@ -270,7 +273,7 @@
 .team-hero-gallery .prop-tile:nth-child(3) { height: clamp(310px, 33vw, 460px); }
 .team-hero-sub {
   position: relative; z-index: 2;
-  margin: 30px auto 0; max-width: 56ch;
+  margin: 38px auto 0; max-width: 56ch;
   font-size: 15.5px; line-height: 1.67; color: var(--on-dark); opacity: 0.9;
 }
 

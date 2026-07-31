@@ -26,7 +26,7 @@
 }
 
 .filter-search {
-  position: relative; flex: 1 1 300px; min-width: 200px; max-width: 420px;
+  position: relative; flex: 1 1 240px; min-width: 180px; max-width: 280px;
   display: flex; align-items: center;
 }
 .filter-search svg { position: absolute; left: 16px; width: 17px; height: 17px; color: var(--muted); pointer-events: none; }
@@ -41,16 +41,16 @@
 .filter-search input::placeholder { color: #a49c8d; }
 .filter-search input:focus { outline: none; border-color: var(--gold); background: var(--paper); box-shadow: 0 0 0 4px rgba(169,131,79,0.14); }
 
-.filter-pills { display: flex; align-items: center; gap: 8px; flex: 0 1 auto; overflow-x: auto; scrollbar-width: none; }
+.filter-pills { display: flex; align-items: center; gap: 6px; flex: 0 1 auto; overflow-x: auto; scrollbar-width: none; }
 .filter-pills::-webkit-scrollbar { display: none; }
 
 .filter-pill {
-  display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
   font-size: 14px; font-weight: 500; color: var(--ink-soft);
   background: var(--ivory);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 10px 13px;
   transition: border-color var(--dur), background-color var(--dur), color var(--dur);
 }
 .filter-pill .pill-caret { width: 14px; height: 14px; transition: transform var(--dur); }
@@ -126,7 +126,9 @@
 }
 .listing-card:hover { box-shadow: var(--shadow-float); transform: translateY(-3px); }
 
-.lc-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--ivory-deep); cursor: pointer; }
+/* 378 x 300 in the design comp — kept as a ratio so the image fills whatever
+   width the card lands on and holds the intended proportion. */
+.lc-media { position: relative; aspect-ratio: 378 / 300; overflow: hidden; background: var(--ivory-deep); cursor: pointer; }
 .lc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease-out); }
 .listing-card:hover .lc-media img { transform: scale(1.05); }
 .lc-status {
@@ -153,10 +155,27 @@
 .lc-body { padding: 18px 20px 18px; display: flex; flex-direction: column; gap: 4px; }
 .lc-price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .lc-price { font-family: var(--font-display); font-weight: 500; font-size: 21px; color: var(--ink); font-variant-numeric: tabular-nums; }
-.lc-specs { font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-.lc-specs b { font-weight: 600; }
+.lc-specs {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px;
+  font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums;
+}
+.lc-spec { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.lc-spec svg { width: 15px; height: 15px; flex: none; color: var(--muted); }
+.lc-specs b { font-weight: 600; color: var(--ink); }
 .lc-addr { font-size: 14px; color: var(--muted); margin-top: 2px; }
 .lc-mls { font-size: 11.5px; letter-spacing: 0.06em; color: #a49c8d; margin-top: 6px; text-transform: uppercase; }
+
+.lc-view {
+  display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
+  margin-top: 12px; padding-top: 12px;
+  font-size: 13.5px; font-weight: 600; color: var(--ink);
+  border-top: 1px solid var(--line-soft); border-radius: 0;
+  width: 100%; justify-content: flex-start;
+  transition: color var(--dur);
+}
+.lc-view svg { width: 16px; height: 16px; transition: transform var(--dur); }
+.lc-view:hover { color: var(--gold-deep); }
+.lc-view:hover svg { transform: translateX(4px); }
 
 /* 3-dot options */
 .lc-options { position: relative; flex: none; }
@@ -411,6 +430,16 @@
 .toast.is-show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ---------- Responsive ---------- */
+
+/* The single-row bar only fits above ~1440px. Below that the pill group used to
+   be squeezed into an overflow-scroll container, clipping "All baths" and
+   colliding with the List/Map toggle — so give the pills their own full row. */
+@media (max-width: 1439px) {
+  .filter-bar { flex-wrap: wrap; }
+  .filter-search { max-width: none; }
+  .filter-pills { order: 3; flex: 1 1 100%; }
+}
+
 @media (max-width: 1080px) {
   .search-body { grid-template-columns: 1fr; }
   .map-col { display: none; position: static; height: 60vh; border-left: 0; border-top: 1px solid var(--line-soft); }

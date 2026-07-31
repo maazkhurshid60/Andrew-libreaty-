@@ -609,10 +609,26 @@ function ListingCard({
 }) {
   const specs =
     l.type === "Land" ? (
-      <span className="lc-specs">{l.lot} · Lot</span>
+      <span className="lc-specs">
+        <span className="lc-spec">
+          <LotIcon />
+          <b>{l.lot}</b> Lot
+        </span>
+      </span>
     ) : (
       <span className="lc-specs">
-        <b>{l.beds}</b> bd · <b>{l.baths}</b> ba · <b>{l.sqft?.toLocaleString()}</b> sqft
+        <span className="lc-spec">
+          <BedIcon />
+          <b>{l.beds}</b> {l.beds === 1 ? "Bed" : "Beds"}
+        </span>
+        <span className="lc-spec">
+          <BathIcon />
+          <b>{l.baths}</b> {l.baths === 1 ? "Bath" : "Baths"}
+        </span>
+        <span className="lc-spec">
+          <AreaIcon />
+          <b>{l.sqft?.toLocaleString()}</b> SqFt
+        </span>
       </span>
     );
 
@@ -662,7 +678,36 @@ function ListingCard({
         {specs}
         <p className="lc-addr">{l.addr}, {l.city} CA, {l.zip}</p>
         <p className="lc-mls">MLS®: {l.mls}</p>
+        <button className="lc-view" onClick={onCard} aria-label={`View details for ${l.addr}`}>
+          <span>View Details</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </button>
       </div>
     </article>
   );
 }
+
+/* ---- Card spec icons ---- */
+const iconProps = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.7,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+};
+const BedIcon = () => (
+  <svg {...iconProps}><path d="M3 18v-6h18v6M3 12V7M21 12v-1a3 3 0 0 0-3-3h-6v4" /><circle cx="7" cy="10" r="1.6" /><path d="M3 18v2M21 18v2" /></svg>
+);
+const BathIcon = () => (
+  <svg {...iconProps}><path d="M4 12V6a2 2 0 0 1 3.4-1.4L9 6" /><path d="M6 8h4" /><path d="M2 12h20v2a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5v-2Z" /><path d="M7 21l-1 1M17 21l1 1" /></svg>
+);
+const AreaIcon = () => (
+  <svg {...iconProps}><rect x="3" y="3" width="18" height="18" rx="1.5" /><path d="M3 9h4M3 15h4M9 3v4M15 3v4" /></svg>
+);
+const LotIcon = () => (
+  <svg {...iconProps}><path d="M3 20h18M5 20V9l7-5 7 5v11" /><path d="M10 20v-5h4v5" /></svg>
+);
