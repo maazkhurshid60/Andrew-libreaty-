@@ -47,6 +47,17 @@ export default function MeetAndrew() {
             <li>Residential · Investment · Development</li>
           </ul>
 
+          <div className="about-awards reveal" data-reveal-delay="270">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="about-award-img" src="/awards/realtrends-verified.png" alt="RealTrends Verified" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="about-award-img about-award-img--tall"
+              src="/awards/la-magazine-all-stars.png"
+              alt="Los Angeles Magazine Real Estate All-Stars"
+            />
+          </div>
+
           <div className="about-ctas reveal" data-reveal-delay="300">
             <a href="#contact" className="btn btn-primary btn-magnetic">
               <span>Schedule a Consultation</span>

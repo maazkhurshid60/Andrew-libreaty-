@@ -115,6 +115,21 @@ export default function AndrewLibertyPage() {
                 ))}
               </div>
             </article>
+
+            <article className="ag-card ag-card--wide">
+              <span className="ag-card-ic"><StarIcon /></span>
+              <p className="ag-card-label">Recognition</p>
+              <div className="ag-awards">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="ag-award-img" src="/awards/realtrends-verified.png" alt="RealTrends Verified" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="ag-award-img ag-award-img--tall"
+                  src="/awards/la-magazine-all-stars.png"
+                  alt="Los Angeles Magazine Real Estate All-Stars"
+                />
+              </div>
+            </article>
           </div>
         </div>
       </section>

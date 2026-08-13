@@ -151,6 +151,10 @@
   padding: 26px 28px;
   box-shadow: var(--shadow-soft);
 }
+.ag-card--wide { grid-column: 1 / -1; }
+.ag-awards { display: flex; flex-wrap: wrap; align-items: center; gap: 32px; margin-top: 6px; }
+.ag-award-img { height: 32px; width: auto; }
+.ag-award-img--tall { height: 48px; }
 .ag-card-ic {
   width: 40px; height: 40px;
   border-radius: 11px;

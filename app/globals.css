@@ -737,6 +737,10 @@ ul, ol { list-style: none; }
 }
 .credential-chips li:hover { border-color: var(--gold); background: var(--gold-tint); }
 
+.about-awards { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 28px; }
+.about-award-img { height: 28px; width: auto; }
+.about-award-img--tall { height: 42px; }
+
 .about-ctas { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
 
 /* ==========================================================================
