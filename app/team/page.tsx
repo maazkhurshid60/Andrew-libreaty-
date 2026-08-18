@@ -61,6 +61,7 @@ export default function TeamPage() {
       <section className="prop-section">
         <div className="container">
           <div className="section-head reveal">
+            
             <p className="eyebrow">The People Behind the Service</p>
             <h2 className="section-title">Andrew Liberty Team</h2>
           </div>
