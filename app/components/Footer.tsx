@@ -126,7 +126,7 @@ export default function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <p>© 2026 Andrew Liberty Team. All rights reserved.</p>
+        <p>© 2026 Andrew Liberty Team. All rights reserved. · Site by EM Creative Studio</p>
         <div className="footer-legal">
           <a href="#" className="footer-link">
             Privacy Policy

@@ -6,6 +6,7 @@ import Process from "./components/home/Process";
 import Neighborhoods from "./components/home/Neighborhoods";
 import Valuation from "./components/home/Valuation";
 import Testimonials from "./components/home/Testimonials";
+import OfficeMap from "./components/home/OfficeMap";
 import Newsletter from "./components/home/Newsletter";
 import FinalCta from "./components/home/FinalCta";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Neighborhoods />
       <Valuation />
       <Testimonials />
+      <OfficeMap />
       <Newsletter />
       <FinalCta />
     </>
