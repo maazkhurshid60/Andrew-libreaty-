@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { ArrowRight, PhoneIcon } from "./icons";
+import { ArrowRight } from "./icons";
+import { WhatsappIcon } from "./vuesax";
 
 const NAV_LINKS = [
   { href: "/property", label: "Properties" },
@@ -111,8 +112,8 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
-            <a href="tel:+13107090581" className="header-phone" aria-label="Call us at (310) 709-0581">
-              <PhoneIcon />
+            <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" className="header-phone" aria-label="Message us on WhatsApp at (310) 709-0581">
+              <WhatsappIcon />
               <span>(310) 709-0581</span>
             </a>
             <a href="/contact" className="btn btn-primary btn-magnetic header-cta">

@@ -43,6 +43,9 @@ export const metadata: Metadata = {
   title: "Andrew Liberty Team — Strategic Real Estate in Los Angeles",
   description:
     "Good moves aren't accidental. Strategic real estate guidance for buyers, sellers, and investors across Los Angeles. Andrew Liberty Team, Compass.",
+  verification: {
+    google: "koQHdUxBYmda27d2oTyeUG2n4_wCoCQJEI4DRTvipWg",
+  },
 };
 
 export default function RootLayout({

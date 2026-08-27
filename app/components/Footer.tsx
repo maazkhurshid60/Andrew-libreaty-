@@ -1,3 +1,13 @@
+import { FacebookIcon, InstagramIcon, LinkedInIcon, CompassIcon, StarIcon } from "./vuesax";
+
+const SOCIALS = [
+  { label: "Instagram", href: "https://www.instagram.com/iamandrewliberty?igsi=cnZ3c3g4dmxsdWdu", Icon: InstagramIcon },
+  { label: "Facebook", href: "https://www.facebook.com/andrew.liberty.90?mibextid=wwXIfr", Icon: FacebookIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/andrew-liberty-55aa612a?utm_source=share_via&utm_content=profile&utm_medium=member_ios", Icon: LinkedInIcon },
+  { label: "Compass agent profile", href: "https://www.compass.com/agents/andrew-liberty/", Icon: CompassIcon },
+  { label: "Google Reviews", href: "https://share.google/sbU7WzKUX9hpNJfOj", Icon: StarIcon },
+];
+
 export default function Footer() {
   return (
     <footer className="site-footer" id="contact">
@@ -17,31 +27,11 @@ export default function Footer() {
             Strategic real estate guidance for Los Angeles buyers, sellers, and investors.
           </p>
           <div className="footer-social" aria-label="Social links">
-            <a href="#" className="social-link" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
-            <a href="#" className="social-link" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v2a5 5 0 0 1 2-2z" />
-                <rect x="2" y="9" width="4" height="12" />
-                <circle cx="4" cy="4" r="2" />
-              </svg>
-            </a>
-            <a href="#" className="social-link" aria-label="Facebook">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-              </svg>
-            </a>
-            <a href="#" className="social-link" aria-label="YouTube">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-                <path d="m9.75 15.02 5.75-3.27-5.75-3.27v6.54z" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="social-link" aria-label={label}>
+                <Icon />
+              </a>
+            ))}
           </div>
         </div>
 
@@ -54,7 +44,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="tel:+13107090581" className="footer-link">
+              <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" className="footer-link">
                 (310) 709-0581
               </a>
             </li>
@@ -93,7 +83,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="footer-link">
+              <a href="/blog" className="footer-link">
                 Blog
               </a>
             </li>

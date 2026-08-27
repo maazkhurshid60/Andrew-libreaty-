@@ -217,20 +217,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </div>
           <div className="bl-grid">
             {related.map((p) => (
-              <article className="bl-card" key={p.slug}>
-                <a className="bl-card-media" href={`/blog/${p.slug}`} aria-label={p.title}>
+              <a className="bl-card" key={p.slug} href={`/blog/${p.slug}`} aria-label={p.title}>
+                <div className="bl-card-media">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.img} alt={p.title} loading="lazy" />
-                </a>
+                  <img src={p.img} alt="" loading="lazy" />
+                </div>
                 <div className="bl-card-body">
                   <div className="bl-card-top">
                     <span className="bl-cat">{p.category}</span>
                     <span className="bl-dot" />
                     <span className="bl-card-date">{p.date}</span>
                   </div>
-                  <h3 className="bl-card-title">
-                    <a href={`/blog/${p.slug}`}>{p.title}</a>
-                  </h3>
+                  <h3 className="bl-card-title">{p.title}</h3>
                   <p className="bl-card-excerpt">{p.excerpt}</p>
                   <div className="bl-card-foot">
                     <span className="bl-readmeta">
@@ -239,7 +237,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     </span>
                   </div>
                 </div>
-              </article>
+              </a>
             ))}
           </div>
         </div>

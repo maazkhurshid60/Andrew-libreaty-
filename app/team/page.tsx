@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ArrowRight } from "../components/icons";
 import Testimonials from "../components/home/Testimonials";
 import PastTransactions from "./PastTransactions";
-import { CallIcon, SmsIcon } from "../components/vuesax";
+import { SmsIcon, WhatsappIcon } from "../components/vuesax";
 
 export const metadata: Metadata = {
   title: "Meet the Team — Andrew Liberty Team | Los Angeles Real Estate",
@@ -102,8 +102,8 @@ export default function TeamPage() {
                     <a href="mailto:andrew.liberty@compass.com" aria-label={`Email ${m.name}`}>
                       <SmsIcon />
                     </a>
-                    <a href="tel:+13107090581" aria-label={`Call ${m.name}`}>
-                      <CallIcon />
+                    <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" aria-label={`Message ${m.name} on WhatsApp`}>
+                      <WhatsappIcon />
                     </a>
                   </div>
                 </div>

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import type { SVGProps } from "react";
 import { ArrowRight } from "../../components/icons";
 import {
-  CallIcon, SmsIcon, LocationIcon, StarIcon, ShieldTickIcon, ShareIcon,
-  FacebookIcon, InstagramIcon, WhatsappIcon,
+  SmsIcon, LocationIcon, StarIcon, ShieldTickIcon, ShareIcon,
+  FacebookIcon, InstagramIcon, WhatsappIcon, LinkedInIcon, CompassIcon,
 } from "../../components/vuesax";
 
 export const metadata: Metadata = {
@@ -12,21 +11,14 @@ export const metadata: Metadata = {
     "Andrew Liberty is a Los Angeles based REALTOR® and certified Real Estate Negotiation Expert, blending strategy and real-world experience to help clients move forward with clarity.",
 };
 
-/* Twitter (X) and LinkedIn have no supplied asset — kept as inline glyphs */
-const SocX = (p: SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-6.6L6 22H3l7.5-8.6L2.5 2h6.6l4.5 6L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z" /></svg>
-);
-const SocLinkedIn = (p: SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...p}><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.8V21H9z" /></svg>
-);
-
 const SPECIALTIES = ["Luxury Residential", "Historic Estates", "Relocation"];
 const SOCIALS = [
-  { label: "Facebook", href: "#", Icon: FacebookIcon },
-  { label: "Twitter", href: "#", Icon: SocX },
-  { label: "WhatsApp", href: "#", Icon: WhatsappIcon },
-  { label: "Instagram", href: "#", Icon: InstagramIcon },
-  { label: "LinkedIn", href: "#", Icon: SocLinkedIn },
+  { label: "Facebook", href: "https://www.facebook.com/andrew.liberty.90?mibextid=wwXIfr", Icon: FacebookIcon },
+  { label: "WhatsApp", href: "https://wa.me/13107090581", Icon: WhatsappIcon },
+  { label: "Instagram", href: "https://www.instagram.com/iamandrewliberty?igsi=cnZ3c3g4dmxsdWdu", Icon: InstagramIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/andrew-liberty-55aa612a?utm_source=share_via&utm_content=profile&utm_medium=member_ios", Icon: LinkedInIcon },
+  { label: "Compass agent profile", href: "https://www.compass.com/agents/andrew-liberty/", Icon: CompassIcon },
+  { label: "Google Reviews", href: "https://share.google/sbU7WzKUX9hpNJfOj", Icon: StarIcon },
 ];
 
 export default function AndrewLibertyPage() {
@@ -49,7 +41,7 @@ export default function AndrewLibertyPage() {
               whether that&rsquo;s a single-family home, an income property, or a development play.
             </p>
             <div className="ag-hero-ctas">
-              <a href="tel:+13107090581" className="btn btn-gold btn-magnetic">
+              <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" className="btn btn-gold btn-magnetic">
                 <span>Schedule a Call</span>
                 <ArrowRight />
               </a>
@@ -69,8 +61,8 @@ export default function AndrewLibertyPage() {
             <h2 className="ag-touch-name">Andrew Liberty</h2>
             <p className="ag-touch-sub">Founder &amp; Lead Agent — DRE# 01965696 · Compass</p>
             <div className="ag-touch-actions">
-              <a href="tel:+13107090581" className="ag-pill ag-pill-solid">
-                <CallIcon />
+              <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" className="ag-pill ag-pill-solid">
+                <WhatsappIcon />
                 <span>(310) 709-0581</span>
               </a>
               <a href="mailto:andrew.liberty@compass.com" className="ag-pill ag-pill-ghost">
@@ -108,7 +100,7 @@ export default function AndrewLibertyPage() {
               <p className="ag-card-label">Connect</p>
               <div className="ag-socials">
                 {SOCIALS.map(({ label, href, Icon }) => (
-                  <a className="ag-social" key={label} href={href} aria-label={label}>
+                  <a className="ag-social" key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
                     <Icon />
                     <span>{label}</span>
                   </a>

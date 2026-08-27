@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 import ContactForm from "./ContactForm";
 import PropertyMap from "../property/[slug]/PropertyMap";
-import { CallIcon, SmsIcon, LocationIcon, InstagramIcon } from "../components/vuesax";
+import {
+  SmsIcon, LocationIcon, InstagramIcon, FacebookIcon, LinkedInIcon, CompassIcon, StarIcon, WhatsappIcon,
+} from "../components/vuesax";
+
+const SOCIALS = [
+  { label: "Instagram", href: "https://www.instagram.com/iamandrewliberty?igsi=cnZ3c3g4dmxsdWdu", Icon: InstagramIcon },
+  { label: "Facebook", href: "https://www.facebook.com/andrew.liberty.90?mibextid=wwXIfr", Icon: FacebookIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/andrew-liberty-55aa612a?utm_source=share_via&utm_content=profile&utm_medium=member_ios", Icon: LinkedInIcon },
+  { label: "Compass agent profile", href: "https://www.compass.com/agents/andrew-liberty/", Icon: CompassIcon },
+  { label: "Google Reviews", href: "https://share.google/sbU7WzKUX9hpNJfOj", Icon: StarIcon },
+];
 
 export const metadata: Metadata = {
   title: "Contact — Andrew Liberty Team | Los Angeles Real Estate",
@@ -21,12 +31,12 @@ export default function ContactPage() {
         <div className="contact-list">
           <div className="contact-item">
             <span className="contact-item-ic">
-              <CallIcon />
+              <WhatsappIcon />
             </span>
             <div>
               <p className="contact-item-label">Phone</p>
               <p className="contact-item-val">
-                <a href="tel:+13107090581">(310) 709-0581</a>
+                <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer">(310) 709-0581</a>
               </p>
             </div>
           </div>
@@ -82,28 +92,11 @@ export default function ContactPage() {
         </p>
 
         <div className="contact-social" aria-label="Social links">
-          <a href="#" className="social-link" aria-label="Instagram">
-            <InstagramIcon />
-          </a>
-          <a href="#" className="social-link" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v2a5 5 0 0 1 2-2z" />
-              <rect x="2" y="9" width="4" height="12" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          </a>
-          <a href="#" className="social-link" aria-label="YouTube">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-              <path d="m9.75 15.02 5.75-3.27-5.75-3.27v6.54z" fill="currentColor" stroke="none" />
-            </svg>
-          </a>
-          <a href="#" className="social-link" aria-label="Compass">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" />
-              <path d="m16 8-2 6-6 2 2-6 6-2z" />
-            </svg>
-          </a>
+          {SOCIALS.map(({ label, href, Icon }) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="social-link" aria-label={label}>
+              <Icon />
+            </a>
+          ))}
         </div>
       </div>
 

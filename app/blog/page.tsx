@@ -41,33 +41,31 @@ export default function BlogPage() {
       {/* ============ FEATURED ============ */}
       <section className="bl-featured">
         <div className="container">
-          <div className="bl-featured-card">
-            <a className="bl-featured-media" href={`/blog/${FEATURED.slug}`} aria-label={FEATURED.title}>
+          <a className="bl-featured-card" href={`/blog/${FEATURED.slug}`} aria-label={FEATURED.title}>
+            <div className="bl-featured-media">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={FEATURED.img} alt={FEATURED.title} loading="eager" />
-            </a>
+              <img src={FEATURED.img} alt="" loading="eager" />
+            </div>
             <div className="bl-featured-body">
               <div className="bl-featured-cat">
                 <span className="bl-cat">{FEATURED.category}</span>
                 <span className="bl-dot" />
                 <span className="date">{FEATURED.date}</span>
               </div>
-              <h2 className="bl-featured-title">
-                <a href={`/blog/${FEATURED.slug}`}>{FEATURED.title}</a>
-              </h2>
+              <h2 className="bl-featured-title">{FEATURED.title}</h2>
               <p className="bl-featured-excerpt">{FEATURED.excerpt}</p>
               <div className="bl-featured-foot">
                 <span className="bl-readmeta">
                   <ClockIcon />
                   {FEATURED.read}
                 </span>
-                <a href={`/blog/${FEATURED.slug}`} className="bl-readmore">
+                <span className="bl-readmore">
                   Read Article
                   <ArrowRight />
-                </a>
+                </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </section>
 
