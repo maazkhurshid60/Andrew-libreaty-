@@ -1,19 +1,9 @@
 import type { Metadata } from "next";
-import ComingSoon from "../../components/ComingSoon";
+import PropertyDetailClient from "./PropertyDetailClient";
 
 export const metadata: Metadata = { title: "Listing — Andrew Liberty Team" };
 
-export default function PropertyDetailPage() {
-  return (
-    <div className="pd-page">
-      <div className="container">
-        <ComingSoon
-          title="This Listing Is On The Way"
-          body="Full details, photos, and pricing for this property are being prepared. Reach out and we'll send everything over the moment it's live."
-          ctaLabel="Browse Active Listings"
-          ctaHref="/home-search"
-        />
-      </div>
-    </div>
-  );
+export default async function PropertyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  return <PropertyDetailClient slug={slug} />;
 }

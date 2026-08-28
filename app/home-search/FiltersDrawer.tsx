@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { countFor, DEFAULT_STATE, type SearchState } from "./listings";
+import { countFor, DEFAULT_STATE, type SearchState, type Listing } from "./listings";
 
 const Caret = () => (
   <svg className="acc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -22,9 +22,7 @@ const TYPE_CHIPS = [
 ];
 const STATUS_CHIPS = [
   { val: "Active", label: "Active" },
-  { val: "Coming Soon", label: "Coming soon" },
   { val: "Pending", label: "Pending" },
-  { val: "Active Under Contract", label: "Active under contract" },
   { val: "Sold", label: "Sold" },
 ];
 const TOUR_CHIPS = [
@@ -125,6 +123,7 @@ function seed(state: SearchState): Draft {
 export default function FiltersDrawer({
   open,
   state,
+  listings,
   onApply,
   onReset,
   onClose,
@@ -132,6 +131,7 @@ export default function FiltersDrawer({
 }: {
   open: boolean;
   state: SearchState;
+  listings: Listing[];
   onApply: (next: Partial<SearchState>) => void;
   onReset: () => void;
   onClose: () => void;
@@ -143,6 +143,7 @@ export default function FiltersDrawer({
   // Re-seed the draft from committed state each time the drawer opens.
   useEffect(() => {
     if (open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- re-seeds the drawer's draft state when it opens, not a sync-on-mount read
       setDraft(seed(state));
       setFilterQ("");
     }
@@ -155,7 +156,7 @@ export default function FiltersDrawer({
 
   const count = useMemo(
     () =>
-      countFor({
+      countFor(listings, {
         status: draft.status,
         types: draft.types,
         priceMin: draft.priceMin ? +draft.priceMin : null,
@@ -165,7 +166,7 @@ export default function FiltersDrawer({
         sqft: draft.sqftMin ? +draft.sqftMin : 0,
         q: draft.keywords.trim() || draft.mls.trim(),
       }),
-    [draft]
+    [draft, listings]
   );
 
   const apply = () => {

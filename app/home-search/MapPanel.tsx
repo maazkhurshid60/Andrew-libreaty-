@@ -103,7 +103,7 @@ export default function MapPanel({
     items.forEach((l) => {
       const icon = leaflet.divIcon({
         className: "lm-pin-wrap",
-        html: `<span class="lm-pin${l.status === "Coming Soon" ? " is-coming" : ""}">${abbr(l.price)}</span>`,
+        html: `<span class="lm-pin${l.status !== "Active" ? " is-coming" : ""}">${abbr(l.price)}</span>`,
         iconSize: [0, 0],
         iconAnchor: [0, 0],
       });

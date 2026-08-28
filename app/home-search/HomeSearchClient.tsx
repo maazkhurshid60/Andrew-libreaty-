@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  LISTINGS,
-  TOTAL_RESULTS,
   DEFAULT_STATE,
   applyState,
   activeFilterCount,
@@ -15,6 +13,9 @@ import {
 } from "./listings";
 import FiltersDrawer from "./FiltersDrawer";
 import MapPanel from "./MapPanel";
+import SaveSearchButton from "./SaveSearchButton";
+import { useIdxListings } from "@/hooks/useIdxListings";
+import { toListing } from "@/lib/idx";
 
 /** Thumbnail that falls back to the branded placeholder — also catches images
  *  that already failed before React hydrated (MLS hotlink blocks). */
@@ -38,7 +39,6 @@ function Thumb({ src, alt }: { src: string; alt: string }) {
 type PopKey = "status" | "price" | "type" | "beds" | "baths";
 const STATUS_OPTS = [
   { val: "Active", label: "Active / For sale" },
-  { val: "Coming Soon", label: "Coming soon" },
   { val: "Pending", label: "Pending" },
   { val: "Sold", label: "Sold" },
 ];
@@ -72,9 +72,17 @@ export default function HomeSearchClient() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  /* ---------- Live IDX listings ---------- */
+  const { data: rawListings, loading } = useIdxListings();
+  const listings = useMemo(
+    () => (rawListings ?? []).map((raw, i) => toListing(raw, i)),
+    [rawListings]
+  );
+
   /* ---------- Saved listings persisted to localStorage ---------- */
   useEffect(() => {
     try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage, unavailable during SSR
       setSaved(new Set(JSON.parse(localStorage.getItem("alt-saved") || "[]")));
     } catch {
       /* ignore */
@@ -89,7 +97,7 @@ export default function HomeSearchClient() {
   }, []);
 
   /* ---------- Derived results ---------- */
-  const results = useMemo(() => applyState(state), [state]);
+  const results = useMemo(() => applyState(listings, state), [listings, state]);
   const visibleResults = useMemo(() => results.filter((l) => !hidden.has(l.id)), [results, hidden]);
   const filterCount = activeFilterCount(state);
   const isFiltered = filterCount > 0 || !!state.q;
@@ -174,10 +182,8 @@ export default function HomeSearchClient() {
   };
   const openDetails = (l: Listing) => {
     setMenuOpen(null);
-    // Individual MLS detail pages come from the IDX feed in production; for now
-    // every card opens the built demo detail page.
-    void l;
-    window.location.href = "/property/735-n-stanley-ave";
+    // eslint-disable-next-line react-hooks/immutability -- full navigation, not a render-owned value
+    window.location.href = `/property/${l.slug}`;
   };
   const menuAction = (act: string, l: Listing) => {
     setMenuOpen(null);
@@ -248,16 +254,14 @@ export default function HomeSearchClient() {
       : state.types.length + " types"
     : "All property types";
   const isSet = {
-    status: state.status.length !== 2,
+    status: state.status.length !== 3,
     price: state.priceMin != null || state.priceMax != null,
     type: state.types.length > 0,
     beds: state.beds > 0,
     baths: state.baths > 0,
   };
 
-  const resultCountText = isFiltered
-    ? visibleResults.length.toLocaleString()
-    : TOTAL_RESULTS.toLocaleString();
+  const resultCountText = (isFiltered ? visibleResults.length : listings.length).toLocaleString();
 
   return (
     <div className="page-search">
@@ -297,10 +301,18 @@ export default function HomeSearchClient() {
               <span>All filters</span>
               {filterCount > 0 && <span className="filter-count">{filterCount}</span>}
             </button>
-            <button className="btn btn-primary btn-magnetic" onClick={() => toast("Search saved — you'll get new matches by email")}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /></svg>
-              <span>Save search</span>
-            </button>
+            <SaveSearchButton
+              searchName={`${state.status.join("/")}${state.beds ? `, ${state.beds}+ beds` : ""}${searchValue ? `, "${searchValue}"` : ""}`}
+              criteria={{
+                status: state.status.join(","),
+                q: state.q,
+                priceMin: String(state.priceMin ?? ""),
+                priceMax: String(state.priceMax ?? ""),
+                beds: String(state.beds || ""),
+                baths: String(state.baths || ""),
+                types: state.types.join(","),
+              }}
+            />
           </div>
         </div>
 
@@ -327,7 +339,11 @@ export default function HomeSearchClient() {
               </label>
             </div>
 
-            {visibleResults.length ? (
+            {loading ? (
+              <div className="empty-state" style={{ padding: "48px 0" }}>
+                <p style={{ color: "var(--muted)" }}>Loading listings…</p>
+              </div>
+            ) : visibleResults.length ? (
               <div className="listing-grid" aria-live="polite">
                 {visibleResults.map((l) => (
                   <ListingCard
@@ -353,21 +369,9 @@ export default function HomeSearchClient() {
               </div>
             )}
 
-            <nav className="pagination" aria-label="Listing pages">
-              <button className="page-btn is-active" aria-current="page">1</button>
-              <button className="page-btn">2</button>
-              <button className="page-btn">3</button>
-              <span className="page-ellipsis">…</span>
-              <button className="page-btn">37</button>
-              <button className="page-btn page-next">
-                Next
-                <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              </button>
-            </nav>
-
             <p className="idx-disclaimer">
-              Based on information from The MLS™ / Combined LA/Westside Multiple Listing Service, Inc. Data last updated
-              7/19/2026. IDX information is provided exclusively for consumers&rsquo; personal, non-commercial use, and may
+              Based on information from The MLS™ / Combined LA/Westside Multiple Listing Service, Inc.
+              IDX information is provided exclusively for consumers&rsquo; personal, non-commercial use, and may
               not be used for any purpose other than to identify prospective properties consumers may be interested in
               purchasing. All information is deemed reliable but not guaranteed and should be independently reviewed and
               verified. Property locations displayed on any map are best approximations only. All properties are subject to
@@ -394,8 +398,7 @@ export default function HomeSearchClient() {
                 </div>
               </div>
               <p className="map-note">
-                Interactive map connects to your MLS/IDX map provider in production. Pins show list prices for the current
-                results.
+                Pins show list prices for the current results, sourced live from the MLS/IDX feed.
               </p>
             </div>
           </aside>
@@ -404,7 +407,7 @@ export default function HomeSearchClient() {
 
       {/* ============ POPOVERS ============ */}
       {openPop?.key === "status" && (
-        <Popover left={openPop.left} top={openPop.top} title="Status" onApply={() => setOpenPop(null)} onClear={() => patch({ status: ["Active", "Coming Soon"] })} applyLabel="Done">
+        <Popover left={openPop.left} top={openPop.top} title="Status" onApply={() => setOpenPop(null)} onClear={() => patch({ status: ["Active", "Sold", "Pending"] })} applyLabel="Done">
           <div className="opt-list">
             {STATUS_OPTS.map((o) => (
               <label className="opt-check" key={o.val}>
@@ -495,6 +498,7 @@ export default function HomeSearchClient() {
       <FiltersDrawer
         open={drawerOpen}
         state={state}
+        listings={listings}
         onApply={(next) => { patch(next); if (next.q != null) setSearchValue(next.q); }}
         onReset={resetAll}
         onClose={() => setDrawerOpen(false)}
@@ -635,9 +639,8 @@ function ListingCard({
   return (
     <article className="listing-card">
       <div className="lc-media" onClick={onCard}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <Thumb src={l.img} alt={`${l.addr}, ${l.city}`} />
-        <span className={`lc-status${l.status === "Coming Soon" ? " is-coming" : ""}`}>{l.status}</span>
+        <span className={`lc-status${l.status !== "Active" ? " is-coming" : ""}`}>{l.status}</span>
         <div className="lc-quick">
           <button
             className={`lc-icon-btn lc-save${saved ? " is-saved" : ""}`}

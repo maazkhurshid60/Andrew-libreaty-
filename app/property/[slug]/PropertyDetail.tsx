@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { ArrowRight } from "../../components/icons";
-import { CallIcon, SmsIcon, ShareIcon } from "../../components/vuesax";
+import { SmsIcon, ShareIcon, WhatsappIcon } from "../../components/vuesax";
 import PropertyMap from "./PropertyMap";
+import { createLead } from "@/lib/idx";
 import type { Listing } from "./data";
 
 /* ---------- Inline icons ---------- */
@@ -86,14 +87,26 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
     }
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.first.trim() || !form.email.trim()) {
       setStatus("Please add your name and email.");
       return;
     }
-    setStatus(`Thanks, ${form.first.trim()} — Andrew will reach out about ${listing.address} shortly.`);
-    setForm({ first: "", last: "", email: "", phone: "", message: "" });
+    const [firstName, ...rest] = form.first.trim().split(" ");
+    try {
+      await createLead({
+        firstName,
+        lastName: rest.join(" ") || form.last.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        comments: `${form.message.trim()} (Re: ${listing.address}, ${listing.city})`.trim(),
+      });
+      setStatus(`Thanks, ${form.first.trim()} — Andrew will reach out about ${listing.address} shortly.`);
+      setForm({ first: "", last: "", email: "", phone: "", message: "" });
+    } catch {
+      setStatus("Something went wrong sending your request — please try again or call directly.");
+    }
   };
 
   const rows = listing.features[tab];
@@ -318,8 +331,8 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
                 <button type="submit" className="btn btn-primary btn-magnetic">
                   <span>Request Info</span>
                 </button>
-                <a href="tel:+13107090581" className="pd-form-alt">
-                  <CallIcon />Contact Agent
+                <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" className="pd-form-alt">
+                  <WhatsappIcon />Contact Agent
                 </a>
                 <p className="pd-form-status" role="status" aria-live="polite">{status}</p>
               </form>

@@ -1,4 +1,8 @@
-import ComingSoon from "../ComingSoon";
+"use client";
+
+import { useIdxListings } from "@/hooks/useIdxListings";
+import { toPropertyItem } from "@/lib/idx";
+import PropertyCard from "../../property/PropertyCard";
 
 export default function RecentlySold({
   title = "Recently Sold",
@@ -7,6 +11,12 @@ export default function RecentlySold({
   title?: string;
   subtitle?: string;
 } = {}) {
+  const { data, loading } = useIdxListings();
+  const sold = (data ?? [])
+    .map(toPropertyItem)
+    .filter((p) => p.badge === "Sold")
+    .slice(0, 6);
+
   return (
     <section className="section section-sold" id="sold">
       <div className="container">
@@ -14,13 +24,18 @@ export default function RecentlySold({
           <h2 className="section-title">{title}</h2>
           {subtitle && <p className="section-sub">{subtitle}</p>}
         </div>
-        <ComingSoon
-          heading="h2"
-          title="Recently Sold Is Coming Soon"
-          body="We're connecting our live transaction feed. Check back shortly to see recent sales across Los Angeles."
-          ctaLabel="Contact Us"
-          ctaHref="/contact"
-        />
+
+        {loading ? (
+          <p style={{ textAlign: "center", color: "var(--muted)" }}>Loading…</p>
+        ) : sold.length === 0 ? (
+          <p style={{ textAlign: "center", color: "var(--muted)" }}>No sold listings to show yet.</p>
+        ) : (
+          <div className="prop-grid">
+            {sold.map((p) => (
+              <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,6 +1,16 @@
-import ComingSoon from "../components/ComingSoon";
+"use client";
+
+import { useIdxListings } from "@/hooks/useIdxListings";
+import { toPropertyItem } from "@/lib/idx";
+import PropertyCard from "../property/PropertyCard";
 
 export default function PastTransactions() {
+  const { data, loading } = useIdxListings();
+  const sold = (data ?? [])
+    .map(toPropertyItem)
+    .filter((p) => p.badge === "Sold")
+    .slice(0, 8);
+
   return (
     <section className="pt-section">
       <div className="container">
@@ -12,13 +22,18 @@ export default function PastTransactions() {
             </p>
           </div>
         </div>
-        <ComingSoon
-          heading="h2"
-          title="Past Transactions Are Coming Soon"
-          body="We're connecting our live transaction feed. Check back shortly to see deals we've closed across Los Angeles."
-          ctaLabel="Contact Us"
-          ctaHref="/contact"
-        />
+
+        {loading ? (
+          <p style={{ textAlign: "center", color: "var(--muted)" }}>Loading…</p>
+        ) : sold.length === 0 ? (
+          <p style={{ textAlign: "center", color: "var(--muted)" }}>No sold listings to show yet.</p>
+        ) : (
+          <div className="prop-grid">
+            {sold.map((p) => (
+              <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

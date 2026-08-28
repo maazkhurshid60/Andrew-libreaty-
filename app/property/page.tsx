@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight } from "../components/icons";
-import ComingSoon from "../components/ComingSoon";
+import PropertyListingsSection from "./PropertyListingsSection";
 
 export const metadata: Metadata = {
   title: "Properties — Andrew Liberty Team | Los Angeles Real Estate",
@@ -32,18 +32,7 @@ export default function PropertiesPage() {
         </div>
       </section>
 
-      {/* ============ LISTINGS ============ */}
-      <section className="prop-section">
-        <div className="container">
-          <ComingSoon
-            heading="h2"
-            title="Listings Are Coming Soon"
-            body="Featured listings and past transactions are being connected to our live MLS/IDX feed. Check back shortly, or reach out and we'll walk you through what's available now."
-            ctaLabel="Contact Us"
-            ctaHref="/contact"
-          />
-        </div>
-      </section>
+      <PropertyListingsSection />
 
       {/* ============ START YOUR SEARCH ============ */}
       <section className="prop-searchband-wrap">

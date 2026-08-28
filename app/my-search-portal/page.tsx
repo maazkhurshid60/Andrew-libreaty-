@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ComingSoon from "../components/ComingSoon";
+import PortalClient from "./PortalClient";
 
 export const metadata: Metadata = {
   title: "My Search Portal — Andrew Liberty Team | Los Angeles Real Estate",
@@ -10,14 +10,7 @@ export const metadata: Metadata = {
 export default function SearchPortalPage() {
   return (
     <div className="mp-page">
-      <div className="container">
-        <ComingSoon
-          title="Search Portal Is Coming Soon"
-          body="Saving favorite properties, storing custom searches, and getting notified about new matches will be available once our live listings feed is connected."
-          ctaLabel="Contact Us"
-          ctaHref="/contact"
-        />
-      </div>
+      <PortalClient />
     </div>
   );
 }
