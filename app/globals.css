@@ -270,7 +270,7 @@ ul, ol { list-style: none; }
 
 .wordmark { display: flex; flex-direction: row; align-items: center; gap: 13px; line-height: 1; }
 .wordmark-logo { width: 34px; height: auto; flex: none; display: block; }
-.wordmark-text { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
+.wordmark-text { display: flex; align-items: center; gap: 9px; margin-top: 9px; }
 .wordmark-word { height: 19px; width: auto; display: block; }
 
 /* Footer keeps the original stacked wordmark treatment */
