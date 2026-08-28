@@ -196,7 +196,7 @@ export default function HomeValuationPage() {
               <span>Unlock Your Free Valuation</span>
               <ArrowRight />
             </a>
-            <a href="/#contact" className="btn btn-secondary">
+            <a href="/contact" className="btn btn-secondary">
               Schedule a Consultation
             </a>
           </div>

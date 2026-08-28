@@ -365,7 +365,7 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
           </div>
           <div className="pd-cta-btns">
             <a href="/contact" className="btn btn-gold btn-magnetic"><span>Selling Consultation</span><ArrowRight /></a>
-            <a href="mailto:andrew.liberty@compass.com" className="btn btn-outline"><SmsIcon /><span>Contact Agent</span></a>
+            <a href="/contact" className="btn btn-outline"><SmsIcon /><span>Contact Agent</span></a>
           </div>
         </div>
       </div>

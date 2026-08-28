@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight } from "../components/icons";
-import { CallIcon, SmsIcon, LocationIcon } from "../components/vuesax";
+import { SmsIcon, LocationIcon, WhatsappIcon } from "../components/vuesax";
 import ConciergeForm from "./ConciergeForm";
 
 export const metadata: Metadata = {
@@ -315,17 +315,21 @@ export default function ConciergePage() {
             </p>
             <div className="cc-touch-rows">
               <div className="cc-touch-row">
-                <span className="cc-touch-row-ic"><CallIcon /></span>
+                <span className="cc-touch-row-ic"><WhatsappIcon /></span>
                 <div>
                   <p className="cc-touch-row-label">Phone</p>
-                  <p className="cc-touch-row-val">(310) 709-0581</p>
+                  <p className="cc-touch-row-val">
+                    <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer">(310) 709-0581</a>
+                  </p>
                 </div>
               </div>
               <div className="cc-touch-row">
                 <span className="cc-touch-row-ic"><SmsIcon /></span>
                 <div>
                   <p className="cc-touch-row-label">Email</p>
-                  <p className="cc-touch-row-val">andrew.liberty@compass.com</p>
+                  <p className="cc-touch-row-val">
+                    <a href="mailto:andrew.liberty@compass.com">andrew.liberty@compass.com</a>
+                  </p>
                 </div>
               </div>
               <div className="cc-touch-row">

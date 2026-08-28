@@ -123,7 +123,7 @@ export default function Valuation() {
                 <span>{sending ? "Sending…" : "Unlock Your Free Valuation"}</span>
                 <ArrowRight />
               </button>
-              <a href="#contact" className="btn btn-secondary">
+              <a href="/contact" className="btn btn-secondary">
                 Schedule a Consultation
               </a>
             </div>

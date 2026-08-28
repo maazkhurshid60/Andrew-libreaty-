@@ -49,7 +49,7 @@ export default function WhatsTheMove() {
             </div>
             <h3>Invest Strategically</h3>
             <p>From duplexes to development lots, every deal gets evaluated on the numbers first.</p>
-            <a href="#contact" className="btn btn-secondary btn-card">
+            <a href="/contact" className="btn btn-secondary btn-card">
               <span>Explore Opportunities</span>
               <ArrowRight />
             </a>

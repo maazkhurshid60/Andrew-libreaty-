@@ -59,7 +59,7 @@ export default function MeetAndrew() {
           </div>
 
           <div className="about-ctas reveal" data-reveal-delay="300">
-            <a href="#contact" className="btn btn-primary btn-magnetic">
+            <a href="/contact" className="btn btn-primary btn-magnetic">
               <span>Schedule a Consultation</span>
               <ArrowRight />
             </a>

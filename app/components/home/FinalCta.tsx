@@ -11,7 +11,7 @@ export default function FinalCta() {
           decisions, not unnecessary complexity.
         </p>
         <div className="final-ctas reveal" data-reveal-delay="120">
-          <a href="#contact" className="btn btn-primary btn-magnetic">
+          <a href="/contact" className="btn btn-primary btn-magnetic">
             <span>Contact Us</span>
             <ArrowRight />
           </a>

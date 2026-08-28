@@ -47,7 +47,7 @@ export default function Process() {
             A clear plan from first call to closing. No surprises.
           </p>
           <div className="process-ctas reveal" data-reveal-delay="120">
-            <a href="#contact" className="btn btn-primary btn-magnetic">
+            <a href="/contact" className="btn btn-primary btn-magnetic">
               <span>Book a Strategy Call</span>
               <ArrowRight />
             </a>

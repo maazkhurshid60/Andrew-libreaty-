@@ -59,7 +59,7 @@ export default function PropertiesPage() {
               focus on smart decisions, not unnecessary complexity.
             </p>
             <div className="prop-beyond-ctas">
-              <a href="/#contact" className="btn btn-gold btn-magnetic">
+              <a href="/contact" className="btn btn-gold btn-magnetic">
                 <span>Contact Us</span>
                 <ArrowRight />
               </a>
