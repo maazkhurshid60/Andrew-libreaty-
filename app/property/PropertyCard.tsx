@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight } from "../components/icons";
+import { PLACEHOLDER } from "../home-search/listings";
 
 export type PropertyItem = {
   img: string;
@@ -36,16 +37,26 @@ export default function PropertyCard({ p, href = "#", initialSaved = false }: { 
   const [saved, setSaved] = useState(initialSaved);
 
   return (
-    <article className="pl-card">
+    <a className="pl-card" href={href}>
       <div className="pl-media">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={p.img} alt={p.alt} loading="lazy" />
+        <img
+          src={p.img}
+          alt={p.alt}
+          loading="lazy"
+          referrerPolicy="no-referrer"
+          onError={(e) => (e.currentTarget.src = PLACEHOLDER)}
+        />
         <span className={`badge ${p.badgeGold ? "badge-gold" : "badge-dark"} pl-badge`}>{p.badge}</span>
         <button
           className={`pl-heart${saved ? " is-saved" : ""}`}
           aria-label={saved ? "Remove from saved" : `Save ${p.address}`}
           aria-pressed={saved}
-          onClick={() => setSaved((s) => !s)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSaved((s) => !s);
+          }}
         >
           <svg viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
@@ -70,11 +81,11 @@ export default function PropertyCard({ p, href = "#", initialSaved = false }: { 
           <span><BathIcon /> {p.baths} Baths</span>
           <span><AreaIcon /> {p.sqft} SqFt</span>
         </p>
-        <a href={href} className="pl-link">
+        <span className="pl-link">
           View Details
           <ArrowRight />
-        </a>
+        </span>
       </div>
-    </article>
+    </a>
   );
 }

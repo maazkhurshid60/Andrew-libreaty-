@@ -230,7 +230,12 @@ export function toDetailListing(raw: RawIdxListing): DetailListing {
     history.push({ event: "Built", sub: `${raw.yearBuilt}` });
   }
 
-  const gallery = photos(raw);
+  // CRMLS policy: only the primary photo is displayable off-MLS for
+  // Closed/Expired/Cancelled listings — every other gallery photo 404s at
+  // the source, confirmed live. Pending listings aren't covered by that
+  // rule, so only truncate for Sold.
+  const fullGallery = photos(raw);
+  const gallery = sold ? fullGallery.slice(0, 1) : fullGallery;
 
   return {
     slug: raw.detailsUrlSlug.toLowerCase(),

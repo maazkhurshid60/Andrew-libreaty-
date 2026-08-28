@@ -116,23 +116,35 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
       {/* ============ GALLERY ============ */}
       <div className="pd-gallery-wrap">
         <div className="container">
-          <div className="pd-gallery">
-            {gallery.slice(0, 5).map((src, i) => (
-              <button
-                type="button"
-                className="pd-cell"
-                key={i}
-                onClick={() => openLightbox(i)}
-                aria-label={`View photo ${i + 1} of ${gallery.length}`}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={src} alt={`${listing.address} photo ${i + 1}`} loading={i === 0 ? "eager" : "lazy"} />
-                {i === 4 && gallery.length > 5 && (
-                  <span className="pd-more"><AreaIcon />{gallery.length - 5} More</span>
-                )}
-              </button>
-            ))}
-          </div>
+          {gallery.length > 1 ? (
+            <div className="pd-gallery">
+              {gallery.slice(0, 5).map((src, i) => (
+                <button
+                  type="button"
+                  className="pd-cell"
+                  key={i}
+                  onClick={() => openLightbox(i)}
+                  aria-label={`View photo ${i + 1} of ${gallery.length}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt={`${listing.address} photo ${i + 1}`} loading={i === 0 ? "eager" : "lazy"} />
+                  {i === 4 && gallery.length > 5 && (
+                    <span className="pd-more"><AreaIcon />{gallery.length - 5} More</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="pd-gallery-single"
+              onClick={() => openLightbox(0)}
+              aria-label={`View photo of ${listing.address}`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={gallery[0]} alt={listing.address} loading="eager" />
+            </button>
+          )}
         </div>
       </div>
 
