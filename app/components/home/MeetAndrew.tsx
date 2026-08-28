@@ -63,7 +63,7 @@ export default function MeetAndrew() {
               <span>Schedule a Consultation</span>
               <ArrowRight />
             </a>
-            <a href="#" className="btn btn-secondary">
+            <a href="/team" className="btn btn-secondary">
               Meet the Team
             </a>
           </div>

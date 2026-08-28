@@ -38,7 +38,7 @@ export default function Newsletter() {
             </div>
             <p className="newsletter-note">
               No spam, ever. Unsubscribe anytime.{" "}
-              <a href="#" className="inline-link">
+              <a href="/blog" className="inline-link">
                 Read the Blog
               </a>
             </p>

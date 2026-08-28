@@ -33,7 +33,7 @@ export default function NewsletterForm() {
         </button>
       </form>
       <p className="bl-news-note">
-        No spam, ever. Unsubscribe anytime. <a href="#top">Read the Blog</a>
+        No spam, ever. Unsubscribe anytime. <a href="/blog">Read the Blog</a>
       </p>
       <p className="bl-news-status" role="status" aria-live="polite">{status}</p>
     </div>
