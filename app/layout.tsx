@@ -15,6 +15,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GlobalEffects from "./components/GlobalEffects";
 import MobileCtaBar from "./components/MobileCtaBar";
+import AuthModal from "./components/AuthModal";
+import { AuthProvider } from "@/hooks/useAuth";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -56,14 +58,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`js ${fraunces.variable} ${onest.variable} ${instrumentSerif.variable}`}>
       <body>
-        <GlobalEffects />
-        <a className="skip-link" href="#main">
-          Skip to main content
-        </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <MobileCtaBar />
+        <AuthProvider>
+          <GlobalEffects />
+          <a className="skip-link" href="#main">
+            Skip to main content
+          </a>
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+          <MobileCtaBar />
+          <AuthModal />
+        </AuthProvider>
       </body>
     </html>
   );

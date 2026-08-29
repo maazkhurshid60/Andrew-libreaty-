@@ -65,7 +65,12 @@ export default function AndrewLibertyPage() {
                 <WhatsappIcon />
                 <span>(310) 709-0581</span>
               </a>
-              <a href="mailto:andrew.liberty@compass.com" className="ag-pill ag-pill-ghost">
+              <a
+                href="mailto:andrew.liberty@compass.com"
+                className="ag-pill ag-pill-ghost"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <SmsIcon />
                 <span>andrew.liberty@compass.com</span>
               </a>

@@ -39,7 +39,12 @@ export default function Footer() {
           <h3>Contact</h3>
           <ul>
             <li>
-              <a href="mailto:andrew.liberty@compass.com" className="footer-link">
+              <a
+                href="mailto:andrew.liberty@compass.com"
+                className="footer-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 andrew.liberty@compass.com
               </a>
             </li>

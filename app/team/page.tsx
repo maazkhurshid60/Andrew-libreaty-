@@ -99,7 +99,12 @@ export default function TeamPage() {
                   <p className="team-role">{m.role}</p>
                   <p className="team-meta">{m.meta}</p>
                   <div className="team-contact">
-                    <a href="mailto:andrew.liberty@compass.com" aria-label={`Email ${m.name}`}>
+                    <a
+                      href="mailto:andrew.liberty@compass.com"
+                      aria-label={`Email ${m.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <SmsIcon />
                     </a>
                     <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" aria-label={`Message ${m.name} on WhatsApp`}>

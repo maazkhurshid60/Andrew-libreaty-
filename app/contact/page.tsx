@@ -48,7 +48,7 @@ export default function ContactPage() {
             <div>
               <p className="contact-item-label">Email</p>
               <p className="contact-item-val">
-                <a href="mailto:andrew.liberty@compass.com">andrew.liberty@compass.com</a>
+                <a href="mailto:andrew.liberty@compass.com" target="_blank" rel="noopener noreferrer">andrew.liberty@compass.com</a>
               </p>
             </div>
           </div>

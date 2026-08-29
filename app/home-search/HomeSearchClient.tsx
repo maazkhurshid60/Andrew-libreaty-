@@ -16,6 +16,8 @@ import MapPanel from "./MapPanel";
 import SaveSearchButton from "./SaveSearchButton";
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toListing } from "@/lib/idx";
+import { useAuth } from "@/hooks/useAuth";
+import { listFavoriteMlsIds, addFavorite, removeFavorite } from "@/lib/favorites";
 
 /** Thumbnail that falls back to the branded placeholder — also catches images
  *  that already failed before React hydrated (MLS hotlink blocks). */
@@ -79,15 +81,16 @@ export default function HomeSearchClient() {
     [rawListings]
   );
 
-  /* ---------- Saved listings persisted to localStorage ---------- */
+  /* ---------- Saved listings, per signed-in account ---------- */
+  const { user, requireAuth } = useAuth();
   useEffect(() => {
-    try {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage, unavailable during SSR
-      setSaved(new Set(JSON.parse(localStorage.getItem("alt-saved") || "[]")));
-    } catch {
-      /* ignore */
+    if (!user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reset when signed out
+      setSaved(new Set());
+      return;
     }
-  }, []);
+    listFavoriteMlsIds(user.id).then(setSaved);
+  }, [user]);
 
   const toast = useCallback((msg: string) => {
     setToastMsg(msg);
@@ -161,18 +164,29 @@ export default function HomeSearchClient() {
 
   /* ---------- Save / share / hide ---------- */
   const toggleSave = (l: Listing) => {
+    if (!user) {
+      requireAuth("Log in to save homes to your favorites.");
+      return;
+    }
+    const on = !saved.has(l.mls);
     setSaved((prev) => {
       const next = new Set(prev);
-      const on = !next.has(l.mls);
       if (on) next.add(l.mls);
       else next.delete(l.mls);
-      try {
-        localStorage.setItem("alt-saved", JSON.stringify([...next]));
-      } catch {
-        /* ignore */
-      }
-      toast(on ? "Saved to your favorites" : "Removed from favorites");
       return next;
+    });
+    toast(on ? "Saved to your favorites" : "Removed from favorites");
+    const persist = on ? addFavorite(user.id, l.mls) : removeFavorite(user.id, l.mls);
+    persist.then((ok) => {
+      if (ok) return;
+      // Revert on failure
+      setSaved((prev) => {
+        const next = new Set(prev);
+        if (on) next.delete(l.mls);
+        else next.add(l.mls);
+        return next;
+      });
+      toast("Something went wrong — please try again.");
     });
   };
   const openShare = (l: Listing) => {

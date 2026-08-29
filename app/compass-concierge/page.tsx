@@ -111,7 +111,7 @@ export default function ConciergePage() {
             <div className="cc-contact-block">
               <p className="cc-contact-name">Andrew Liberty Team</p>
               <p className="cc-contact-line">
-                <a href="mailto:andrew.liberty@compass.com">andrew.liberty@compass.com</a> · (310) 709-0581
+                <a href="mailto:andrew.liberty@compass.com" target="_blank" rel="noopener noreferrer">andrew.liberty@compass.com</a> · (310) 709-0581
               </p>
               <p className="cc-contact-line">12001 Ventura Pl Ste 100, Studio City, CA 91604</p>
               <p className="cc-contact-line">Compass California, Inc. · CA DRE# 01991628</p>
@@ -328,7 +328,9 @@ export default function ConciergePage() {
                 <div>
                   <p className="cc-touch-row-label">Email</p>
                   <p className="cc-touch-row-val">
-                    <a href="mailto:andrew.liberty@compass.com">andrew.liberty@compass.com</a>
+                    <a href="mailto:andrew.liberty@compass.com" target="_blank" rel="noopener noreferrer">
+                      andrew.liberty@compass.com
+                    </a>
                   </p>
                 </div>
               </div>
