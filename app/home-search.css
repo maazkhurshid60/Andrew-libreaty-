@@ -79,6 +79,10 @@
 .filter-right .btn-primary { padding: 11px 20px; font-size: 14px; }
 .filter-right .btn-primary svg { width: 16px; height: 16px; }
 
+.hs-account { display: flex; align-items: center; gap: 10px; }
+.hs-account-signout { font-size: 13px; font-weight: 500; color: var(--muted); transition: color var(--dur); }
+.hs-account-signout:hover { color: var(--ink); }
+
 /* ---------- Body split ---------- */
 .search-body {
   flex: 1;

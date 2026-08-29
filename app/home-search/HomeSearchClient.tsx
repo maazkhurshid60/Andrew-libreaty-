@@ -82,7 +82,7 @@ export default function HomeSearchClient() {
   );
 
   /* ---------- Saved listings, per signed-in account ---------- */
-  const { user, requireAuth } = useAuth();
+  const { user, requireAuth, signOut } = useAuth();
   useEffect(() => {
     if (!user) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- reset when signed out
@@ -315,6 +315,14 @@ export default function HomeSearchClient() {
               <span>All filters</span>
               {filterCount > 0 && <span className="filter-count">{filterCount}</span>}
             </button>
+            {user ? (
+              <div className="hs-account" role="group" aria-label="Account">
+                <a href="/my-search-portal" className="btn btn-secondary">My Account</a>
+                <button type="button" className="hs-account-signout" onClick={() => signOut()}>Log Out</button>
+              </div>
+            ) : (
+              <button type="button" className="btn btn-secondary" onClick={() => requireAuth()}>Log In</button>
+            )}
             <SaveSearchButton
               searchName={`${state.status.join("/")}${state.beds ? `, ${state.beds}+ beds` : ""}${searchValue ? `, "${searchValue}"` : ""}`}
               criteria={{
