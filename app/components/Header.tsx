@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "./icons";
 import { WhatsappIcon } from "./vuesax";
-import { useAuth } from "@/hooks/useAuth";
 
 const NAV_LINKS = [
   { href: "/property", label: "Properties" },
@@ -33,7 +32,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHash, setActiveHash] = useState<string>("");
   const pathname = usePathname();
-  const { user, requireAuth, signOut } = useAuth();
   // Inner pages have no transparent hero behind the header — keep it solid & sticky.
   const solid = pathname !== "/";
 
@@ -114,14 +112,6 @@ export default function Header() {
           </nav>
 
           <div className="header-actions">
-            {user ? (
-              <div className="header-account">
-                <a href="/my-search-portal" className="header-account-link">My Account</a>
-                <button type="button" className="header-account-link" onClick={() => signOut()}>Log Out</button>
-              </div>
-            ) : (
-              <button type="button" className="header-account-link" onClick={() => requireAuth()}>Log In</button>
-            )}
             <a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" className="header-phone" aria-label="Message us on WhatsApp at (310) 709-0581">
               <WhatsappIcon />
               <span>(310) 709-0581</span>
@@ -180,25 +170,6 @@ export default function Header() {
           ))}
         </nav>
         <div className="side-foot">
-          {user ? (
-            <button
-              type="button"
-              className="side-item"
-              style={{ width: "100%", textAlign: "left" }}
-              onClick={() => { setMenuOpen(false); signOut(); }}
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="side-item"
-              style={{ width: "100%", textAlign: "left" }}
-              onClick={() => { setMenuOpen(false); requireAuth(); }}
-            >
-              Log In / Register
-            </button>
-          )}
           <p className="side-foot-label">Get in Touch</p>
           <a href="/contact" className="btn btn-primary side-connect">
             Let&rsquo;s Connect

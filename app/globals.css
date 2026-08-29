@@ -308,13 +308,6 @@ ul, ol { list-style: none; }
 
 .header-actions { display: flex; align-items: center; gap: 8px; }
 
-.header-account { display: flex; align-items: center; gap: 10px; margin-right: 4px; }
-.header-account-link {
-  font-size: 13.5px; font-weight: 500; color: var(--ink-soft);
-  transition: color var(--dur);
-}
-.header-account-link:hover { color: var(--ink); }
-
 .header-phone {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 14px; font-weight: 500; color: var(--ink-soft);
@@ -1296,7 +1289,6 @@ ul, ol { list-style: none; }
   .main-nav { display: none; }
   .menu-toggle { display: flex; }
   .header-phone { display: none; }
-  .header-account, .header-actions > .header-account-link { display: none; }
 
   .hero-inner { grid-template-columns: 1fr; }
   .hero-visual { min-height: 440px; margin-top: 8px; }
