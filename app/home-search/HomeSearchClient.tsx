@@ -18,6 +18,7 @@ import { useIdxListings } from "@/hooks/useIdxListings";
 import { toListing } from "@/lib/idx";
 import { useAuth } from "@/hooks/useAuth";
 import { listFavoriteMlsIds, addFavorite, removeFavorite } from "@/lib/favorites";
+import PageLoader from "../components/PageLoader";
 
 /** Thumbnail that falls back to the branded placeholder — also catches images
  *  that already failed before React hydrated (MLS hotlink blocks). */
@@ -362,9 +363,7 @@ export default function HomeSearchClient() {
             </div>
 
             {loading ? (
-              <div className="empty-state" style={{ padding: "48px 0" }}>
-                <p style={{ color: "var(--muted)" }}>Loading listings…</p>
-              </div>
+              <PageLoader label="Loading listings…" />
             ) : visibleResults.length ? (
               <div className="listing-grid" aria-live="polite">
                 {visibleResults.map((l) => (

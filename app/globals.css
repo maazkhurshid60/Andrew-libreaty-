@@ -1377,3 +1377,13 @@ ul, ol { list-style: none; }
 .auth-form input:focus { outline: none; border-color: var(--gold); }
 .auth-error { font-size: 12.5px; color: #c0392b; }
 .auth-note { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 16px; }
+
+/* ---------- Branded loader ---------- */
+.page-loader { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 64px 0; }
+.page-loader-lg { padding: 120px 0; }
+.page-loader-house { width: 46px; height: 46px; color: var(--gold-deep); animation: pl-bounce 1.4s ease-in-out infinite; }
+.page-loader-lg .page-loader-house { width: 60px; height: 60px; }
+.pl-door { fill: var(--gold); animation: pl-glow 1.4s ease-in-out infinite; }
+.page-loader-label { font-size: 13.5px; font-weight: 500; color: var(--muted); }
+@keyframes pl-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes pl-glow { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }

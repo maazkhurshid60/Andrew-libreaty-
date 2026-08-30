@@ -8,6 +8,7 @@ import { toPropertyItem } from "@/lib/idx";
 import { useAuth } from "@/hooks/useAuth";
 import { listFavoriteMlsIds } from "@/lib/favorites";
 import { listSavedSearches, deleteSavedSearch, type SavedSearchRow } from "@/lib/savedSearches";
+import PageLoader from "../components/PageLoader";
 
 const LockIcon = () => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>);
 
@@ -109,7 +110,7 @@ export default function PortalClient() {
       <div className="container mp-body">
         {tab === "favorites" ? (
           listingsLoading ? (
-            <p style={{ color: "var(--muted)" }}>Loading…</p>
+            <PageLoader />
           ) : favorites.length === 0 ? (
             <div className="mp-gate">
               <h1>No saved properties yet</h1>
@@ -142,7 +143,7 @@ export default function PortalClient() {
             </div>
           )
         ) : searchesLoading ? (
-          <p style={{ color: "var(--muted)" }}>Loading…</p>
+          <PageLoader />
         ) : searches.length === 0 ? (
           <div className="mp-gate">
             <h1>No saved searches yet</h1>

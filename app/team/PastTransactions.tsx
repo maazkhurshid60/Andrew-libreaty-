@@ -3,6 +3,7 @@
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toPropertyItem } from "@/lib/idx";
 import PropertyCard from "../property/PropertyCard";
+import PageLoader from "../components/PageLoader";
 
 export default function PastTransactions() {
   const { data, loading } = useIdxListings();
@@ -24,7 +25,7 @@ export default function PastTransactions() {
         </div>
 
         {loading ? (
-          <p style={{ textAlign: "center", color: "var(--muted)" }}>Loading…</p>
+          <PageLoader />
         ) : sold.length === 0 ? (
           <p style={{ textAlign: "center", color: "var(--muted)" }}>No sold listings to show yet.</p>
         ) : (

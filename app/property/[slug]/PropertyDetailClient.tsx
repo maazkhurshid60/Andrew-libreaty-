@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import PropertyCard from "../PropertyCard";
 import PropertyDetail from "./PropertyDetail";
 import ComingSoon from "../../components/ComingSoon";
+import PageLoader from "../../components/PageLoader";
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toDetailListing, toPropertyItem } from "@/lib/idx";
 
@@ -26,11 +27,7 @@ export default function PropertyDetailClient({ slug }: { slug: string }) {
   if (loading) {
     return (
       <div className="pd-page">
-        <div className="container">
-          <div className="pd-soon">
-            <p>Loading…</p>
-          </div>
-        </div>
+        <PageLoader label="Loading listing…" size="lg" />
       </div>
     );
   }

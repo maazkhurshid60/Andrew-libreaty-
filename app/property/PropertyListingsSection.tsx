@@ -3,6 +3,7 @@
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toPropertyItem } from "@/lib/idx";
 import PropertyCard from "./PropertyCard";
+import PageLoader from "../components/PageLoader";
 
 export default function PropertyListingsSection() {
   const { data, loading } = useIdxListings();
@@ -23,7 +24,7 @@ export default function PropertyListingsSection() {
             </p>
           </div>
           {loading ? (
-            <p style={{ textAlign: "center", color: "var(--muted)" }}>Loading listings…</p>
+            <PageLoader label="Loading listings…" />
           ) : featured.length === 0 ? (
             <p style={{ textAlign: "center", color: "var(--muted)" }}>
               No active listings right now — check back soon.

@@ -3,6 +3,7 @@
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toPropertyItem } from "@/lib/idx";
 import PropertyCard from "../../property/PropertyCard";
+import PageLoader from "../PageLoader";
 
 export default function RecentlySold({
   title = "Recently Sold",
@@ -26,7 +27,7 @@ export default function RecentlySold({
         </div>
 
         {loading ? (
-          <p style={{ textAlign: "center", color: "var(--muted)" }}>Loading…</p>
+          <PageLoader />
         ) : sold.length === 0 ? (
           <p style={{ textAlign: "center", color: "var(--muted)" }}>No sold listings to show yet.</p>
         ) : (

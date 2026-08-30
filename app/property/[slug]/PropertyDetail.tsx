@@ -115,8 +115,8 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
     <>
       {/* ============ GALLERY ============ */}
       <div className="pd-gallery-wrap">
-        <div className="container">
-          {gallery.length > 1 ? (
+        {gallery.length > 1 ? (
+          <div className="container">
             <div className="pd-gallery">
               {gallery.slice(0, 5).map((src, i) => (
                 <button
@@ -134,18 +134,18 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
                 </button>
               ))}
             </div>
-          ) : (
-            <button
-              type="button"
-              className="pd-gallery-single"
-              onClick={() => openLightbox(0)}
-              aria-label={`View photo of ${listing.address}`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={gallery[0]} alt={listing.address} loading="eager" />
-            </button>
-          )}
-        </div>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="pd-gallery-single"
+            onClick={() => openLightbox(0)}
+            aria-label={`View photo of ${listing.address}`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={gallery[0]} alt={listing.address} loading="eager" />
+          </button>
+        )}
       </div>
 
       {/* ============ LIGHTBOX ============ */}
