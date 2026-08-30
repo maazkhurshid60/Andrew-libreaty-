@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { ArrowRight } from "../components/icons";
+import { createLead } from "@/lib/idx";
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "", consent: false });
   const [status, setStatus] = useState("");
+  const [sending, setSending] = useState(false);
 
   const set = (k: keyof typeof form, v: string | boolean) => setForm((f) => ({ ...f, [k]: v }));
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim()) {
       setStatus("Please add your name and email.");
@@ -19,8 +21,22 @@ export default function ContactForm() {
       setStatus("Please agree to be contacted before submitting.");
       return;
     }
-    setStatus(`Thanks, ${form.name.trim().split(" ")[0]} — your message is on its way. Andrew will be in touch shortly.`);
-    setForm({ name: "", email: "", phone: "", message: "", consent: false });
+    setSending(true);
+    const [firstName, ...rest] = form.name.trim().split(" ");
+    const leadId = await createLead({
+      firstName,
+      lastName: rest.join(" ") || "—",
+      email: form.email.trim(),
+      phone: form.phone.trim() || undefined,
+      comments: form.message.trim() || undefined,
+    });
+    setSending(false);
+    if (leadId) {
+      setStatus(`Thanks, ${firstName} — your message is on its way. Andrew will be in touch shortly.`);
+      setForm({ name: "", email: "", phone: "", message: "", consent: false });
+    } else {
+      setStatus("Something went wrong sending your message — please try again, or reach out on WhatsApp.");
+    }
   };
 
   return (
@@ -53,8 +69,8 @@ export default function ContactForm() {
         </label>
       </div>
 
-      <button type="submit" className="btn btn-gold btn-magnetic">
-        <span>Submit</span>
+      <button type="submit" className="btn btn-gold btn-magnetic" disabled={sending}>
+        <span>{sending ? "Sending…" : "Submit"}</span>
         <ArrowRight />
       </button>
       <p className="cf-status" role="status" aria-live="polite">{status}</p>
