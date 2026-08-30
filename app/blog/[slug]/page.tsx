@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "../../components/icons";
-import { ShareIcon, FacebookIcon, WhatsappIcon } from "../../components/vuesax";
 import NewsletterForm from "../NewsletterForm";
+import ArticleShare from "./ArticleShare";
 import { ALL, POSTS, getPost, DEMO_SLUG } from "../posts";
 
 export function generateStaticParams() {
@@ -64,11 +64,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   <p className="ar-meta-sub">Founder &amp; Lead Agent · {post.read}</p>
                 </div>
               </div>
-              <div className="ar-share" aria-label="Share this article">
-                <a href="#" aria-label="Share on Facebook"><FacebookIcon /></a>
-                <a href="#" aria-label="Share on WhatsApp"><WhatsappIcon /></a>
-                <a href="#" aria-label="Copy link"><ShareIcon /></a>
-              </div>
+              <ArticleShare title={post.title} />
             </div>
           </div>
         </div>

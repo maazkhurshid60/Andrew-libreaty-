@@ -174,14 +174,19 @@
 .ar-meta-author img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; object-position: top center; }
 .ar-meta-name { font-size: 14px; font-weight: 600; color: var(--ink); }
 .ar-meta-sub { font-size: 12.5px; color: var(--muted); }
-.ar-share { display: flex; gap: 8px; margin-left: auto; }
-.ar-share a {
+.ar-share { display: flex; align-items: center; gap: 8px; margin-left: auto; position: relative; }
+.ar-share button {
   width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
-  border: 1px solid var(--line); color: var(--ink-soft);
+  border: 1px solid var(--line); color: var(--ink-soft); background: none; font: inherit; cursor: pointer;
   transition: transform var(--dur), color var(--dur), border-color var(--dur), background-color var(--dur);
 }
-.ar-share a svg { width: 16px; height: 16px; }
-.ar-share a:hover { transform: translateY(-2px); color: var(--gold-deep); border-color: var(--gold); background: var(--gold-tint); }
+.ar-share button svg { width: 16px; height: 16px; }
+.ar-share button:hover { transform: translateY(-2px); color: var(--gold-deep); border-color: var(--gold); background: var(--gold-tint); }
+.ar-share-copied {
+  position: absolute; top: calc(100% + 8px); right: 0; white-space: nowrap;
+  font-size: 12px; color: var(--sage); background: var(--paper); border: 1px solid var(--line-soft);
+  border-radius: 8px; padding: 5px 10px; box-shadow: var(--shadow-float);
+}
 
 .ar-hero-img { max-width: 1000px; margin: 0 auto; padding: 8px 0 0; }
 .ar-hero-img img { width: 100%; height: auto; aspect-ratio: 16 / 8; object-fit: cover; border-radius: var(--radius-lg); display: block; }

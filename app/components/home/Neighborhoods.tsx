@@ -37,7 +37,7 @@ export default function Neighborhoods() {
           {HOODS.map((hood) => (
             <a
               key={hood.name}
-              href="#"
+              href="/neighborhoods"
               className="hood-card reveal"
               data-reveal-delay={hood.delay}
               aria-label={`Learn more about ${hood.name}`}

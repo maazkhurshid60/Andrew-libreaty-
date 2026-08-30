@@ -89,6 +89,12 @@
   display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   align-items: start;
 }
+/* The List/Map toggle goes full-width map at every viewport, not just mobile
+   — previously this only had an effect below 1080px, so clicking it on a
+   normal desktop window silently did nothing (the split view already shows
+   both). */
+body.map-view .search-body { grid-template-columns: 1fr; }
+body.map-view .results-col { display: none; }
 .results-col {
   padding: 24px clamp(20px, 3vw, 40px) 48px;
   min-width: 0;
@@ -448,7 +454,6 @@
   .search-body { grid-template-columns: 1fr; }
   .map-col { display: none; position: static; height: 60vh; border-left: 0; border-top: 1px solid var(--line-soft); }
   body.map-view .map-col { display: block; }
-  body.map-view .results-col { display: none; }
   .listing-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
