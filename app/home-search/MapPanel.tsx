@@ -29,14 +29,19 @@ function popupHtml(l: Listing) {
   </div>`;
 }
 
+export type OfficeMarker = { lat: number; lng: number; label: string };
+
 export default function MapPanel({
   items,
   mapType,
   onOpen,
+  officeMarker,
 }: {
   items: Listing[];
   mapType: "map" | "satellite";
   onOpen: (l: Listing) => void;
+  /** An extra fixed pin (e.g. the office) drawn alongside the listing pins. */
+  officeMarker?: OfficeMarker;
 }) {
   const elRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -116,13 +121,23 @@ export default function MapPanel({
       m.addTo(layer);
       bounds.push([l.lat, l.lng]);
     });
+    if (officeMarker) {
+      const icon = leaflet.divIcon({
+        className: "lm-office-wrap",
+        html: `<span class="lm-office-pin">${esc(officeMarker.label)}</span>`,
+        iconSize: [0, 0],
+        iconAnchor: [0, 0],
+      });
+      leaflet.marker([officeMarker.lat, officeMarker.lng], { icon, zIndexOffset: 1000 }).addTo(layer);
+      bounds.push([officeMarker.lat, officeMarker.lng]);
+    }
     if (bounds.length) map.fitBounds(bounds, { padding: [48, 48], maxZoom: 14 });
   }
 
   useEffect(() => {
     drawMarkers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [items, officeMarker]);
 
   return <div ref={elRef} className="lm-map" />;
 }

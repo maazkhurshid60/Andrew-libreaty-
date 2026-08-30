@@ -504,6 +504,21 @@ body.map-view .results-col { display: none; }
 .lm-pin-wrap:hover .lm-pin,
 .leaflet-marker-icon:focus .lm-pin { background: var(--ink); color: var(--on-dark); transform: translate(-50%, -50%) scale(1.08); }
 
+/* Fixed "office" pin — distinct from listing price pins */
+.lm-office-wrap { background: transparent !important; border: 0 !important; }
+.lm-office-pin {
+  position: absolute; left: 0; top: 0; transform: translate(-50%, -100%);
+  display: inline-block; white-space: nowrap;
+  font-size: 12.5px; font-weight: 600;
+  background: var(--dark); color: #fff;
+  padding: 7px 14px; border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(6, 34, 33, 0.35);
+}
+.lm-office-pin::after {
+  content: ""; position: absolute; left: 50%; bottom: -5px; transform: translateX(-50%);
+  border: 5px solid transparent; border-top-color: var(--dark); border-bottom: 0;
+}
+
 /* Popup card */
 .leaflet-popup-content-wrap { border-radius: 14px; padding: 0; overflow: hidden; box-shadow: var(--shadow-float); }
 .leaflet-popup-content { margin: 0; width: 236px !important; }
