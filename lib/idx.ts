@@ -143,6 +143,7 @@ export function toPropertyItem(raw: RawIdxListing): PropertyItem & { slug: strin
   const priceStr = sold && raw.soldPrice != null ? money(Number(raw.soldPrice)) : raw.listingPrice;
   return {
     slug: raw.detailsUrlSlug.toLowerCase(),
+    mlsId: raw.listingID,
     img: photos(raw)[0] || "",
     alt: raw.address,
     location: cityState(raw),

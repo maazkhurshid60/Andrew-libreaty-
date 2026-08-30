@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { ArrowRight } from "../components/icons";
 import { PLACEHOLDER } from "../home-search/listings";
+import { useAuth } from "@/hooks/useAuth";
+import { addFavorite, removeFavorite } from "@/lib/favorites";
 
 export type PropertyItem = {
+  mlsId: string;
   img: string;
   alt: string;
   location: string;
@@ -33,8 +36,39 @@ const AreaIcon = () => (
   </svg>
 );
 
-export default function PropertyCard({ p, href = "#", initialSaved = false }: { p: PropertyItem; href?: string; initialSaved?: boolean }) {
+export default function PropertyCard({
+  p,
+  href = "#",
+  initialSaved = false,
+  onToggleSaved,
+}: {
+  p: PropertyItem;
+  href?: string;
+  initialSaved?: boolean;
+  /** Notified after a save/unsave persists — lets a favorites list drop the card immediately. */
+  onToggleSaved?: (mlsId: string, saved: boolean) => void;
+}) {
   const [saved, setSaved] = useState(initialSaved);
+  const { user, requireAuth } = useAuth();
+
+  const toggleSave = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!user) {
+      requireAuth("Log in to save homes to your favorites.");
+      return;
+    }
+    const next = !saved;
+    setSaved(next);
+    const persist = next ? addFavorite(user.id, p.mlsId) : removeFavorite(user.id, p.mlsId);
+    persist.then((ok) => {
+      if (ok) {
+        onToggleSaved?.(p.mlsId, next);
+      } else {
+        setSaved(!next);
+      }
+    });
+  };
 
   return (
     <a className="pl-card" href={href}>
@@ -52,11 +86,7 @@ export default function PropertyCard({ p, href = "#", initialSaved = false }: { 
           className={`pl-heart${saved ? " is-saved" : ""}`}
           aria-label={saved ? "Remove from saved" : `Save ${p.address}`}
           aria-pressed={saved}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setSaved((s) => !s);
-          }}
+          onClick={toggleSave}
         >
           <svg viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />

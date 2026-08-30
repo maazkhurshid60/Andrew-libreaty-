@@ -124,7 +124,20 @@ export default function PortalClient() {
           ) : (
             <div className="mp-grid">
               {favorites.map((p) => (
-                <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} initialSaved />
+                <PropertyCard
+                  key={p.slug}
+                  p={p}
+                  href={`/property/${p.slug}`}
+                  initialSaved
+                  onToggleSaved={(mlsId, isSaved) => {
+                    if (isSaved) return;
+                    setSavedMls((prev) => {
+                      const next = new Set(prev);
+                      next.delete(mlsId);
+                      return next;
+                    });
+                  }}
+                />
               ))}
             </div>
           )
