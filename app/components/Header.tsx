@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "./icons";
 import { WhatsappIcon } from "./vuesax";
+import { SITE_URL } from "@/lib/site";
 
 const NAV_LINKS = [
   { href: "/property", label: "Properties" },
@@ -85,12 +86,12 @@ export default function Header() {
         <div className="header-inner">
           <a href="/#top" className="wordmark" aria-label="Andrew Liberty Team — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="" className="wordmark-logo" width={34} height={39} />
+            <img src={`${SITE_URL}/logo.png`} alt="" className="wordmark-logo" width={34} height={39} />
             <span className="wordmark-text">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-andrew.png" alt="" className="wordmark-word" width={99} height={21} />
+              <img src={`${SITE_URL}/logo-andrew.png`} alt="" className="wordmark-word" width={99} height={21} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-liberty.png" alt="" className="wordmark-word" width={91} height={21} />
+              <img src={`${SITE_URL}/logo-liberty.png`} alt="" className="wordmark-word" width={91} height={21} />
             </span>
           </a>
 
@@ -129,7 +130,7 @@ export default function Header() {
               onClick={() => setMenuOpen((v) => !v)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/line-md_menu-unfold-left.png" alt="" className="menu-toggle-icon" />
+              <img src={`${SITE_URL}/line-md_menu-unfold-left.png`} alt="" className="menu-toggle-icon" />
             </button>
           </div>
         </div>
