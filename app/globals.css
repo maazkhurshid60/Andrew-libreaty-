@@ -727,15 +727,21 @@ ul, ol { list-style: none; }
 
 .credential-chips { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
 .credential-chips li {
+  display: inline-flex; align-items: center; gap: 7px;
   font-size: 12.5px; font-weight: 500; letter-spacing: 0.04em;
   color: var(--ink-soft);
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 8px 16px;
-  transition: border-color var(--dur), background-color var(--dur);
+  padding: 8px 16px 8px 14px;
+  box-shadow: 0 1px 3px rgba(23, 20, 15, 0.04);
+  transition: border-color var(--dur), background-color var(--dur), transform var(--dur), box-shadow var(--dur), color var(--dur);
 }
-.credential-chips li:hover { border-color: var(--gold); background: var(--gold-tint); }
+.credential-chips li svg { width: 13px; height: 13px; flex: none; color: var(--gold-deep); transition: color var(--dur); }
+.credential-chips li:hover {
+  border-color: var(--gold); background: var(--gold-tint); color: var(--ink);
+  transform: translateY(-2px); box-shadow: 0 6px 16px rgba(23, 20, 15, 0.08);
+}
 
 .about-awards { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 28px; }
 .about-award-img { height: 28px; width: auto; }

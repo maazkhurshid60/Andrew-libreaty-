@@ -40,11 +40,17 @@ export default function MeetAndrew() {
             at the numbers, and makes sure his clients feel confident every step of the way.
           </p>
 
-          <ul className="credential-chips reveal" data-reveal-delay="240" aria-label="Credentials">
-            <li>REALTOR®</li>
-            <li>Real Estate Negotiation Expert</li>
-            <li>Compass · California</li>
-            <li>Residential · Investment · Development</li>
+          <ul className="credential-chips" aria-label="Credentials">
+            {["REALTOR®", "Real Estate Negotiation Expert", "Compass · California", "Residential · Investment · Development"].map(
+              (label, i) => (
+                <li key={label} className="reveal" data-reveal-delay={240 + i * 70}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  <span>{label}</span>
+                </li>
+              )
+            )}
           </ul>
 
           <div className="about-awards reveal" data-reveal-delay="270">

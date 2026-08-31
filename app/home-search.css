@@ -79,9 +79,28 @@
 .filter-right .btn-primary { padding: 11px 20px; font-size: 14px; }
 .filter-right .btn-primary svg { width: 16px; height: 16px; }
 
-.hs-account { display: flex; align-items: center; gap: 10px; }
-.hs-account-signout { font-size: 13px; font-weight: 500; color: var(--muted); transition: color var(--dur); }
-.hs-account-signout:hover { color: var(--ink); }
+.hs-account { position: relative; }
+.hs-account-btn {
+  display: grid; place-items: center; width: 40px; height: 40px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink-soft);
+  transition: border-color var(--dur), color var(--dur), background-color var(--dur);
+}
+.hs-account-btn svg { width: 18px; height: 18px; }
+.hs-account-btn:hover, .hs-account[data-open="true"] .hs-account-btn { border-color: var(--gold); color: var(--ink); background: var(--gold-tint); }
+.hs-account-menu {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 140;
+  width: 200px; padding: 6px;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: var(--shadow-float);
+}
+.hs-account-menu a, .hs-account-menu button {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 9px 10px; border-radius: 9px;
+  font-size: 13.5px; font-weight: 500; color: var(--ink-soft); text-align: left;
+  transition: background-color var(--dur), color var(--dur);
+}
+.hs-account-menu svg { width: 16px; height: 16px; flex: none; }
+.hs-account-menu a:hover, .hs-account-menu button:hover { background: var(--ivory); color: var(--ink); }
 
 /* ---------- Body split ---------- */
 .search-body {

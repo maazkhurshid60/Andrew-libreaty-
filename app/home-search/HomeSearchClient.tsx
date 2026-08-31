@@ -65,6 +65,7 @@ export default function HomeSearchClient() {
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const [hidden, setHidden] = useState<Set<number>>(new Set());
   const [menuOpen, setMenuOpen] = useState<number | null>(null);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [view, setView] = useState<"list" | "map">("list");
   const [mapType, setMapType] = useState<"map" | "satellite">("map");
   const [drawActive, setDrawActive] = useState(false);
@@ -130,15 +131,16 @@ export default function HomeSearchClient() {
   };
 
   useEffect(() => {
-    if (!openPop && menuOpen == null) return;
+    if (!openPop && menuOpen == null && !accountMenuOpen) return;
     const onDown = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
       if (openPop && !t.closest(".popover") && !t.closest(".filter-pill")) setOpenPop(null);
       if (menuOpen != null && !t.closest(".lc-options")) setMenuOpen(null);
+      if (accountMenuOpen && !t.closest(".hs-account")) setAccountMenuOpen(false);
     };
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
-  }, [openPop, menuOpen]);
+  }, [openPop, menuOpen, accountMenuOpen]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -317,12 +319,40 @@ export default function HomeSearchClient() {
               {filterCount > 0 && <span className="filter-count">{filterCount}</span>}
             </button>
             {user ? (
-              <div className="hs-account" role="group" aria-label="Account">
-                <a href="/my-search-portal" className="btn btn-secondary">My Account</a>
-                <button type="button" className="hs-account-signout" onClick={() => signOut()}>Log Out</button>
+              <div className="hs-account" data-open={accountMenuOpen}>
+                <button
+                  type="button"
+                  className="hs-account-btn"
+                  aria-label="Account menu"
+                  aria-haspopup="menu"
+                  aria-expanded={accountMenuOpen}
+                  onClick={() => setAccountMenuOpen((o) => !o)}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21c1.6-4 5-6 8-6s6.4 2 8 6" />
+                  </svg>
+                </button>
+                {accountMenuOpen && (
+                  <div className="hs-account-menu" role="menu">
+                    <a href="/my-search-portal" role="menuitem" onClick={() => setAccountMenuOpen(false)}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>
+                      <span>My Search Portal</span>
+                    </a>
+                    <button type="button" role="menuitem" onClick={() => { setAccountMenuOpen(false); signOut(); }}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="M16 17l5-5-5-5" /><path d="M21 12H9" /></svg>
+                      <span>Log Out</span>
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
-              <button type="button" className="btn btn-secondary" onClick={() => requireAuth()}>Log In</button>
+              <button type="button" className="hs-account-btn" aria-label="Log in" onClick={() => requireAuth()}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 21c1.6-4 5-6 8-6s6.4 2 8 6" />
+                </svg>
+              </button>
             )}
             <SaveSearchButton
               searchName={`${state.status.join("/")}${state.beds ? `, ${state.beds}+ beds` : ""}${searchValue ? `, "${searchValue}"` : ""}`}
