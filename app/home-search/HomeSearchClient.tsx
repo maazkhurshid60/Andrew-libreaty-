@@ -67,6 +67,7 @@ export default function HomeSearchClient() {
   const [menuOpen, setMenuOpen] = useState<number | null>(null);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [fullSearchUrl, setFullSearchUrl] = useState<string | null>(null);
+  const [fullAccountUrl, setFullAccountUrl] = useState<string | null>(null);
   const [view, setView] = useState<"list" | "map">("list");
   const [mapType, setMapType] = useState<"map" | "satellite">("map");
   const [drawActive, setDrawActive] = useState(false);
@@ -169,11 +170,13 @@ export default function HomeSearchClient() {
   useEffect(() => {
     fetchSystemLinks()
       .then((links) => {
-        const pick = links.find((l) => l.name === "Map Search") || links.find((l) => l.category === "search");
-        if (pick) setFullSearchUrl(pick.url);
+        const search = links.find((l) => l.name === "Map Search") || links.find((l) => l.category === "search");
+        if (search) setFullSearchUrl(search.url);
+        const account = links.find((l) => l.name === "My Account") || links.find((l) => l.category === "user");
+        if (account) setFullAccountUrl(account.url);
       })
       .catch(() => {
-        // full-MLS-search link is a nice-to-have — silently skip if it fails
+        // full-MLS-search / account links are a nice-to-have — silently skip if it fails
       });
   }, []);
 
@@ -338,6 +341,16 @@ export default function HomeSearchClient() {
                 className="btn btn-secondary hs-full-mls"
               >
                 Search the full MLS
+              </a>
+            )}
+            {fullAccountUrl && (
+              <a
+                href={fullAccountUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary hs-full-mls"
+              >
+                My Saved Searches
               </a>
             )}
             {user ? (
