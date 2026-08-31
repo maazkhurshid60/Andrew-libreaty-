@@ -15,7 +15,7 @@ import FiltersDrawer from "./FiltersDrawer";
 import MapPanel from "./MapPanel";
 import SaveSearchButton from "./SaveSearchButton";
 import { useIdxListings } from "@/hooks/useIdxListings";
-import { toListing } from "@/lib/idx";
+import { toListing, fetchSystemLinks } from "@/lib/idx";
 import { useAuth } from "@/hooks/useAuth";
 import { listFavoriteMlsIds, addFavorite, removeFavorite } from "@/lib/favorites";
 import PageLoader from "../components/PageLoader";
@@ -66,6 +66,7 @@ export default function HomeSearchClient() {
   const [hidden, setHidden] = useState<Set<number>>(new Set());
   const [menuOpen, setMenuOpen] = useState<number | null>(null);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const [fullSearchUrl, setFullSearchUrl] = useState<string | null>(null);
   const [view, setView] = useState<"list" | "map">("list");
   const [mapType, setMapType] = useState<"map" | "satellite">("map");
   const [drawActive, setDrawActive] = useState(false);
@@ -164,6 +165,17 @@ export default function HomeSearchClient() {
     document.body.classList.toggle("map-view", view === "map");
     return () => document.body.classList.remove("map-view");
   }, [view]);
+
+  useEffect(() => {
+    fetchSystemLinks()
+      .then((links) => {
+        const pick = links.find((l) => l.name === "Map Search") || links.find((l) => l.category === "search");
+        if (pick) setFullSearchUrl(pick.url);
+      })
+      .catch(() => {
+        // full-MLS-search link is a nice-to-have — silently skip if it fails
+      });
+  }, []);
 
   /* ---------- Save / share / hide ---------- */
   const toggleSave = (l: Listing) => {
@@ -318,6 +330,16 @@ export default function HomeSearchClient() {
               <span>All filters</span>
               {filterCount > 0 && <span className="filter-count">{filterCount}</span>}
             </button>
+            {fullSearchUrl && (
+              <a
+                href={fullSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary hs-full-mls"
+              >
+                Search the full MLS
+              </a>
+            )}
             {user ? (
               <div className="hs-account" data-open={accountMenuOpen}>
                 <button

@@ -71,6 +71,7 @@
 
 .btn-filters { padding: 11px 18px; font-size: 14px; position: relative; }
 .btn-filters svg { width: 17px; height: 17px; }
+.hs-full-mls { padding: 11px 18px; font-size: 13.5px; white-space: nowrap; }
 .filter-count {
   display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 6px;
   font-size: 12px; font-weight: 600; border-radius: 999px;
