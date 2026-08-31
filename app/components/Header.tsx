@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowRight } from "./icons";
 import { WhatsappIcon } from "./vuesax";
+import { fetchSystemLinks } from "@/lib/idx";
 
 const NAV_LINKS = [
   { href: "/property", label: "Properties" },
@@ -31,9 +32,25 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHash, setActiveHash] = useState<string>("");
+  const [accountUrl, setAccountUrl] = useState<string | null>(null);
   const pathname = usePathname();
   // Inner pages have no transparent hero behind the header — keep it solid & sticky.
   const solid = pathname !== "/";
+
+  /* IDX Broker's own "My Account" page — it shows a login prompt for a
+   * signed-out visitor and their saved searches/favorites once signed in,
+   * so a single link covers both states without us tracking IDX's session
+   * (there's no shared cookie between this domain and idxbroker.com). */
+  useEffect(() => {
+    fetchSystemLinks()
+      .then((links) => {
+        const account = links.find((l) => l.name === "My Account") || links.find((l) => l.category === "user");
+        if (account) setAccountUrl(account.url);
+      })
+      .catch(() => {
+        // nice-to-have — silently skip if it fails
+      });
+  }, []);
 
   /* Sticky glass header — shrink on scroll */
   useEffect(() => {
@@ -116,6 +133,11 @@ export default function Header() {
               <WhatsappIcon />
               <span>(310) 709-0581</span>
             </a>
+            {accountUrl && (
+              <a href={accountUrl} target="_blank" rel="noopener noreferrer" className="header-portal">
+                My Account
+              </a>
+            )}
             <a href="/contact" className="btn btn-primary btn-magnetic header-cta">
               <span>Contact Us</span>
               <ArrowRight />
@@ -170,6 +192,16 @@ export default function Header() {
           ))}
         </nav>
         <div className="side-foot">
+          {accountUrl && (
+            <a
+              href={accountUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="side-item"
+            >
+              My Account
+            </a>
+          )}
           <p className="side-foot-label">Get in Touch</p>
           <a href="/contact" className="btn btn-primary side-connect">
             Let&rsquo;s Connect
