@@ -1,0 +1,111 @@
+/* Dedicated, hand-maintained stylesheet for public/idx-wrapper.html — the
+ * donor page IDX Broker's Dynamic Wrapper fetches to extract header/footer
+ * markup. Kept deliberately separate from the app's own build output (no
+ * hashed /_next/ paths, no next/font) so this URL never changes between
+ * deploys and never depends on a live React/Next runtime. If Header.tsx or
+ * Footer.tsx's visual design changes, mirror the change here too. */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Onest:wght@400;500;600&display=swap");
+
+:root {
+  --ink: #17140f;
+  --ink-soft: #3d382f;
+  --line: rgba(23, 20, 15, 0.12);
+  --line-soft: rgba(23, 20, 15, 0.07);
+  --ivory: #f6f3ec;
+  --paper: #fffdf8;
+  --gold: #D19852;
+  --gold-deep: #9a6c2e;
+  --brand: #084446;
+  --brand-hover: #0c5a5c;
+  --dark: #084446;
+  --on-dark: #f3efe6;
+  --on-dark-muted: rgba(243, 239, 230, 0.66);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Onest", -apple-system, BlinkMacSystemFont, sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 260ms;
+  --container: 1200px;
+  --header-h: 64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); color: var(--ink); background: var(--ivory); -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; }
+ul, ol { list-style: none; }
+
+.container { width: min(var(--container), 100% - 48px); margin-inline: auto; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 15px; font-weight: 500; line-height: 1;
+  padding: 16px 28px; border-radius: 999px; white-space: nowrap;
+}
+.btn .btn-arrow { width: 16px; height: 16px; flex: none; }
+.btn-primary { background: var(--brand); color: var(--on-dark); box-shadow: 0 1px 2px rgba(8, 68, 70, 0.25); }
+.header-cta { padding: 13px 22px; font-size: 14px; }
+
+/* ---------- Header (always rendered in its "scrolled/solid" look — no JS
+   here to toggle it on scroll like the live site does) ---------- */
+.site-header {
+  position: relative; z-index: 200;
+  background: rgba(246, 243, 236, 0.93);
+  border-bottom: 1px solid var(--line-soft);
+  box-shadow: 0 1px 24px rgba(23, 20, 15, 0.06);
+}
+.header-inner {
+  width: min(1360px, 100% - 48px); margin-inline: auto; height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.wordmark { display: flex; flex-direction: row; align-items: center; gap: 13px; line-height: 1; }
+.wordmark-logo { width: 34px; height: auto; flex: none; display: block; }
+.wordmark-text { display: flex; align-items: center; gap: 9px; margin-top: 9px; }
+.wordmark-word { height: 19px; width: auto; display: block; }
+@media (max-width: 400px) {
+  .wordmark { gap: 9px; }
+  .wordmark-logo { width: 28px; }
+  .wordmark-word { height: 16px; }
+}
+.main-nav { display: none; gap: 4px; }
+.nav-link { font-size: 14px; font-weight: 500; color: var(--ink-soft); padding: 10px 14px; border-radius: 8px; white-space: nowrap; }
+@media (min-width: 900px) { .main-nav { display: flex; } }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.header-phone { display: none; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--ink-soft); padding: 10px 12px; white-space: nowrap; }
+.header-phone svg { width: 15px; height: 15px; }
+@media (min-width: 900px) { .header-phone { display: inline-flex; } }
+.menu-toggle { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; }
+.menu-toggle-icon { width: 24px; height: 24px; object-fit: contain; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--dark); color: var(--on-dark); padding: 80px 0 36px; }
+.footer-grid { display: grid; grid-template-columns: 1.7fr 1.1fr 1fr 1fr; gap: clamp(28px, 3vw, 52px); padding-bottom: 44px; }
+.footer-license-row { display: grid; grid-template-columns: 1.7fr 3.1fr; gap: clamp(28px, 3vw, 52px); padding-bottom: 44px; align-items: start; }
+.footer-license-row .footer-disclaimer { border-left: 1px solid rgba(243, 239, 230, 0.14); padding-left: clamp(24px, 3vw, 48px); max-width: 92ch; }
+.footer-logo { display: inline-flex; align-items: center; gap: 12px; }
+.footer-logo-mark { height: 42px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+.footer-logo-word { display: inline-flex; align-items: center; gap: 9px; }
+.footer-logo-img { height: 21px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+.footer-tagline { margin-top: 20px; font-size: 14px; color: var(--on-dark-muted); max-width: 30ch; }
+.footer-licensing h3 { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.footer-compass-logo { height: 60px; width: auto; margin-bottom: 22px; opacity: 0.92; }
+.footer-licensing ul { display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; line-height: 1.5; color: var(--on-dark-muted); }
+.footer-social { margin-top: 24px; display: flex; gap: 10px; }
+.social-link { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(243, 239, 230, 0.18); color: var(--on-dark-muted); }
+.social-link svg { width: 17px; height: 17px; }
+.footer-col h3 { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: var(--on-dark-muted); }
+.footer-link { color: var(--on-dark-muted); border-bottom: 1px solid transparent; }
+.footer-disclaimer { font-size: 12px; line-height: 1.7; color: rgba(243, 239, 230, 0.4); }
+.footer-bottom { padding-top: 28px; border-top: 1px solid rgba(243, 239, 230, 0.1); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; color: rgba(243, 239, 230, 0.45); }
+.footer-legal { display: flex; gap: 24px; }
+
+@media (max-width: 1080px) {
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1fr; }
+  .footer-license-row { grid-template-columns: 1fr; gap: 28px; }
+  .footer-license-row .footer-disclaimer { border-left: 0; padding-left: 0; max-width: none; }
+}
+
+/* The idxStart/idxStop gap where IDX Broker splices in its own MLS content */
+#idxStart, #idxStop { display: block; }

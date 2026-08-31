@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { SITE_URL } from "@/lib/site";
 
 /**
  * Site-wide pointer & scroll interactions ported from the original js/main.js.
@@ -199,7 +198,7 @@ export default function GlobalEffects() {
       <div className="cursor-dot" aria-hidden="true"></div>
       <div className="cursor-glow" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="cursor-home" src={`${SITE_URL}/Group 4.svg`} alt="" />
+        <img className="cursor-home" src="/Group 4.svg" alt="" />
         <span className="cursor-label">Drag</span>
       </div>
     </>

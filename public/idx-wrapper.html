@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--
+  IDX Broker Dynamic Wrapper source — NOT a page of the live site.
+
+  IDX Broker's crawler fetches this exact file and string-splices its own
+  MLS search markup between the #idxStart and #idxStop divs below, then
+  serves the combined page at andrew-liberty.idxbroker.com. It's a plain
+  static file (no React/Next.js) on purpose: an earlier version pointed IDX
+  Broker at a live Next.js page, and Next's own hydration script — shipped
+  with every App Router page — ran in the visitor's browser, compared the
+  live DOM to what it originally server-rendered (two empty marker divs,
+  nothing between them), and deleted IDX's injected content as a "mismatch"
+  a moment after the page loaded. A static HTML file has no such script, so
+  nothing ever touches the injected content.
+
+  Keep this file's markup/classes in sync with app/components/Header.tsx and
+  Footer.tsx by hand if their design changes — see public/idx-wrapper.css.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Andrew Liberty Team</title>
+  <link rel="stylesheet" href="https://www.andrewliberty.com/idx-wrapper.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="https://www.andrewliberty.com/#top" aria-label="Andrew Liberty Team — home">
+        <img src="https://www.andrewliberty.com/logo.png" alt="" class="wordmark-logo" width="34" height="39" />
+        <span class="wordmark-text">
+          <img src="https://www.andrewliberty.com/logo-andrew.png" alt="" class="wordmark-word" width="99" height="21" />
+          <img src="https://www.andrewliberty.com/logo-liberty.png" alt="" class="wordmark-word" width="91" height="21" />
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a class="nav-link" href="https://www.andrewliberty.com/property">Properties</a>
+        <a class="nav-link" href="https://www.andrewliberty.com/home-search">Home Search</a>
+        <a class="nav-link" href="https://www.andrewliberty.com/neighborhoods">Neighborhoods</a>
+        <a class="nav-link" href="https://www.andrewliberty.com/home-valuation">Home Valuation</a>
+        <a class="nav-link" href="https://www.andrewliberty.com/contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="header-phone" href="https://wa.me/13107090581" aria-label="Message us on WhatsApp at (310) 709-0581">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6.9 20.6C8.4 21.5 10.2 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 13.8 2.5 15.5 3.3 17L2.44044 20.306C2.24572 21.0549 2.93892 21.7317 3.68299 21.5191L6.9 20.6Z" />
+          </svg>
+          <span>(310) 709-0581</span>
+        </a>
+        <a href="https://www.andrewliberty.com/contact" class="btn btn-primary header-cta">
+          <span>Contact Us</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div id="idxStart"></div>
+  <div id="idxStop"></div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="https://www.andrewliberty.com/#top" aria-label="Andrew Liberty Team — home">
+          <img src="https://www.andrewliberty.com/logo.png" alt="" class="footer-logo-mark" width="34" height="39" />
+          <span class="footer-logo-word">
+            <img src="https://www.andrewliberty.com/logo-andrew.png" alt="Andrew" class="footer-logo-img" width="99" height="21" />
+            <img src="https://www.andrewliberty.com/logo-liberty.png" alt="Liberty" class="footer-logo-img" width="91" height="21" />
+          </span>
+        </a>
+        <p class="footer-tagline">Strategic real estate guidance for Los Angeles buyers, sellers, and investors.</p>
+        <div class="footer-social" aria-label="Social links">
+          <a href="https://www.instagram.com/iamandrewliberty?igsi=cnZ3c3g4dmxsdWdu" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" /><path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" /><path d="M17.6361 7H17.6477" stroke-width="2" /></svg>
+          </a>
+          <a href="https://www.facebook.com/andrew.liberty.90?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9.3V12.2H16.6C16.8 12.2 16.9 12.4 16.9 12.6L16.5 14.5C16.5 14.6 16.3 14.7 16.2 14.7H14V22H11V14.8H9.3C9.1 14.8 9 14.7 9 14.5V12.6C9 12.4 9.1 12.3 9.3 12.3H11V9C11 7.3 12.3 6 14 6H16.7C16.9 6 17 6.1 17 6.3V8.7C17 8.9 16.9 9 16.7 9H14.3C14.1 9 14 9.1 14 9.3Z" /><path d="M15 22H9C4 22 2 20 2 15V9C2 4 4 2 9 2H15C20 2 22 4 22 9V15C22 20 20 22 15 22Z" /></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/andrew-liberty-55aa612a?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4V8h4v2a5 5 0 0 1 2-2z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" /></svg>
+          </a>
+          <a href="https://www.compass.com/agents/andrew-liberty/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Compass agent profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><path d="m16 8-2 6-6 2 2-6 6-2z" /></svg>
+          </a>
+          <a href="https://share.google/sbU7WzKUX9hpNJfOj" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Google Reviews">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.39 5.21L16.7999 8.02999C16.9899 8.41999 17.4999 8.78999 17.9299 8.86999L20.48 9.28999C22.11 9.55999 22.49 10.74 21.32 11.92L19.3299 13.91C18.9999 14.24 18.81 14.89 18.92 15.36L19.4899 17.82C19.9399 19.76 18.9 20.52 17.19 19.5L14.7999 18.08C14.3699 17.82 13.65 17.82 13.22 18.08L10.8299 19.5C9.11994 20.51 8.07995 19.76 8.52995 17.82L9.09996 15.36C9.20996 14.9 9.01995 14.25 8.68995 13.91L6.69996 11.92C5.52996 10.75 5.90996 9.56999 7.53996 9.28999L10.0899 8.86999C10.5199 8.79999 11.03 8.41999 11.22 8.02999L12.63 5.21C13.38 3.68 14.62 3.68 15.39 5.21Z" /><path d="M8 5H2" /><path d="M5 19H2" /><path d="M3 12H2" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="mailto:andrew.liberty@compass.com" class="footer-link" target="_blank" rel="noopener noreferrer">andrew.liberty@compass.com</a></li>
+          <li><a href="https://wa.me/13107090581" target="_blank" rel="noopener noreferrer" class="footer-link">(310) 709-0581</a></li>
+          <li>12001 Ventura Pl Ste 100<br />Studio City, CA 91604</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Open Hours</h3>
+        <ul>
+          <li>Monday – Sunday</li>
+          <li>8:00 AM – 7:00 PM</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="https://www.andrewliberty.com/property" class="footer-link">Properties</a></li>
+          <li><a href="https://www.andrewliberty.com/neighborhoods" class="footer-link">Neighborhoods</a></li>
+          <li><a href="https://www.andrewliberty.com/home-valuation" class="footer-link">Home Valuation</a></li>
+          <li><a href="https://www.andrewliberty.com/blog" class="footer-link">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-license-row">
+      <div class="footer-licensing">
+        <h3>Licensing</h3>
+        <img src="https://www.andrewliberty.com/AL%20logo%202.png" alt="Compass" class="footer-compass-logo" width="150" height="22" />
+        <ul>
+          <li>Andrew Ruric Liberty II | CA DRE# 01965696</li>
+          <li>Compass California, Inc. | CA DRE# 01991628</li>
+        </ul>
+      </div>
+      <p class="footer-disclaimer">
+        Andrew Liberty Team is a team of real estate agents licensed by the state of California
+        affiliated with Compass. Compass is a licensed real estate broker licensed by the state of
+        California and abides by equal housing opportunity laws. All material presented herein is
+        intended for informational purposes only. Information is compiled from sources deemed
+        reliable but is subject to errors, omissions, changes in price, condition, sale, or
+        withdrawal without notice. No statement is made as to accuracy of any description. All
+        measurements and square footages are approximate. This is not intended to solicit property
+        already listed. Nothing herein shall be construed as legal, accounting or other
+        professional advice outside the realm of real estate brokerage.
+      </p>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 Andrew Liberty Team. All rights reserved. · Site by EM Creative Studio</p>
+      <div class="footer-legal">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Use</a>
+        <a href="#" class="footer-link">Accessibility</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,5 +1,4 @@
 import { FacebookIcon, InstagramIcon, LinkedInIcon, CompassIcon, StarIcon } from "./vuesax";
-import { SITE_URL } from "@/lib/site";
 
 const SOCIALS = [
   { label: "Instagram", href: "https://www.instagram.com/iamandrewliberty?igsi=cnZ3c3g4dmxsdWdu", Icon: InstagramIcon },
@@ -16,12 +15,12 @@ export default function Footer() {
         <div className="footer-brand">
           <a className="footer-logo" href="/#top" aria-label="Andrew Liberty Team — home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${SITE_URL}/logo.png`} alt="" className="footer-logo-mark" width={34} height={39} />
+            <img src="/logo.png" alt="" className="footer-logo-mark" width={34} height={39} />
             <span className="footer-logo-word">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${SITE_URL}/logo-andrew.png`} alt="Andrew" className="footer-logo-img" width={99} height={21} />
+              <img src="/logo-andrew.png" alt="Andrew" className="footer-logo-img" width={99} height={21} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${SITE_URL}/logo-liberty.png`} alt="Liberty" className="footer-logo-img" width={91} height={21} />
+              <img src="/logo-liberty.png" alt="Liberty" className="footer-logo-img" width={91} height={21} />
             </span>
           </a>
           <p className="footer-tagline">
@@ -102,7 +101,7 @@ export default function Footer() {
         <div className="footer-licensing">
           <h3>Licensing</h3>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`${SITE_URL}/AL logo 2.png`} alt="Compass" className="footer-compass-logo" width={150} height={22} />
+          <img src="/AL logo 2.png" alt="Compass" className="footer-compass-logo" width={150} height={22} />
           <ul>
             <li>Andrew Ruric Liberty II | CA DRE# 01965696</li>
             <li>Compass California, Inc. | CA DRE# 01991628</li>
