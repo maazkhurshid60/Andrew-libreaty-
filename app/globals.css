@@ -1393,3 +1393,12 @@ ul, ol { list-style: none; }
 .page-loader-label { font-size: 13.5px; font-weight: 500; color: var(--muted); }
 @keyframes pl-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes pl-glow { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+/* UserWay accessibility widget — force bottom-right regardless of the
+   widget's own default placement (data-position is a hint, not a guarantee). */
+#userwayAccessibilityIcon {
+  top: auto !important;
+  left: auto !important;
+  bottom: 20px !important;
+  right: 20px !important;
+}

@@ -70,7 +70,7 @@ export default function RootLayout({
           <MobileCtaBar />
           <AuthModal />
         </AuthProvider>
-        <Script src="https://cdn.userway.org/widget.js" data-account="Wpzt1Vuecx" strategy="afterInteractive" />
+        <Script src="https://cdn.userway.org/widget.js" data-account="Wpzt1Vuecx" data-position="6" strategy="afterInteractive" />
       </body>
     </html>
   );
