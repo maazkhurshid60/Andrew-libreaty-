@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Fraunces, Onest, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import "./home-search.css";
@@ -69,6 +70,7 @@ export default function RootLayout({
           <MobileCtaBar />
           <AuthModal />
         </AuthProvider>
+        <Script src="https://cdn.userway.org/widget.js" data-account="Wpzt1Vuecx" strategy="afterInteractive" />
       </body>
     </html>
   );
