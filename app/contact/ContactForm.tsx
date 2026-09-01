@@ -23,19 +23,24 @@ export default function ContactForm() {
     }
     setSending(true);
     const [firstName, ...rest] = form.name.trim().split(" ");
-    const leadId = await createLead({
-      firstName,
-      lastName: rest.join(" ") || "—",
-      email: form.email.trim(),
-      phone: form.phone.trim() || undefined,
-      comments: form.message.trim() || undefined,
-    });
-    setSending(false);
-    if (leadId) {
-      setStatus(`Thanks, ${firstName} — your message is on its way. Andrew will be in touch shortly.`);
-      setForm({ name: "", email: "", phone: "", message: "", consent: false });
-    } else {
+    try {
+      const leadId = await createLead({
+        firstName,
+        lastName: rest.join(" ") || "—",
+        email: form.email.trim(),
+        phone: form.phone.trim() || undefined,
+        comments: form.message.trim() || undefined,
+      });
+      if (leadId) {
+        setStatus(`Thanks, ${firstName} — your message is on its way. Andrew will be in touch shortly.`);
+        setForm({ name: "", email: "", phone: "", message: "", consent: false });
+      } else {
+        setStatus("Something went wrong sending your message — please try again, or reach out on WhatsApp.");
+      }
+    } catch {
       setStatus("Something went wrong sending your message — please try again, or reach out on WhatsApp.");
+    } finally {
+      setSending(false);
     }
   };
 

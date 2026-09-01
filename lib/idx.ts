@@ -276,6 +276,9 @@ export async function fetchSystemLinks(): Promise<SystemLink[]> {
   return systemLinksCache;
 }
 
+/** IDX returns 409 "Lead already exists" for an email already on file —
+ *  a routine case (a repeat visitor), not a failure. Falls back to
+ *  looking the existing lead up instead of throwing. */
 export async function createLead(input: {
   firstName: string;
   lastName: string;
@@ -283,12 +286,16 @@ export async function createLead(input: {
   phone?: string;
   comments?: string;
 }): Promise<string | null> {
-  const res = await idxFetch<{ newID?: number | string }>("leads/lead", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(input),
-  });
-  return res?.newID != null ? String(res.newID) : null;
+  try {
+    const res = await idxFetch<{ newID?: number | string }>("leads/lead", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    });
+    return res?.newID != null ? String(res.newID) : null;
+  } catch {
+    return findLeadByEmail(input.email).catch(() => null);
+  }
 }
 
 type RawLead = { id: string; email: string };

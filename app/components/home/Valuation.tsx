@@ -45,21 +45,26 @@ export default function Valuation() {
     const email = String(data.get("email") || "").trim();
     const phone = String(data.get("phone") || "").trim();
 
-    const leadId = await createLead({
-      firstName: firstName || fullName,
-      lastName: rest.join(" ") || "—",
-      email,
-      phone: phone || undefined,
-      comments: `Home valuation request for: ${address}`,
-    });
-
-    setSending(false);
-    if (leadId) {
-      setStatus("Thank you — your valuation request is in. Expect a response within the hour.");
-      form.reset();
-    } else {
+    try {
+      const leadId = await createLead({
+        firstName: firstName || fullName,
+        lastName: rest.join(" ") || "—",
+        email,
+        phone: phone || undefined,
+        comments: `Home valuation request for: ${address}`,
+      });
+      if (leadId) {
+        setStatus("Thank you — your valuation request is in. Expect a response within the hour.");
+        form.reset();
+      } else {
+        setIsError(true);
+        setStatus("Something went wrong — please try again, or reach out on WhatsApp.");
+      }
+    } catch {
       setIsError(true);
       setStatus("Something went wrong — please try again, or reach out on WhatsApp.");
+    } finally {
+      setSending(false);
     }
   }, []);
 
