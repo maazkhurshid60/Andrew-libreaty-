@@ -28,16 +28,16 @@ export default function MeetAndrew() {
             Compass California, Inc. | CA DRE# 01991628
           </p>
           <p className="about-bio reveal" data-reveal-delay="120">
-            Andrew Liberty is a Los Angeles based REALTOR® and certified Real Estate Negotiation
-            Expert who brings a strong mix of strategy and real world experience to his work. With a
-            background in commercial real estate, he has a sharp eye for value and opportunity,
-            whether that is a single family home, an income property, or a development play.
+            I&rsquo;m a Los Angeles based REALTOR® and Certified Real Estate Negotiation Expert who
+            combines strategic thinking with real-world experience. With a background in commercial
+            real estate, I bring a sharp eye for value and opportunity, whether that is a
+            single-family home, an income property, or a development play.
           </p>
           <p className="about-bio reveal" data-reveal-delay="160">
-            He works with both investors and homebuyers and tends to take on the role of advisor
-            just as much as agent. Andrew is hands on, thoughtful, and focused on helping clients
-            make smart decisions without overcomplicating the process. He does the research, looks
-            at the numbers, and makes sure his clients feel confident every step of the way.
+            I work with both investors and homebuyers, often taking on the role of advisor as much
+            as agent. I&rsquo;m hands-on, thoughtful, and focused on helping clients make smart
+            decisions without overcomplicating the process. I do the research, look at the numbers,
+            and make sure my clients feel confident every step of the way.
           </p>
 
           <ul className="credential-chips" aria-label="Credentials">

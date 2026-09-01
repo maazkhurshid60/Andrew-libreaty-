@@ -30,13 +30,13 @@ export default function Hero() {
         <div className="hero-copy">
           <p className="eyebrow reveal">Los Angeles · Compass</p>
           <h1 className="hero-title reveal" data-reveal-delay="80">
-            Good Moves
+            Real Estate Agent in Los Angeles
             <br />
-            <em>Aren&rsquo;t Accidental</em>
+            <em>for Smart, Confident Moves</em>
           </h1>
           <p className="hero-sub reveal" data-reveal-delay="160">
-            Strategic real estate guidance for buyers, sellers, and investors across
-            Los&nbsp;Angeles.
+            Andrew Liberty, a Certified Real Estate Negotiation Expert with Compass, offers strategic
+            guidance for buyers, sellers, and investors across Los&nbsp;Angeles.
           </p>
 
           {/* Search capsule */}

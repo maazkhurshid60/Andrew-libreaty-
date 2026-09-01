@@ -64,6 +64,16 @@
 .val-body { margin-top: 16px; font-size: 15.5px; line-height: 1.75; color: var(--ink-soft); }
 .val-worth-copy .btn { margin-top: 26px; }
 
+.val-checklist { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.val-checklist li {
+  position: relative; padding-left: 26px;
+  font-size: 15.5px; line-height: 1.6; color: var(--ink-soft);
+}
+.val-checklist li::before {
+  content: "✓"; position: absolute; left: 0; top: 0;
+  color: var(--gold); font-weight: 600;
+}
+
 /* ---------- FAQ ---------- */
 .val-faq { background: var(--ivory); }
 .faq-list { margin-top: 30px; border-top: 1px solid var(--line); }

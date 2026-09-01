@@ -18,8 +18,8 @@ export default function WhatsTheMove() {
             </div>
             <h3>Buy a Home</h3>
             <p>
-              Find the right home at the right price, with a certified negotiator reading the
-              market on your side.
+              Find the right home in Los Angeles at the right price, with a certified negotiator
+              reading the market on your side.
             </p>
             <a href="#sold" className="btn btn-secondary btn-card">
               <span>Start Home Search</span>
@@ -33,8 +33,8 @@ export default function WhatsTheMove() {
             </div>
             <h3>Sell a Home</h3>
             <p>
-              Price it right, position it well, and let a certified negotiation expert handle the
-              offers.
+              Price it right, position it well, and let a certified negotiation expert handle
+              offers on your Los Angeles home.
             </p>
             <p className="move-proof">Positioning · pricing · negotiation, handled</p>
             <a href="#valuation" className="btn btn-secondary btn-card">
@@ -48,7 +48,10 @@ export default function WhatsTheMove() {
               <FavoriteChartIcon />
             </div>
             <h3>Invest Strategically</h3>
-            <p>From duplexes to development lots, every deal gets evaluated on the numbers first.</p>
+            <p>
+              From duplexes to development lots, every Los Angeles investment deal gets evaluated
+              on the numbers first.
+            </p>
             <a href="/contact" className="btn btn-secondary btn-card">
               <span>Explore Opportunities</span>
               <ArrowRight />

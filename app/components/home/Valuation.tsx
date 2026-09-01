@@ -53,7 +53,8 @@ export default function Valuation() {
           <p className="eyebrow">Free &amp; Confidential</p>
           <h2 className="section-title">How Much Is Your Home Worth?</h2>
           <p className="section-sub">
-            Get an instant property valuation and expert guidance from a local advisor.
+            Get an instant property valuation and expert guidance from Andrew Liberty, your Los
+            Angeles real estate advisor.
           </p>
 
           <form className="valuation-form" onSubmit={onSubmit} noValidate>

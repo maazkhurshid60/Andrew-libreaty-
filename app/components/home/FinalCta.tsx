@@ -6,9 +6,9 @@ export default function FinalCta() {
       <div className="container final-inner">
         <h2 className="final-title reveal">Beyond the Transaction</h2>
         <p className="final-copy reveal" data-reveal-delay="60">
-          Our team brings together real-world experience, thoughtful strategy, and a calm, hands-on
-          approach to help clients move with clarity. From homes to investments, we focus on smart
-          decisions, not unnecessary complexity.
+          The Andrew Liberty Team brings together real-world experience, thoughtful strategy, and a
+          calm, hands-on approach to help Los Angeles clients move with clarity. From homes to
+          investments, we focus on smart decisions, not unnecessary complexity.
         </p>
         <div className="final-ctas reveal" data-reveal-delay="120">
           <a href="/contact" className="btn btn-primary btn-magnetic">
