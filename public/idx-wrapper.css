@@ -110,11 +110,14 @@ ul, ol { list-style: none; }
 /* The idxStart/idxStop gap where IDX Broker splices in its own MLS content */
 #idxStart, #idxStop { display: block; }
 
-/* UserWay accessibility widget — force bottom-right regardless of the
-   widget's own default placement (data-position is a hint, not a guarantee). */
-#userwayAccessibilityIcon {
+/* UserWay accessibility widget — the actual fixed-position element is the
+   outer ".uwy" wrapper (its position-N class, e.g. "userway_p6", is not
+   reliably bottom-right), not the inner #userwayAccessibilityIcon div. */
+.uwy {
+  position: fixed !important;
   top: auto !important;
   left: auto !important;
   bottom: 20px !important;
   right: 20px !important;
+  z-index: 999999 !important;
 }
