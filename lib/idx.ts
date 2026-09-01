@@ -335,3 +335,32 @@ export async function deleteLeadSearch(leadId: string, searchId: string): Promis
   const res = await fetch(`/api/idx/leads/search/${leadId}/${searchId}`, { method: "DELETE" });
   return res.ok;
 }
+
+/** This account has a single MLS board — every listing's idxID is this. */
+export const ACCOUNT_IDX_ID = "e025";
+
+type RawLeadFavorite = { id: string; listingID: string };
+
+export async function getLeadFavorites(leadId: string): Promise<Map<string, string>> {
+  const res = await idxFetch<RawLeadFavorite[]>(`leads/property/${leadId}`);
+  const map = new Map<string, string>();
+  for (const row of res || []) map.set(row.listingID, row.id);
+  return map;
+}
+
+export async function saveLeadFavorite(leadId: string, listingId: string): Promise<string | null> {
+  const res = await idxFetch<{ newID?: number | string }>(`leads/property/${leadId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      propertyName: listingId,
+      property: { idxID: ACCOUNT_IDX_ID, listingID: listingId },
+    }),
+  });
+  return res?.newID != null ? String(res.newID) : null;
+}
+
+export async function deleteLeadFavorite(leadId: string, favoriteId: string): Promise<boolean> {
+  const res = await fetch(`/api/idx/leads/property/${leadId}/${favoriteId}`, { method: "DELETE" });
+  return res.ok;
+}

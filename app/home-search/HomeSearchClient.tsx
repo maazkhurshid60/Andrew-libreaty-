@@ -16,7 +16,7 @@ import MapPanel from "./MapPanel";
 import SaveSearchButton from "./SaveSearchButton";
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toListing, fetchSystemLinks } from "@/lib/idx";
-import { useAuth } from "@/hooks/useAuth";
+import { useLead } from "@/hooks/useLead";
 import { listFavoriteMlsIds, addFavorite, removeFavorite } from "@/lib/favorites";
 import PageLoader from "../components/PageLoader";
 
@@ -85,16 +85,16 @@ export default function HomeSearchClient() {
     [rawListings]
   );
 
-  /* ---------- Saved listings, per signed-in account ---------- */
-  const { user, requireAuth, signOut } = useAuth();
+  /* ---------- Saved listings, per IDX lead ---------- */
+  const { leadId, requireLead, signOut } = useLead();
   useEffect(() => {
-    if (!user) {
+    if (!leadId) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- reset when signed out
       setSaved(new Set());
       return;
     }
-    listFavoriteMlsIds(user.id).then(setSaved);
-  }, [user]);
+    listFavoriteMlsIds(leadId).then(setSaved);
+  }, [leadId]);
 
   const toast = useCallback((msg: string) => {
     setToastMsg(msg);
@@ -182,8 +182,8 @@ export default function HomeSearchClient() {
 
   /* ---------- Save / share / hide ---------- */
   const toggleSave = (l: Listing) => {
-    if (!user) {
-      requireAuth("Log in to save homes to your favorites.");
+    if (!leadId) {
+      requireLead("Save your info to add homes to your favorites.");
       return;
     }
     const on = !saved.has(l.mls);
@@ -194,7 +194,7 @@ export default function HomeSearchClient() {
       return next;
     });
     toast(on ? "Saved to your favorites" : "Removed from favorites");
-    const persist = on ? addFavorite(user.id, l.mls) : removeFavorite(user.id, l.mls);
+    const persist = on ? addFavorite(leadId, l.mls) : removeFavorite(leadId, l.mls);
     persist.then((ok) => {
       if (ok) return;
       // Revert on failure
@@ -353,7 +353,7 @@ export default function HomeSearchClient() {
                 My Saved Searches
               </a>
             )}
-            {user ? (
+            {leadId ? (
               <div className="hs-account" data-open={accountMenuOpen}>
                 <button
                   type="button"
@@ -382,7 +382,7 @@ export default function HomeSearchClient() {
                 )}
               </div>
             ) : (
-              <button type="button" className="hs-account-btn" aria-label="Log in" onClick={() => requireAuth()}>
+              <button type="button" className="hs-account-btn" aria-label="Log in" onClick={() => requireLead()}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <circle cx="12" cy="8" r="4" />
                   <path d="M4 21c1.6-4 5-6 8-6s6.4 2 8 6" />

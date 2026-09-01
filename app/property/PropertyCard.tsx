@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowRight } from "../components/icons";
 import { PLACEHOLDER } from "../home-search/listings";
-import { useAuth } from "@/hooks/useAuth";
+import { useLead } from "@/hooks/useLead";
 import { addFavorite, removeFavorite } from "@/lib/favorites";
 
 export type PropertyItem = {
@@ -49,18 +49,18 @@ export default function PropertyCard({
   onToggleSaved?: (mlsId: string, saved: boolean) => void;
 }) {
   const [saved, setSaved] = useState(initialSaved);
-  const { user, requireAuth } = useAuth();
+  const { leadId, requireLead } = useLead();
 
   const toggleSave = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!user) {
-      requireAuth("Log in to save homes to your favorites.");
+    if (!leadId) {
+      requireLead("Save your info to add homes to your favorites.");
       return;
     }
     const next = !saved;
     setSaved(next);
-    const persist = next ? addFavorite(user.id, p.mlsId) : removeFavorite(user.id, p.mlsId);
+    const persist = next ? addFavorite(leadId, p.mlsId) : removeFavorite(leadId, p.mlsId);
     persist.then((ok) => {
       if (ok) {
         onToggleSaved?.(p.mlsId, next);

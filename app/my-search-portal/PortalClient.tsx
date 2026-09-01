@@ -5,7 +5,7 @@ import { ArrowRight } from "../components/icons";
 import PropertyCard from "../property/PropertyCard";
 import { useIdxListings } from "@/hooks/useIdxListings";
 import { toPropertyItem } from "@/lib/idx";
-import { useAuth } from "@/hooks/useAuth";
+import { useLead } from "@/hooks/useLead";
 import { listFavoriteMlsIds } from "@/lib/favorites";
 import { listSavedSearches, deleteSavedSearch, type SavedSearchRow } from "@/lib/savedSearches";
 import PageLoader from "../components/PageLoader";
@@ -21,15 +21,15 @@ function criteriaSummary(criteria: Record<string, unknown>): string {
 
 export default function PortalClient() {
   const [tab, setTab] = useState<"favorites" | "searches">("favorites");
-  const { user, loading: authLoading, requireAuth } = useAuth();
+  const { leadId, loading: authLoading, requireLead } = useLead();
 
   /* ---------- Favorites ---------- */
   const { data, loading: listingsLoading } = useIdxListings();
   const [savedMls, setSavedMls] = useState<Set<string>>(new Set());
   useEffect(() => {
-    if (!user) return;
-    listFavoriteMlsIds(user.id).then(setSavedMls);
-  }, [user]);
+    if (!leadId) return;
+    listFavoriteMlsIds(leadId).then(setSavedMls);
+  }, [leadId]);
   const favorites = useMemo(() => {
     if (!data) return [];
     return data.filter((raw) => savedMls.has(raw.listingID)).map(toPropertyItem);
@@ -41,28 +41,28 @@ export default function PortalClient() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user) {
+    if (!leadId) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- reset when signed out
       setSearches([]);
       return;
     }
     setSearchesLoading(true);
-    listSavedSearches(user.id)
+    listSavedSearches(leadId)
       .then(setSearches)
       .finally(() => setSearchesLoading(false));
-  }, [user]);
+  }, [leadId]);
 
   const removeSearch = async (searchId: string) => {
-    if (!user) return;
+    if (!leadId) return;
     setDeletingId(searchId);
-    const ok = await deleteSavedSearch(user.id, searchId);
+    const ok = await deleteSavedSearch(leadId, searchId);
     if (ok) setSearches((prev) => prev.filter((s) => s.id !== searchId));
     setDeletingId(null);
   };
 
   if (authLoading) return null;
 
-  if (!user) {
+  if (!leadId) {
     return (
       <div className="container">
         <div className="mp-gate-wrap">
@@ -72,7 +72,7 @@ export default function PortalClient() {
             <h1>My Search Portal</h1>
             <p>Log in to see your favorite properties and saved searches.</p>
             <div className="mp-gate-btns">
-              <button type="button" className="btn btn-gold btn-magnetic" onClick={() => requireAuth()}>
+              <button type="button" className="btn btn-gold btn-magnetic" onClick={() => requireLead()}>
                 <span>Log In / Register</span>
                 <ArrowRight />
               </button>

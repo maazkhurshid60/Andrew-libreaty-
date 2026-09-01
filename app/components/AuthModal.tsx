@@ -1,23 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useLead } from "@/hooks/useLead";
 
 export default function AuthModal() {
-  const { modalOpen, modalReason, closeModal, signIn, signUp } = useAuth();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [fullName, setFullName] = useState("");
+  const { modalOpen, modalReason, closeModal, signIn } = useLead();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [status, setStatus] = useState<"idle" | "busy" | "confirm">("idle");
+  const [status, setStatus] = useState<"idle" | "busy">("idle");
   const [error, setError] = useState("");
 
   const reset = () => {
-    setFullName("");
+    setFirstName("");
+    setLastName("");
     setPhone("");
     setEmail("");
-    setPassword("");
     setStatus("idle");
     setError("");
   };
@@ -25,39 +24,23 @@ export default function AuthModal() {
   const close = () => {
     closeModal();
     reset();
-    setMode("signin");
   };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setStatus("busy");
-    if (mode === "signin") {
-      const { error: err } = await signIn(email, password);
-      if (err) {
-        setError(err);
-        setStatus("idle");
-      } else {
-        close();
-      }
+    const { error: err } = await signIn({
+      email,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone: phone.trim() || undefined,
+    });
+    if (err) {
+      setError(err);
+      setStatus("idle");
     } else {
-      if (!fullName.trim()) {
-        setError("Please enter your name.");
-        setStatus("idle");
-        return;
-      }
-      const { error: err, needsConfirmation } = await signUp(email, password, {
-        fullName: fullName.trim(),
-        phone: phone.trim() || undefined,
-      });
-      if (err) {
-        setError(err);
-        setStatus("idle");
-      } else if (needsConfirmation) {
-        setStatus("confirm");
-      } else {
-        close();
-      }
+      close();
     }
   };
 
@@ -67,11 +50,11 @@ export default function AuthModal() {
       <div
         className={`share-sheet auth-sheet${modalOpen ? " is-open" : ""}`}
         role="dialog"
-        aria-label="Sign in"
+        aria-label="Save your info"
         aria-hidden={!modalOpen}
       >
         <div className="share-head">
-          <p className="share-title">{mode === "signin" ? "Log In" : "Create Account"}</p>
+          <p className="share-title">Continue</p>
           <button className="drawer-close" aria-label="Close" onClick={close}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -81,73 +64,43 @@ export default function AuthModal() {
 
         {modalReason && <p className="share-sub">{modalReason}</p>}
 
-        {status === "confirm" ? (
-          <p className="auth-note">
-            Almost there — we sent a confirmation link to <b>{email}</b>. Click it, then come back and log in.
-          </p>
-        ) : (
-          <>
-            <div className="auth-tabs">
-              <button
-                type="button"
-                className={`auth-tab${mode === "signin" ? " is-active" : ""}`}
-                onClick={() => { setMode("signin"); setError(""); }}
-              >
-                Log In
-              </button>
-              <button
-                type="button"
-                className={`auth-tab${mode === "signup" ? " is-active" : ""}`}
-                onClick={() => { setMode("signup"); setError(""); }}
-              >
-                Register
-              </button>
-            </div>
-
-            <form className="auth-form" onSubmit={submit}>
-              {mode === "signup" && (
-                <>
-                  <input
-                    type="text"
-                    required
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Your full name"
-                    autoComplete="name"
-                  />
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone (optional)"
-                    autoComplete="tel"
-                  />
-                </>
-              )}
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@email.com"
-                autoComplete="email"
-              />
-              <input
-                type="password"
-                required
-                minLength={6}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              />
-              {error && <p className="auth-error">{error}</p>}
-              <button type="submit" className="btn btn-primary btn-magnetic" disabled={status === "busy"}>
-                <span>{status === "busy" ? "Please wait…" : mode === "signin" ? "Log In" : "Create Account"}</span>
-              </button>
-            </form>
-          </>
-        )}
+        <form className="auth-form" onSubmit={submit}>
+          <input
+            type="text"
+            required
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First name"
+            autoComplete="given-name"
+          />
+          <input
+            type="text"
+            required
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last name"
+            autoComplete="family-name"
+          />
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@email.com"
+            autoComplete="email"
+          />
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Phone (optional)"
+            autoComplete="tel"
+          />
+          {error && <p className="auth-error">{error}</p>}
+          <button type="submit" className="btn btn-primary btn-magnetic" disabled={status === "busy"}>
+            <span>{status === "busy" ? "Please wait…" : "Continue"}</span>
+          </button>
+        </form>
       </div>
     </>
   );
