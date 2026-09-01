@@ -240,6 +240,7 @@ export function toDetailListing(raw: RawIdxListing): DetailListing {
 
   return {
     slug: raw.detailsUrlSlug.toLowerCase(),
+    mlsId: raw.listingID,
     address: raw.address,
     city: cityState(raw),
     price: sold ? money(price) : raw.listingPrice,

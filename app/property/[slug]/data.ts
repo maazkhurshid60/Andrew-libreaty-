@@ -6,6 +6,7 @@ export type HistoryItem = { event: string; sub: string; price?: string };
 
 export type Listing = {
   slug: string;
+  mlsId: string;
   address: string;
   city: string;
   price: string;

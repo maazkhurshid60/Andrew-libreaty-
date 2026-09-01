@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight } from "../components/icons";
 import { PLACEHOLDER } from "../home-search/listings";
 import { useLead } from "@/hooks/useLead";
@@ -50,6 +50,11 @@ export default function PropertyCard({
 }) {
   const [saved, setSaved] = useState(initialSaved);
   const { leadId, requireLead } = useLead();
+
+  // initialSaved usually resolves after an async favorites fetch completes on
+  // the parent — useState's initializer alone would miss that later update.
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from an async parent fetch
+  useEffect(() => setSaved(initialSaved), [initialSaved]);
 
   const toggleSave = (e: React.MouseEvent) => {
     e.preventDefault();

@@ -5,6 +5,9 @@ import { ArrowRight } from "../../components/icons";
 import { SmsIcon, ShareIcon, WhatsappIcon } from "../../components/vuesax";
 import PropertyMap from "./PropertyMap";
 import { createLead } from "@/lib/idx";
+import { useLead } from "@/hooks/useLead";
+import { useSavedFavorites } from "@/hooks/useSavedFavorites";
+import { addFavorite, removeFavorite } from "@/lib/favorites";
 import type { Listing } from "./data";
 
 /* ---------- Inline icons ---------- */
@@ -24,7 +27,25 @@ const FEATURE_TABS = [
 ] as const;
 
 export default function PropertyDetail({ listing }: { listing: Listing }) {
+  const { leadId, requireLead } = useLead();
+  const savedMls = useSavedFavorites();
   const [saved, setSaved] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing from an async favorites fetch
+  useEffect(() => setSaved(savedMls.has(listing.mlsId)), [savedMls, listing.mlsId]);
+
+  const toggleSave = () => {
+    if (!leadId) {
+      requireLead("Save your info to add homes to your favorites.");
+      return;
+    }
+    const next = !saved;
+    setSaved(next);
+    const persist = next ? addFavorite(leadId, listing.mlsId) : removeFavorite(leadId, listing.mlsId);
+    persist.then((ok) => {
+      if (!ok) setSaved(!next);
+    });
+  };
+
   const [tab, setTab] = useState<"interior" | "exterior" | "details">("interior");
   const [copied, setCopied] = useState(false);
   const [form, setForm] = useState({ first: "", last: "", email: "", phone: "", message: "" });
@@ -242,7 +263,7 @@ export default function PropertyDetail({ listing }: { listing: Listing }) {
 
             {/* Actions */}
             <div className="pd-actions">
-              <button className={`pd-act${saved ? " is-active" : ""}`} onClick={() => setSaved((s) => !s)}>
+              <button className={`pd-act${saved ? " is-active" : ""}`} onClick={toggleSave}>
                 <HeartIcon filled={saved} />{saved ? "Saved" : "Save"}
               </button>
               <button className="pd-act" onClick={share}><ShareIcon />Share</button>
