@@ -355,16 +355,24 @@ export async function getLeadFavorites(leadId: string): Promise<Map<string, stri
   return map;
 }
 
+/** IDX returns a raw 500 (not a clean error) for a listing already favorited
+ *  by this lead — a routine case (double-click, stale local state), not a
+ *  real failure. Falls back to checking whether it's already saved. */
 export async function saveLeadFavorite(leadId: string, listingId: string): Promise<string | null> {
-  const res = await idxFetch<{ newID?: number | string }>(`leads/property/${leadId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      propertyName: listingId,
-      property: { idxID: ACCOUNT_IDX_ID, listingID: listingId },
-    }),
-  });
-  return res?.newID != null ? String(res.newID) : null;
+  try {
+    const res = await idxFetch<{ newID?: number | string }>(`leads/property/${leadId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        propertyName: listingId,
+        property: { idxID: ACCOUNT_IDX_ID, listingID: listingId },
+      }),
+    });
+    return res?.newID != null ? String(res.newID) : null;
+  } catch {
+    const existing = await getLeadFavorites(leadId).catch(() => new Map<string, string>());
+    return existing.get(listingId) ?? null;
+  }
 }
 
 export async function deleteLeadFavorite(leadId: string, favoriteId: string): Promise<boolean> {
