@@ -452,8 +452,8 @@ ul, ol { list-style: none; }
 .hero-title {
   font-family: var(--font-display);
   font-weight: 300;
-  font-size: clamp(44px, 6.2vw, 84px);
-  line-height: 1.02;
+  font-size: clamp(32px, 4.4vw, 58px);
+  line-height: 1.06;
   letter-spacing: -0.015em;
   color: #fff;
   text-shadow: 0 2px 26px rgba(0, 0, 0, 0.38);
