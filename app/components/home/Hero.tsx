@@ -30,7 +30,7 @@ export default function Hero() {
         <div className="hero-copy">
           <p className="eyebrow reveal">Los Angeles · Compass</p>
           <h1 className="hero-title reveal" data-reveal-delay="80">
-            Real Estate Agent in Los Angeles
+            Real Estate Agent in Los&nbsp;Angeles
             <br />
             <em>for Smart, Confident Moves</em>
           </h1>
