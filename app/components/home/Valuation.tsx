@@ -1,12 +1,67 @@
 "use client";
 
+import { useCallback, useState } from "react";
 import { ArrowRight } from "../icons";
-import { useLeadForm } from "../useLeadForm";
+import { createLead } from "@/lib/idx";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Valuation() {
-  const { status, isError, sending, onSubmit, clearInvalid } = useLeadForm(
-    "Thank you — your valuation request is in. Expect a response within the hour."
-  );
+  const [status, setStatus] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const clearInvalid = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    e.currentTarget.classList.remove("is-invalid");
+  }, []);
+
+  const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    let valid = true;
+
+    form.querySelectorAll<HTMLInputElement>("input[required]").forEach((input) => {
+      const empty = input.type === "checkbox" ? !input.checked : !input.value.trim();
+      const badEmail = input.type === "email" && !!input.value && !EMAIL_RE.test(input.value);
+      input.classList.toggle("is-invalid", empty || badEmail);
+      if (empty || badEmail) valid = false;
+    });
+
+    if (!valid) {
+      setIsError(true);
+      setStatus("Please complete the highlighted fields.");
+      form.querySelector<HTMLInputElement>(".is-invalid")?.focus();
+      return;
+    }
+
+    setIsError(false);
+    setStatus("");
+    setSending(true);
+
+    const data = new FormData(form);
+    const address = String(data.get("address") || "").trim();
+    const fullName = String(data.get("name") || "").trim();
+    const [firstName, ...rest] = fullName.split(" ");
+    const email = String(data.get("email") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+
+    const leadId = await createLead({
+      firstName: firstName || fullName,
+      lastName: rest.join(" ") || "—",
+      email,
+      phone: phone || undefined,
+      comments: `Home valuation request for: ${address}`,
+    });
+
+    setSending(false);
+    if (leadId) {
+      setStatus("Thank you — your valuation request is in. Expect a response within the hour.");
+      form.reset();
+    } else {
+      setIsError(true);
+      setStatus("Something went wrong — please try again, or reach out on WhatsApp.");
+    }
+  }, []);
 
   return (
     <section className="section section-valuation" id="valuation">
