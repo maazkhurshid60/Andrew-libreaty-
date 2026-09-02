@@ -9,7 +9,7 @@ export default function AuthModal() {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "busy">("idle");
+  const [status, setStatus] = useState<"idle" | "busy" | "verify">("idle");
   const [error, setError] = useState("");
 
   const reset = () => {
@@ -30,7 +30,7 @@ export default function AuthModal() {
     e.preventDefault();
     setError("");
     setStatus("busy");
-    const { error: err } = await signIn({
+    const { error: err, created } = await signIn({
       email,
       firstName: firstName.trim(),
       lastName: lastName.trim(),
@@ -39,6 +39,10 @@ export default function AuthModal() {
     if (err) {
       setError(err);
       setStatus("idle");
+    } else if (created) {
+      // A new lead triggers IDX's "verify your email" message — say so, rather
+      // than leaving an unexplained email to turn up in their inbox.
+      setStatus("verify");
     } else {
       close();
     }
@@ -54,7 +58,7 @@ export default function AuthModal() {
         aria-hidden={!modalOpen}
       >
         <div className="share-head">
-          <p className="share-title">Continue</p>
+          <p className="share-title">{status === "verify" ? "Check your email" : "Continue"}</p>
           <button className="drawer-close" aria-label="Close" onClick={close}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -62,6 +66,19 @@ export default function AuthModal() {
           </button>
         </div>
 
+        {status === "verify" ? (
+          <>
+            <p className="share-sub">
+              We&rsquo;ve sent a link to <b>{email}</b> to verify your address and activate your account.
+              You&rsquo;re signed in here already — verifying also lets you use this same account on the full
+              MLS search, so everything you save stays in one place.
+            </p>
+            <button type="button" className="btn btn-primary btn-magnetic" onClick={close}>
+              <span>Got it</span>
+            </button>
+          </>
+        ) : (
+          <>
         {modalReason && <p className="share-sub">{modalReason}</p>}
 
         <form className="auth-form" onSubmit={submit}>
@@ -101,6 +118,8 @@ export default function AuthModal() {
             <span>{status === "busy" ? "Please wait…" : "Continue"}</span>
           </button>
         </form>
+          </>
+        )}
       </div>
     </>
   );
