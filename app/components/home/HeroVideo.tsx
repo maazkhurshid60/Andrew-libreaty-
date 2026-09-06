@@ -5,11 +5,16 @@ import { useEffect, useRef, useState } from "react";
 /**
  * Hero background video.
  *
- * - Desktop: the video source is attached, then faded in the moment it can play
- *   (no jarring poster→video swap).
- * - Mobile / data-saver / reduced-motion: the video is NEVER downloaded — only
- *   the lightweight poster image shows. This keeps mobile fast and avoids the
- *   large media download that tanks the mobile performance score / LCP.
+ * - Desktop: the full 1920x1080 cut, faded in the moment it can play (no
+ *   jarring poster→video swap).
+ * - Mobile: a portrait crop of the same footage (540x960, no audio track,
+ *   ~0.5MB against the desktop file's 5.6MB). Mobile used to get the poster
+ *   only, because shipping the landscape file was too heavy — but a phone in
+ *   portrait also throws away the left and right thirds to object-fit:cover,
+ *   so it was paying to decode pixels it never showed. The crop is framed on
+ *   the subject rather than the centre of the frame, which would have cut him
+ *   in half.
+ * - Data-saver / reduced-motion: still poster-only, no video downloaded.
  */
 export default function HeroVideo() {
   const ref = useRef<HTMLVideoElement>(null);
@@ -22,13 +27,13 @@ export default function HeroVideo() {
     const conn = (navigator as unknown as { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
     const slow = conn?.saveData || /2g/.test(conn?.effectiveType ?? "");
 
-    // Poster-only on small screens, data-saver, slow links, or reduced motion.
-    if (!mq.matches || reducedMotion || slow) {
+    // Poster-only on data-saver, slow links, or reduced motion.
+    if (reducedMotion || slow) {
       setReady(true); // reveal the element so its poster shows; no video is loaded
       return;
     }
-    // Desktop: attach and play the video.
-    setSrc("/video/hero.mp4");
+    // Attach the cut that suits the viewport.
+    setSrc(mq.matches ? "/video/hero.mp4" : "/video/hero-mobile.mp4");
   }, []);
 
   useEffect(() => {
