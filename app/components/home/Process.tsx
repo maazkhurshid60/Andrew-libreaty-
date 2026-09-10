@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ArrowRight } from "../icons";
 
 const STEPS = [
@@ -33,22 +34,38 @@ const STEPS = [
   },
 ];
 
-export default function Process() {
+const DEFAULT_TITLE = (
+  <>
+    Smart Moves,
+    <br />
+    Clear Process
+  </>
+);
+
+type Props = {
+  title?: ReactNode;
+  sub?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+};
+
+export default function Process({
+  title = DEFAULT_TITLE,
+  sub = "A clear plan from first call to closing. No surprises.",
+  ctaLabel = "Book a Strategy Call",
+  ctaHref = "/contact",
+}: Props = {}) {
   return (
     <section className="section section-process" id="process">
       <div className="container process-grid">
         <div className="process-intro">
-          <h2 className="section-title reveal">
-            Smart Moves,
-            <br />
-            Clear Process
-          </h2>
+          <h2 className="section-title reveal">{title}</h2>
           <p className="section-sub reveal" data-reveal-delay="60">
-            A clear plan from first call to closing. No surprises.
+            {sub}
           </p>
           <div className="process-ctas reveal" data-reveal-delay="120">
-            <a href="/contact" className="btn btn-primary btn-magnetic">
-              <span>Book a Strategy Call</span>
+            <a href={ctaHref} className="btn btn-primary btn-magnetic">
+              <span>{ctaLabel}</span>
               <ArrowRight />
             </a>
           </div>

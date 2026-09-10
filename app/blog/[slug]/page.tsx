@@ -13,9 +13,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return { title: "Article — The Liberty Journal" };
+  const title = `${post.title} — The Liberty Journal | Andrew Liberty Team`;
+  const url = `/blog/${post.slug}`;
   return {
-    title: `${post.title} — The Liberty Journal | Andrew Liberty Team`,
+    title,
     description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      title,
+      description: post.excerpt,
+      url,
+      images: post.img ? [post.img] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: post.excerpt,
+      images: post.img ? [post.img] : undefined,
+    },
   };
 }
 

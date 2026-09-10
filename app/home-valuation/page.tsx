@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Home Valuation in Los Angeles | Free & Accurate",
   description:
     "Get a free home valuation for your Los Angeles home in just a few minutes. Real comps, real numbers, reviewed by Andrew himself, not just an algorithm.",
+  alternates: { canonical: "/home-valuation" },
 };
 
 const FAQS = [

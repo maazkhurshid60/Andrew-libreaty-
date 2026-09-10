@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Neighborhoods — Andrew Liberty Team | Los Angeles Real Estate",
   description:
     "The Los Angeles neighborhoods the Andrew Liberty Team knows best — Studio City, Laurel Canyon, the Hollywood Hills, Sherman Oaks, Valley Village and Pasadena.",
+  alternates: { canonical: "/neighborhoods" },
 };
 
 const HERO_GALLERY = [

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Andrew Liberty — Founder & Lead Agent | Andrew Liberty Team",
   description:
     "Andrew Liberty is a Los Angeles based REALTOR® and certified Real Estate Negotiation Expert, blending strategy and real-world experience to help clients move forward with clarity.",
+  alternates: { canonical: "/team/andrew-liberty" },
 };
 
 const SPECIALTIES = ["Luxury Residential", "Historic Estates", "Relocation"];

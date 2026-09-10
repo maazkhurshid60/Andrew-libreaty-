@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Properties — Andrew Liberty Team | Los Angeles Real Estate",
   description:
     "Featured listings and past transactions from the Andrew Liberty Team — strategic real estate across Studio City, Sherman Oaks, the Hollywood Hills and greater Los Angeles.",
+  alternates: { canonical: "/property" },
 };
 
 const HERO_GALLERY = [

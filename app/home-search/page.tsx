@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Home Search — Andrew Liberty Team | Los Angeles Real Estate",
   description:
     "Search active and sold homes for sale across Los Angeles — Studio City, Sherman Oaks, the Hollywood Hills and more. Filter by price, beds, baths, and property type. Andrew Liberty Team, Compass.",
+  alternates: { canonical: "/home-search" },
 };
 
 export default function HomeSearchPage() {

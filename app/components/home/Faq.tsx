@@ -1,4 +1,8 @@
-const FAQS = [
+import JsonLd from "../JsonLd";
+
+export type FaqItem = { q: string; a: string };
+
+const DEFAULT_FAQS: FaqItem[] = [
   {
     q: "How do I choose a real estate agent in Los Angeles?",
     a: "Look for local market experience, negotiation credentials, and a clear process from consultation to closing. A good agent should also explain their pricing or search strategy before you commit to anything.",
@@ -33,15 +37,36 @@ const FAQS = [
   },
 ];
 
-export default function Faq() {
+type Props = {
+  title?: string;
+  faqs?: FaqItem[];
+};
+
+export default function Faq({
+  title = "Frequently Asked Questions",
+  faqs = DEFAULT_FAQS,
+}: Props = {}) {
   return (
     <section className="section val-faq">
+      {/* Structured data lives with the questions so any page rendering this
+          section gets the markup without having to remember to add it. */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }}
+      />
       <div className="container">
         <div className="section-head reveal">
-          <h2 className="section-title">Frequently Asked Questions</h2>
+          <h2 className="section-title">{title}</h2>
         </div>
         <div className="faq-list reveal" data-reveal-delay="100">
-          {FAQS.map((f, i) => (
+          {faqs.map((f, i) => (
             <details className="faq-item" key={f.q} open={i === 0}>
               <summary>
                 {f.q}

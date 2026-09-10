@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Neighborhood landing pages (e.g. /real-estate-agent-in-laurel-canyon)
+   Everything else on these pages reuses the shared home sections; only the
+   hero and a two-up variant of the neighborhood grid are new.
+   ========================================================================== */
+
+.nb-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(460px, 68vh, 660px);
+  padding: calc(var(--header-h) + 56px) 0 64px;
+  overflow: hidden;
+  background: var(--dark);
+}
+
+.nb-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Two stops rather than a flat wash: the copy sits low, so the darkening
+   needs to be heaviest at the bottom without flattening the ridgeline. */
+.nb-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 68, 70, 0.35) 0%,
+    rgba(8, 68, 70, 0.55) 45%,
+    rgba(12, 34, 30, 0.88) 100%
+  );
+}
+
+.nb-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--on-dark-muted);
+}
+.nb-crumbs a { color: var(--on-dark-muted); text-decoration: none; }
+.nb-crumbs a:hover { color: var(--gold); text-decoration: underline; }
+.nb-crumbs span[aria-current] { color: var(--on-dark); }
+.nb-crumbs .nb-crumb-sep { opacity: 0.5; }
+
+.nb-hero-copy { max-width: 760px; }
+
+.nb-hero-title {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.1rem, 5.2vw, 3.7rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--on-dark);
+  text-wrap: balance;
+}
+.nb-hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.nb-hero-sub {
+  margin: 0 0 28px;
+  max-width: 60ch;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  line-height: 1.6;
+  color: var(--on-dark-muted);
+}
+
+.nb-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* A two-card set in a grid built for three would sit lopsided against an
+   empty third column, so give it its own narrower, centred track. */
+.hood-grid--pair {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+@media (max-width: 860px) {
+  .nb-hero {
+    min-height: 0;
+    padding: calc(var(--header-h) + 40px) 0 48px;
+  }
+  .hood-grid--pair {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+}

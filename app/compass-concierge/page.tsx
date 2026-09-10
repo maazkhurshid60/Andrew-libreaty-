@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Compass Concierge — Andrew Liberty Team | Sell Faster, For More",
   description:
     "Compass Concierge fronts the cost of home improvement services — staging, flooring, painting and more — with zero due until closing, helping you sell faster and for a higher price.",
+  alternates: { canonical: "/compass-concierge" },
 };
 
 /* ---------- Icons ---------- */

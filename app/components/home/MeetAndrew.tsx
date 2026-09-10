@@ -1,17 +1,29 @@
 import { ArrowRight } from "../icons";
 
-export default function MeetAndrew() {
+const DEFAULT_BIO = [
+  "I’m a Los Angeles based REALTOR® and Certified Real Estate Negotiation Expert who combines strategic thinking with real-world experience. With a background in commercial real estate, I bring a sharp eye for value and opportunity, whether that is a single-family home, an income property, or a development play.",
+  "I work with both investors and homebuyers, often taking on the role of advisor as much as agent. I’m hands-on, thoughtful, and focused on helping clients make smart decisions without overcomplicating the process. I do the research, look at the numbers, and make sure my clients feel confident every step of the way.",
+];
+
+type Props = {
+  title?: string;
+  /** One <p> per entry. Neighborhood pages pass localised copy. */
+  bio?: string[];
+  imageAlt?: string;
+};
+
+export default function MeetAndrew({
+  title = "Meet Andrew Liberty",
+  bio = DEFAULT_BIO,
+  imageAlt = "Andrew Liberty, Studio City real estate agent",
+}: Props = {}) {
   return (
     <section className="section section-about" id="about">
       <div className="container about-grid">
         <div className="about-visual reveal">
           <div className="about-image-card tilt-card">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/andrew-liberty.jpg"
-              alt="Andrew Liberty, Studio City real estate agent"
-              loading="lazy"
-            />
+            <img src="/images/andrew-liberty.jpg" alt={imageAlt} loading="lazy" />
           </div>
           <div className="about-image-backdrop" aria-hidden="true"></div>
           <div className="about-experience-chip">
@@ -21,24 +33,17 @@ export default function MeetAndrew() {
         </div>
 
         <div className="about-copy">
-          <h2 className="section-title reveal">Meet Andrew Liberty</h2>
+          <h2 className="section-title reveal">{title}</h2>
           <p className="about-credentials reveal" data-reveal-delay="60">
             Andrew Ruric Liberty II | CA DRE# 01965696
             <br />
             Compass California, Inc. | CA DRE# 01991628
           </p>
-          <p className="about-bio reveal" data-reveal-delay="120">
-            I&rsquo;m a Los Angeles based REALTOR® and Certified Real Estate Negotiation Expert who
-            combines strategic thinking with real-world experience. With a background in commercial
-            real estate, I bring a sharp eye for value and opportunity, whether that is a
-            single-family home, an income property, or a development play.
-          </p>
-          <p className="about-bio reveal" data-reveal-delay="160">
-            I work with both investors and homebuyers, often taking on the role of advisor as much
-            as agent. I&rsquo;m hands-on, thoughtful, and focused on helping clients make smart
-            decisions without overcomplicating the process. I do the research, look at the numbers,
-            and make sure my clients feel confident every step of the way.
-          </p>
+          {bio.map((para, i) => (
+            <p key={i} className="about-bio reveal" data-reveal-delay={120 + i * 40}>
+              {para}
+            </p>
+          ))}
 
           <ul className="credential-chips" aria-label="Credentials">
             {["REALTOR®", "Real Estate Negotiation Expert", "Compass · California", "Residential · Investment · Development"].map(

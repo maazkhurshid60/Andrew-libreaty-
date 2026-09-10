@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "The Liberty Journal — Andrew Liberty Team | LA Real Estate Insights",
   description:
     "Market perspective, delivered with clarity — strategic insights on Los Angeles real estate: neighborhoods, timing, and the decisions that matter.",
+  alternates: { canonical: "/blog" },
 };
 
 

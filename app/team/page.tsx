@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Meet the Team — Andrew Liberty Team | Los Angeles Real Estate",
   description:
     "A collective of dedicated professionals committed to delivering an extraordinary real estate experience across Los Angeles — the Andrew Liberty Team at Compass.",
+  alternates: { canonical: "/team" },
 };
 
 const HERO_GALLERY = [

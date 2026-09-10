@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Testimonials — Andrew Liberty Team | Client Reviews",
   description:
     "Read reviews and testimonials from clients who have bought or sold homes with the Andrew Liberty Team at Compass in Los Angeles.",
+  alternates: { canonical: "/testimonials" },
 };
 
 const TESTIMONIALS_COL1 = [

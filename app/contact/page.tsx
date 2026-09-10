@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Contact — Andrew Liberty Team | Los Angeles Real Estate",
   description:
     "Get in touch with the Andrew Liberty Team — call, email, or send a message about buying, selling, or investing in Los Angeles real estate.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

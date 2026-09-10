@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Real Estate Agent in Los Angeles | Certified Negotiator",
   description:
     "Work directly with Andrew Liberty, a Certified Real Estate Negotiation Expert in Los Angeles. Get a free consultation, no directories, no waiting.",
+  alternates: { canonical: "/" },
 };
 
 export default function Home() {

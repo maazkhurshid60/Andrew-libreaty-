@@ -6,7 +6,17 @@ import { createLead } from "@/lib/idx";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function Valuation() {
+type Props = {
+  eyebrow?: string;
+  title?: string;
+  sub?: string;
+};
+
+export default function Valuation({
+  eyebrow = "Free & Confidential",
+  title = "How Much Is Your Home Worth?",
+  sub = "Get an instant property valuation and expert guidance from Andrew Liberty, your Los Angeles real estate advisor.",
+}: Props = {}) {
   const [status, setStatus] = useState("");
   const [isError, setIsError] = useState(false);
   const [sending, setSending] = useState(false);
@@ -110,12 +120,9 @@ export default function Valuation() {
         </div>
 
         <div className="valuation-form-wrap reveal" data-reveal-delay="120">
-          <p className="eyebrow">Free &amp; Confidential</p>
-          <h2 className="section-title">How Much Is Your Home Worth?</h2>
-          <p className="section-sub">
-            Get an instant property valuation and expert guidance from Andrew Liberty, your Los
-            Angeles real estate advisor.
-          </p>
+          <p className="eyebrow">{eyebrow}</p>
+          <h2 className="section-title">{title}</h2>
+          <p className="section-sub">{sub}</p>
 
           <form className="valuation-form" onSubmit={onSubmit} noValidate>
             <div className="form-field form-field-full">

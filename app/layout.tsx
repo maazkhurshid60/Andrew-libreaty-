@@ -11,13 +11,16 @@ import "./agent.css";
 import "./compass-concierge/concierge.css";
 import "./blog/blog.css";
 import "./detail.css";
+import "./neighborhood.css";
 import "./my-search-portal/portal.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GlobalEffects from "./components/GlobalEffects";
 import MobileCtaBar from "./components/MobileCtaBar";
 import AuthModal from "./components/AuthModal";
+import JsonLd from "./components/JsonLd";
 import { LeadProvider } from "@/hooks/useLead";
+import { SITE_URL, SITE_NAME, AGENT, AREAS_SERVED, abs } from "@/lib/site";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -42,10 +45,41 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const TITLE = "Andrew Liberty Team — Strategic Real Estate in Los Angeles";
+const DESCRIPTION =
+  "Good moves aren't accidental. Strategic real estate guidance for buyers, sellers, and investors across Los Angeles. Andrew Liberty Team, Compass.";
+
 export const metadata: Metadata = {
-  title: "Andrew Liberty Team — Strategic Real Estate in Los Angeles",
-  description:
-    "Good moves aren't accidental. Strategic real estate guidance for buyers, sellers, and investors across Los Angeles. Andrew Liberty Team, Compass.",
+  // Without metadataBase every canonical and og:image resolves as a relative
+  // path, which crawlers and link unfurlers ignore.
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  // No `alternates.canonical` or `openGraph.url` here on purpose: metadata in
+  // the root layout is inherited by every route that doesn't override it, so a
+  // canonical of "/" would tell Google that /contact, /team and the rest are
+  // all duplicates of the homepage. Canonicals are set per page.
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: TITLE,
+    description: DESCRIPTION,
+    locale: "en_US",
+    images: [
+      {
+        url: "/images/hero-la-aerial.jpg",
+        width: 1400,
+        height: 933,
+        alt: "Los Angeles from above",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/images/hero-la-aerial.jpg"],
+  },
   verification: {
     google: "koQHdUxBYmda27d2oTyeUG2n4_wCoCQJEI4DRTvipWg",
   },
@@ -74,6 +108,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        {/* Site-wide identity. Sits in the layout so every route carries it. */}
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "RealEstateAgent",
+            "@id": `${SITE_URL}/#agent`,
+            name: SITE_NAME,
+            url: SITE_URL,
+            image: abs(AGENT.image),
+            telephone: AGENT.phone,
+            email: AGENT.email,
+            areaServed: AREAS_SERVED.map((name) => ({
+              "@type": "Place",
+              name: `${name}, Los Angeles, CA`,
+            })),
+            sameAs: AGENT.sameAs,
+            employee: {
+              "@type": "Person",
+              name: AGENT.name,
+              alternateName: AGENT.legalName,
+              jobTitle: AGENT.jobTitle,
+              identifier: AGENT.licence,
+              worksFor: { "@type": "Organization", name: AGENT.brokerage },
+            },
+          }}
+        />
         <LeadProvider>
           <GlobalEffects />
           <a className="skip-link" href="#main">
