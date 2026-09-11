@@ -48,6 +48,17 @@
 
 .prop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
+/* "See All N Sold Listings" under the three-row preview on /property. */
+.prop-more { display: flex; justify-content: center; margin-top: 48px; }
+
+/* Running count at the top of the full sold list, so the page says how much
+   is here before you start scrolling it. */
+.prop-count {
+  margin: 0 0 28px; text-align: center;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+}
+
 /* ---------- Listing card (matches the Figma property card) ---------- */
 .pl-card {
   display: flex; flex-direction: column;

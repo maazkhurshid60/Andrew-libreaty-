@@ -172,7 +172,7 @@
 .ar-meta { display: flex; align-items: center; gap: 16px; margin-top: 22px; flex-wrap: wrap; }
 .ar-meta-author { display: flex; align-items: center; gap: 11px; }
 .ar-meta-author img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; object-position: top center; }
-.ar-meta-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.ar-meta-name { font-size: 17px; font-weight: 600; color: var(--ink); }
 .ar-meta-sub { font-size: 12.5px; color: var(--muted); }
 .ar-share { display: flex; align-items: center; gap: 8px; margin-left: auto; position: relative; }
 .ar-share button {

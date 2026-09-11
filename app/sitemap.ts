@@ -17,6 +17,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/home-search", priority: 0.8, changeFrequency: "daily" },
   { path: "/home-valuation", priority: 0.8, changeFrequency: "monthly" },
   { path: "/property", priority: 0.7, changeFrequency: "daily" },
+  { path: "/property/sold", priority: 0.6, changeFrequency: "weekly" },
   { path: "/team", priority: 0.6, changeFrequency: "yearly" },
   { path: "/team/andrew-liberty", priority: 0.7, changeFrequency: "yearly" },
   { path: "/testimonials", priority: 0.6, changeFrequency: "monthly" },
