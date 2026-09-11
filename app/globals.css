@@ -268,19 +268,13 @@ ul, ol { list-style: none; }
 }
 .site-header.is-scrolled .header-inner { height: 64px; }
 
-/* The A|L mark is a 50x57 house whose letters occupy rows 21-43, so the cap
-   height inside it is 23/57 of the mark's height (0.46 of its width) and the
-   letters' optical centre sits 0.035 of that width below the mark's own box
-   centre - the roof is tall and the base bar is deep, so centring the words on
-   the mark's box leaves them riding high of the lettering. align-items:center
-   centres the margin box, so a margin-top moves the content by only half of
-   itself; 0.07 is that 0.035 doubled. The wordmark matches both numbers, so
-   mark and words read as one line set at one size. Everything follows from
-   --mark-w; set that alone per breakpoint. */
-.wordmark { display: flex; flex-direction: row; align-items: center; gap: 13px; line-height: 1; --mark-w: 34px; }
-.wordmark-logo { width: var(--mark-w); height: auto; flex: none; display: block; }
-.wordmark-text { display: flex; align-items: center; gap: 9px; margin-top: calc(var(--mark-w) * 0.14); }
-.wordmark-word { height: calc(var(--mark-w) * 0.46); width: auto; display: block; }
+/* The header lockup is one SVG now, so there is no mark-to-words alignment to
+   maintain here - the artwork holds it. Its ink sits inside about 29 units of
+   padding in a 1105.6x272.2 box, so the house draws at 0.787 of whatever height
+   is set: 49px reproduces the 38.8px mark the previous three-image lockup had,
+   at practically the same overall width. */
+.wordmark { display: flex; align-items: center; line-height: 1; }
+.wordmark-svg { height: 49px; width: auto; display: block; }
 
 /* Footer keeps the original stacked wordmark treatment */
 .wordmark-name {
@@ -293,7 +287,7 @@ ul, ol { list-style: none; }
 }
 
 @media (max-width: 400px) {
-  .wordmark { gap: 9px; --mark-w: 28px; }
+  .wordmark-svg { height: 40px; }
 }
 
 .main-nav { display: flex; gap: 4px; }

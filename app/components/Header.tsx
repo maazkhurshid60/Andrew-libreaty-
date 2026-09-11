@@ -84,16 +84,12 @@ export default function Header() {
       >
         <div className="header-inner">
           <a href="/#top" className="wordmark" aria-label="Andrew Liberty Team — home">
+            {/* One SVG carries the whole lockup, so the mark and the words can no
+                longer drift out of alignment with each other. width/height are the
+                artwork's own box - they only supply the aspect ratio, since CSS
+                sets the height. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="" className="wordmark-logo" width={34} height={39} />
-            <span className="wordmark-text">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-andrew.png" alt="" className="wordmark-word" width={99} height={26
-                
-              } />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-liberty.png" alt="" className="wordmark-word" width={91} height={26} />
-            </span>
+            <img src="/andrew-liberty-logo.svg" alt="" className="wordmark-svg" width={1106} height={272} />
           </a>
 
           <nav className="main-nav" aria-label="Primary">
