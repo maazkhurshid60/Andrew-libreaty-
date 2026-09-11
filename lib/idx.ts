@@ -104,12 +104,23 @@ function simpleType(raw: RawIdxListing): string {
   return "House";
 }
 
+/** IDX's soldpending feed mixes closed LEASES in with closed sales - the rent
+ *  lands in the same price field, so a $4,250/month rental reads as a $4,250
+ *  sale sitting beside $3.8M closings. Nothing in the site presents rentals as
+ *  a category, so they are dropped here at the fetch rather than at each of the
+ *  five places sold listings are rendered. */
+function isLease(raw: RawIdxListing): boolean {
+  return (raw.propType || "").toLowerCase().includes("lease");
+}
+
 export async function fetchRawListings(): Promise<RawIdxListing[]> {
   const [featured, soldpending] = await Promise.all([
     idxFetch<RawIdxListResponse>("clients/featured"),
     idxFetch<RawIdxListResponse>("clients/soldpending"),
   ]);
-  return [...Object.values(featured?.data || {}), ...Object.values(soldpending?.data || {})];
+  return [...Object.values(featured?.data || {}), ...Object.values(soldpending?.data || {})].filter(
+    (raw) => !isLease(raw)
+  );
 }
 
 /** List-page shape (app/home-search/listings.ts's Listing). */

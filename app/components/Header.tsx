@@ -88,9 +88,11 @@ export default function Header() {
             <img src="/logo.png" alt="" className="wordmark-logo" width={34} height={39} />
             <span className="wordmark-text">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-andrew.png" alt="" className="wordmark-word" width={99} height={21} />
+              <img src="/logo-andrew.png" alt="" className="wordmark-word" width={99} height={26
+                
+              } />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-liberty.png" alt="" className="wordmark-word" width={91} height={21} />
+              <img src="/logo-liberty.png" alt="" className="wordmark-word" width={91} height={26} />
             </span>
           </a>
 
@@ -99,12 +101,11 @@ export default function Header() {
               <a
                 key={link.label}
                 href={link.href}
-                className={`nav-link${
-                  activeHash === link.href ||
+                className={`nav-link${activeHash === link.href ||
                   (link.href.startsWith("/") && pathname === link.href)
-                    ? " is-active"
-                    : ""
-                }`}
+                  ? " is-active"
+                  : ""
+                  }`}
               >
                 {link.label}
               </a>
