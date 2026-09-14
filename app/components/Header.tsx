@@ -89,7 +89,7 @@ export default function Header() {
                 artwork's own box - they only supply the aspect ratio, since CSS
                 sets the height. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/andrew-liberty-logo.svg" alt="" className="wordmark-svg" width={1106} height={272} />
+            <img src="/andrew-liberty-logo.svg" alt="" className="wordmark-svg" width={1054} height={214} />
           </a>
 
           <nav className="main-nav" aria-label="Primary">

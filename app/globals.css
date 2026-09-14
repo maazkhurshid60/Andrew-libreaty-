@@ -269,12 +269,14 @@ ul, ol { list-style: none; }
 .site-header.is-scrolled .header-inner { height: 64px; }
 
 /* The header lockup is one SVG now, so there is no mark-to-words alignment to
-   maintain here - the artwork holds it. Its ink sits inside about 29 units of
-   padding in a 1105.6x272.2 box, so the house draws at 0.787 of whatever height
-   is set: 49px reproduces the 38.8px mark the previous three-image lockup had,
-   at practically the same overall width. */
+   maintain here - the artwork holds it. The current file is cropped tight to
+   its ink (1053.65x214.24, no surrounding padding), so the height set here is
+   the height the house actually draws at. 39px keeps the 38.8px mark the
+   earlier artwork produced at 49px, when it carried about 29 units of padding
+   inside its box and drew at 0.787 of the height it was given. Swap the file
+   again and check that ratio before trusting this number. */
 .wordmark { display: flex; align-items: center; line-height: 1; }
-.wordmark-svg { height: 49px; width: auto; display: block; }
+.wordmark-svg { height: 39px; width: auto; display: block; }
 
 /* Footer keeps the original stacked wordmark treatment */
 .wordmark-name {
@@ -287,7 +289,7 @@ ul, ol { list-style: none; }
 }
 
 @media (max-width: 400px) {
-  .wordmark-svg { height: 40px; }
+  .wordmark-svg { height: 32px; }
 }
 
 .main-nav { display: flex; gap: 4px; }
