@@ -4,6 +4,7 @@ import { ArrowRight } from "../components/icons";
 import JsonLd from "../components/JsonLd";
 import WhatsTheMove from "../components/home/WhatsTheMove";
 import MeetAndrew from "../components/home/MeetAndrew";
+import RecentlySold from "../components/home/RecentlySold";
 import Process from "../components/home/Process";
 import Neighborhoods from "../components/home/Neighborhoods";
 import Valuation from "../components/home/Valuation";
@@ -203,6 +204,14 @@ export default function ShermanOaksPage() {
         title="Andrew Liberty"
         bio={BIO}
         imageAlt={`${AGENT.name}, Sherman Oaks real estate agent`}
+      />
+
+      {/* Self-hiding: renders only once this neighborhood has closings in
+          the feed. See lib/areas.ts for how a listing is placed. */}
+      <RecentlySold
+        area="sherman-oaks"
+        title="Recently Sold in Sherman Oaks"
+        subtitle="Closings on both sides of the Boulevard, straight from the MLS feed."
       />
 
       <Process

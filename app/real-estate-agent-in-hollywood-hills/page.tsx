@@ -4,6 +4,7 @@ import { ArrowRight } from "../components/icons";
 import JsonLd from "../components/JsonLd";
 import WhatsTheMove from "../components/home/WhatsTheMove";
 import MeetAndrew from "../components/home/MeetAndrew";
+import RecentlySold from "../components/home/RecentlySold";
 import Process from "../components/home/Process";
 import Neighborhoods from "../components/home/Neighborhoods";
 import Valuation from "../components/home/Valuation";
@@ -208,6 +209,14 @@ export default function HollywoodHillsPage() {
         title="Andrew Liberty"
         bio={BIO}
         imageAlt={`${AGENT.name}, Hollywood Hills real estate agent`}
+      />
+
+      {/* Self-hiding: renders only once this neighborhood has closings in
+          the feed. See lib/areas.ts for how a listing is placed. */}
+      <RecentlySold
+        area="hollywood-hills"
+        title="Recently Sold in the Hollywood Hills"
+        subtitle="Closings up on the hill, straight from the MLS feed."
       />
 
       <Neighborhoods

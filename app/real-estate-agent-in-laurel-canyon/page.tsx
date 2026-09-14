@@ -4,6 +4,7 @@ import { ArrowRight } from "../components/icons";
 import JsonLd from "../components/JsonLd";
 import WhatsTheMove from "../components/home/WhatsTheMove";
 import MeetAndrew from "../components/home/MeetAndrew";
+import RecentlySold from "../components/home/RecentlySold";
 import Process from "../components/home/Process";
 import Neighborhoods from "../components/home/Neighborhoods";
 import Valuation from "../components/home/Valuation";
@@ -214,6 +215,14 @@ export default function LaurelCanyonPage() {
         title="Meet Andrew Liberty"
         bio={BIO}
         imageAlt={`${AGENT.name}, Laurel Canyon real estate agent`}
+      />
+
+      {/* Self-hiding: renders only once this neighborhood has closings in
+          the feed. See lib/areas.ts for how a listing is placed. */}
+      <RecentlySold
+        area="laurel-canyon"
+        title="Recently Sold Around Laurel Canyon"
+        subtitle="Closings in the canyon itself, straight from the MLS feed."
       />
 
       <Process

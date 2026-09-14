@@ -212,13 +212,10 @@ export default function StudioCityPage() {
         imageAlt={`${AGENT.name}, Studio City real estate agent`}
       />
 
-      {/* The brief asks for Studio City closings specifically. RecentlySold
-          draws the whole sold feed from IDX, which has no per-area filter on
-          this endpoint, so it shows the team's recent closings rather than a
-          Studio City subset. Flagged rather than faked. */}
       <RecentlySold
-        title="Recently Sold"
-        subtitle="A look at deals closed across Studio City and the surrounding Valley."
+        area="studio-city"
+        title="Recently Sold in Studio City"
+        subtitle="Closings on these streets, straight from the MLS feed."
       />
 
       <Process
