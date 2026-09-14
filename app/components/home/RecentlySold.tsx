@@ -1,7 +1,6 @@
 "use client";
 
 import { useIdxListings } from "@/hooks/useIdxListings";
-import { useSavedFavorites } from "@/hooks/useSavedFavorites";
 import { toPropertyItem } from "@/lib/idx";
 import { inArea, type AreaKey } from "@/lib/areas";
 import PropertyCard from "../../property/PropertyCard";
@@ -18,7 +17,6 @@ export default function RecentlySold({
   area?: AreaKey;
 } = {}) {
   const { data, loading } = useIdxListings();
-  const savedMls = useSavedFavorites();
   const sold = (data ?? [])
     .filter((raw) => (area ? inArea(raw, area) : true))
     .map(toPropertyItem)
@@ -52,7 +50,7 @@ export default function RecentlySold({
         ) : (
           <div className="prop-grid">
             {sold.map((p) => (
-              <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} initialSaved={savedMls.has(p.mlsId)} />
+              <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} />
             ))}
           </div>
         )}

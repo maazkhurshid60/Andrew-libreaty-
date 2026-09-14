@@ -1,7 +1,6 @@
 "use client";
 
 import { useIdxListings } from "@/hooks/useIdxListings";
-import { useSavedFavorites } from "@/hooks/useSavedFavorites";
 import { toPropertyItem } from "@/lib/idx";
 import PropertyCard from "../PropertyCard";
 import PageLoader from "../../components/PageLoader";
@@ -11,7 +10,6 @@ import PageLoader from "../../components/PageLoader";
    costs no second request against IDX's hourly limit. */
 export default function SoldListingsSection() {
   const { data, loading, error } = useIdxListings();
-  const savedMls = useSavedFavorites();
   const sold = (data ?? []).map(toPropertyItem).filter((p) => p.badge === "Sold");
 
   return (
@@ -36,7 +34,7 @@ export default function SoldListingsSection() {
                   key={p.slug}
                   p={p}
                   href={`/property/${p.slug}`}
-                  initialSaved={savedMls.has(p.mlsId)}
+                 
                 />
               ))}
             </div>

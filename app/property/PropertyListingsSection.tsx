@@ -1,7 +1,6 @@
 "use client";
 
 import { useIdxListings } from "@/hooks/useIdxListings";
-import { useSavedFavorites } from "@/hooks/useSavedFavorites";
 import { toPropertyItem } from "@/lib/idx";
 import { ArrowRight } from "../components/icons";
 import PropertyCard from "./PropertyCard";
@@ -14,7 +13,6 @@ const PAST_PREVIEW = 9;
 
 export default function PropertyListingsSection() {
   const { data, loading } = useIdxListings();
-  const savedMls = useSavedFavorites();
   const items = (data ?? []).map(toPropertyItem);
   const featured = items.filter((p) => p.badge === "Active").slice(0, 6);
   const sold = items.filter((p) => p.badge === "Sold");
@@ -41,7 +39,7 @@ export default function PropertyListingsSection() {
           ) : (
             <div className="prop-grid">
               {featured.map((p) => (
-                <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} initialSaved={savedMls.has(p.mlsId)} />
+                <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} />
               ))}
             </div>
           )}
@@ -62,7 +60,7 @@ export default function PropertyListingsSection() {
             <>
               <div className="prop-grid">
                 {past.map((p) => (
-                  <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} initialSaved={savedMls.has(p.mlsId)} />
+                  <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} />
                 ))}
               </div>
               {/* No "reveal" class here: GlobalEffects snapshots .reveal once per

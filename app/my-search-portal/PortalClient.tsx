@@ -129,6 +129,7 @@ export default function PortalClient() {
                   key={p.slug}
                   p={p}
                   href={`/property/${p.slug}`}
+                  showSave
                   initialSaved
                   onToggleSaved={(mlsId, isSaved) => {
                     if (isSaved) return;

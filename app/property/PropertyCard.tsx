@@ -41,12 +41,19 @@ export default function PropertyCard({
   href = "#",
   initialSaved = false,
   onToggleSaved,
+  showSave = false,
 }: {
   p: PropertyItem;
   href?: string;
   initialSaved?: boolean;
   /** Notified after a save/unsave persists — lets a favorites list drop the card immediately. */
   onToggleSaved?: (mlsId: string, saved: boolean) => void;
+  /** Show the save heart. Off by default: saving belongs to the places built
+   *  for browsing a search, not to the listing strips that sit inside
+   *  marketing pages. /home-search has its own card and its own heart; the
+   *  only caller that opts in here is the saved-homes portal, where the
+   *  heart is how a home comes back off the list. */
+  showSave?: boolean;
 }) {
   const [saved, setSaved] = useState(initialSaved);
   const { leadId, requireLead } = useLead();
@@ -87,16 +94,18 @@ export default function PropertyCard({
           onError={(e) => (e.currentTarget.src = PLACEHOLDER)}
         />
         <span className={`badge ${p.badgeGold ? "badge-gold" : "badge-dark"} pl-badge`}>{p.badge}</span>
-        <button
-          className={`pl-heart${saved ? " is-saved" : ""}`}
-          aria-label={saved ? "Remove from saved" : `Save ${p.address}`}
-          aria-pressed={saved}
-          onClick={toggleSave}
-        >
-          <svg viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
-          </svg>
-        </button>
+        {showSave && (
+          <button
+            className={`pl-heart${saved ? " is-saved" : ""}`}
+            aria-label={saved ? "Remove from saved" : `Save ${p.address}`}
+            aria-pressed={saved}
+            onClick={toggleSave}
+          >
+            <svg viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+            </svg>
+          </button>
+        )}
       </div>
       <div className="pl-body">
         <div className="pl-toprow">

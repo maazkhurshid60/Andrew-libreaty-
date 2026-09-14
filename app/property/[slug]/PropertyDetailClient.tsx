@@ -6,12 +6,10 @@ import PropertyDetail from "./PropertyDetail";
 import ComingSoon from "../../components/ComingSoon";
 import PageLoader from "../../components/PageLoader";
 import { useIdxListings } from "@/hooks/useIdxListings";
-import { useSavedFavorites } from "@/hooks/useSavedFavorites";
 import { toDetailListing, toPropertyItem } from "@/lib/idx";
 
 export default function PropertyDetailClient({ slug }: { slug: string }) {
   const { data, loading } = useIdxListings();
-  const savedMls = useSavedFavorites();
 
   const match = useMemo(() => {
     if (!data) return undefined;
@@ -63,7 +61,7 @@ export default function PropertyDetailClient({ slug }: { slug: string }) {
             </div>
             <div className="pd-similar-grid">
               {similar.map((p) => (
-                <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} initialSaved={savedMls.has(p.mlsId)} />
+                <PropertyCard key={p.slug} p={p} href={`/property/${p.slug}`} />
               ))}
             </div>
           </div>
