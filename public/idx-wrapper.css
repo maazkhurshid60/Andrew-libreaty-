@@ -59,14 +59,12 @@ ul, ol { list-style: none; }
   width: min(1360px, 100% - 48px); margin-inline: auto; height: var(--header-h);
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
-.wordmark { display: flex; flex-direction: row; align-items: center; gap: 13px; line-height: 1; }
-.wordmark-logo { width: 34px; height: auto; flex: none; display: block; }
-.wordmark-text { display: flex; align-items: center; gap: 9px; margin-top: 9px; }
-.wordmark-word { height: 19px; width: auto; display: block; }
+.wordmark { display: flex; align-items: center; line-height: 1; }
+/* One SVG, cropped tight to its ink, so this height is the height the house
+   draws at. Matches .wordmark-svg in app/globals.css - keep the two together. */
+.wordmark-svg { height: 39px; width: auto; display: block; }
 @media (max-width: 400px) {
-  .wordmark { gap: 9px; }
-  .wordmark-logo { width: 28px; }
-  .wordmark-word { height: 16px; }
+  .wordmark-svg { height: 32px; }
 }
 .main-nav { display: none; gap: 4px; }
 .nav-link { font-size: 14px; font-weight: 500; color: var(--ink-soft); padding: 10px 14px; border-radius: 8px; white-space: nowrap; }
@@ -83,10 +81,8 @@ ul, ol { list-style: none; }
 .footer-grid { display: grid; grid-template-columns: 1.7fr 1.1fr 1fr 1fr; gap: clamp(28px, 3vw, 52px); padding-bottom: 44px; }
 .footer-license-row { display: grid; grid-template-columns: 1.7fr 3.1fr; gap: clamp(28px, 3vw, 52px); padding-bottom: 44px; align-items: start; }
 .footer-license-row .footer-disclaimer { border-left: 1px solid rgba(243, 239, 230, 0.14); padding-left: clamp(24px, 3vw, 48px); max-width: 92ch; }
-.footer-logo { display: inline-flex; align-items: center; gap: 12px; }
-.footer-logo-mark { height: 42px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
-.footer-logo-word { display: inline-flex; align-items: center; gap: 9px; }
-.footer-logo-img { height: 21px; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+.footer-logo { display: inline-flex; align-items: center; }
+.footer-logo-svg { height: 42px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.95; }
 .footer-tagline { margin-top: 20px; font-size: 14px; color: var(--on-dark-muted); max-width: 30ch; }
 .footer-licensing h3 { font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
 .footer-compass-logo { height: 60px; width: auto; margin-bottom: 22px; opacity: 0.92; }
