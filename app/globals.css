@@ -1171,12 +1171,13 @@ ul, ol { list-style: none; }
 }
 
 /* Whitened horizontal logo lockup for the dark footer */
-/* Same lockup as the header, driven off the mark's height here: cap height is
-   23/57 of it and the optical offset (32/57 - 1/2) of it. See .wordmark above. */
-.footer-logo { display: inline-flex; align-items: center; gap: 12px; --mark-h: 42px; }
-.footer-logo-mark { height: var(--mark-h); width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
-.footer-logo-word { display: inline-flex; align-items: center; gap: 9px; margin-top: calc(var(--mark-h) * 0.1228); }
-.footer-logo-img { height: calc(var(--mark-h) * 0.4035); width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
+/* The header's SVG, flipped to white. It used to be three PNGs sat next to
+   each other, with the words nudged down by a fraction of the mark's height to
+   fake the alignment the artwork already contains; that is gone. Height here
+   is the mark's height, 42px, as the file is cropped tight to its ink - see
+   .wordmark-svg above before changing it. */
+.footer-logo { display: inline-flex; align-items: center; }
+.footer-logo-svg { height: 42px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.95; }
 .footer-tagline { margin-top: 20px; font-size: 14px; color: var(--on-dark-muted); max-width: 30ch; }
 
 /* Licensing block */
