@@ -15,21 +15,26 @@ const HERO_GALLERY = [
   { src: "/images/sold-hollywood-hills.jpg", alt: "Hillside estate, Hollywood Hills" },
 ];
 
-type Area = { name: string; img: string; alt: string; tall?: boolean };
+type Area = { name: string; img: string; alt: string; href: string; tall?: boolean };
 // Three columns, each with one tall + one short tile (tall-short / short-tall / tall-short)
 // so the middle column's second tile rides up — a woven masonry matching the Figma.
+//
+// Each tile links to that neighborhood's own agent page. Pasadena is the
+// exception: it has no page of its own, so it still goes to the search. If one
+// is written for it, point it here too — a card that looks like its neighbours
+// but lands somewhere else is the kind of thing that gets missed.
 const COLUMNS: Area[][] = [
   [
-    { name: "Studio City", img: "/images/studio-city.jpg", alt: "Studio City, Los Angeles", tall: true },
-    { name: "Sherman Oaks", img: "/images/sold-sherman-oaks.jpg", alt: "Sherman Oaks, Los Angeles" },
+    { name: "Studio City", img: "/images/studio-city.jpg", alt: "Studio City, Los Angeles", href: "/real-estate-agent-in-studio-city", tall: true },
+    { name: "Sherman Oaks", img: "/images/sold-sherman-oaks.jpg", alt: "Sherman Oaks, Los Angeles", href: "/real-estate-agent-in-sherman-oaks" },
   ],
   [
-    { name: "Laurel Canyon", img: "/images/laurel-canyon.jpg", alt: "Laurel Canyon, Los Angeles" },
-    { name: "Valley Village", img: "/images/sold-valley-village.jpg", alt: "Valley Village, Los Angeles", tall: true },
+    { name: "Laurel Canyon", img: "/images/laurel-canyon.jpg", alt: "Laurel Canyon, Los Angeles", href: "/real-estate-agent-in-laurel-canyon" },
+    { name: "Valley Village", img: "/images/sold-valley-village.jpg", alt: "Valley Village, Los Angeles", href: "/real-estate-agent-in-valley-village", tall: true },
   ],
   [
-    { name: "Hollywood Hills", img: "/images/hollywood-hills.jpg", alt: "Hollywood Hills, Los Angeles", tall: true },
-    { name: "Pasadena", img: "/images/hero-la-aerial.jpg", alt: "Pasadena, Los Angeles" },
+    { name: "Hollywood Hills", img: "/images/hollywood-hills.jpg", alt: "Hollywood Hills, Los Angeles", href: "/real-estate-agent-in-hollywood-hills", tall: true },
+    { name: "Pasadena", img: "/images/hero-la-aerial.jpg", alt: "Pasadena, Los Angeles", href: "/home-search" },
   ],
 ];
 
@@ -64,7 +69,7 @@ export default function NeighborhoodsPage() {
                 {col.map((a) => (
                   <a
                     key={a.name}
-                    href="/home-search"
+                    href={a.href}
                     className={`area-card${a.tall ? " is-tall" : " is-short"}`}
                     aria-label={`Explore ${a.name}`}
                   >

@@ -80,14 +80,14 @@ const NEARBY = [
     name: "Studio City",
     desc: "Down the canyon, with a walkable village and easy access to the Valley.",
     img: "/images/studio-city.jpg",
-    href: "/neighborhoods",
+    href: "/real-estate-agent-in-studio-city",
   },
   {
-    coords: "Los Angeles · Iconic views",
+    coords: "Los Angeles · 90068",
     name: "Hollywood Hills",
     desc: "Just over the ridge, with sweeping views and homes that don't come around often.",
     img: "/images/hollywood-hills.jpg",
-    href: "/neighborhoods",
+    href: "/real-estate-agent-in-hollywood-hills",
   },
 ];
 
@@ -219,7 +219,8 @@ export default function LaurelCanyonPage() {
       <Process
         title="How I Work With Clients"
         sub="From a free consultation to strategy, negotiation, closing, and advice after the sale, every client goes through the same clear, six-step process. No surprises, no guesswork."
-        ctaLabel="Book a Free Consultation"
+        ctaLabel="See the Full Process"
+        ctaHref="/#process"
       />
 
       <Neighborhoods

@@ -32,7 +32,11 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/compass-concierge", priority: 0.6, changeFrequency: "monthly" },
   { path: "/blog", priority: 0.8, changeFrequency: "weekly" },
 
-  /* Not in the supplied list — see above. */
+  /* Not in the supplied list — see above. The five neighbourhood pages are
+     the local-SEO surface, so they carry the same priority as /property. */
+  { path: "/real-estate-agent-in-studio-city", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/real-estate-agent-in-sherman-oaks", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/real-estate-agent-in-hollywood-hills", priority: 0.9, changeFrequency: "monthly" },
   { path: "/real-estate-agent-in-laurel-canyon", priority: 0.9, changeFrequency: "monthly" },
   { path: "/real-estate-agent-in-valley-village", priority: 0.9, changeFrequency: "monthly" },
   { path: "/property/sold", priority: 0.6, changeFrequency: "weekly" },

@@ -81,23 +81,20 @@ const BIO = [
   "I am hands-on and straightforward, backed by RealTrends Verified status and recognition as a Los Angeles Magazine Real Estate All-Star, and I make sure you feel confident at every step.",
 ];
 
-/* The brief points these at dedicated Studio City and Sherman Oaks agent pages.
-   Neither exists yet, so both link to /neighborhoods — the same fallback the
-   Laurel Canyon page uses. Repoint them when those pages ship. */
 const NEARBY = [
   {
     coords: "Los Angeles · 91604",
     name: "Studio City",
     desc: "Right next door, with a walkable village and a livelier pace.",
     img: "/images/studio-city.jpg",
-    href: "/neighborhoods",
+    href: "/real-estate-agent-in-studio-city",
   },
   {
     coords: "Los Angeles · 91403",
     name: "Sherman Oaks",
     desc: "Just around the corner, with Ventura Boulevard's shops and restaurants close by.",
     img: "/images/sold-sherman-oaks.jpg",
-    href: "/neighborhoods",
+    href: "/real-estate-agent-in-sherman-oaks",
   },
 ];
 
