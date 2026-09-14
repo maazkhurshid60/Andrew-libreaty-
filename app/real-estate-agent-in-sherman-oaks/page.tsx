@@ -79,6 +79,7 @@ const NEARBY = [
     desc: "Just next door, with a walkable village and easy access to the Cahuenga Pass.",
     img: "/images/studio-city.jpg",
     href: "/real-estate-agent-in-studio-city",
+    cta: "Explore Studio City",
   },
   {
     coords: "Los Angeles · 91607",
@@ -86,6 +87,7 @@ const NEARBY = [
     desc: "Right around the corner, with quieter streets and the same easy Valley access.",
     img: "/images/sold-valley-village.jpg",
     href: "/real-estate-agent-in-valley-village",
+    cta: "Explore Valley Village",
   },
 ];
 

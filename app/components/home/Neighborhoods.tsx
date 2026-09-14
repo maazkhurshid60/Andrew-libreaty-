@@ -7,6 +7,10 @@ export type Hood = {
   img: string;
   /** Where the card goes. Defaults to the neighborhoods index. */
   href?: string;
+  /** Card link text. Defaults to "Learn More"; the Valley Village and
+   *  Sherman Oaks briefs name theirs ("Explore Studio City"), which reads
+   *  better anyway when the card leads to that neighborhood's own page. */
+  cta?: string;
 };
 
 const DEFAULT_HOODS: Hood[] = [
@@ -72,7 +76,7 @@ export default function Neighborhoods({
                 <h3>{hood.name}</h3>
                 <p className="hood-desc">{hood.desc}</p>
                 <span className="hood-cta">
-                  Learn More
+                  {hood.cta ?? "Learn More"}
                   <ArrowRight />
                 </span>
               </div>

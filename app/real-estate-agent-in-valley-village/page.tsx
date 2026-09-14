@@ -19,7 +19,7 @@ const DESCRIPTION =
   "Valley Village's quiet streets don't show up in a citywide search. Andrew Liberty is a real estate agent in Valley Village who knows every block.";
 
 const HERO_SUB =
-  "I am a real estate agent in Valley Village who knows its schools, its streets, and what your home is really worth. Whether you are buying your first home here or getting ready to sell, I will walk you through it step by step.";
+  "I am a real estate agent in Valley Village who knows its schools, its streets, and what your home is really worth. Whether you are buying your first home here or getting ready to sell, I will walk you through it step by step. Let's talk.";
 
 /* The neighborhood's own photo is the square sold-listing shot; it crops fine
    behind the hero, but a wide Valley Village image would serve better here and
@@ -89,6 +89,7 @@ const NEARBY = [
     desc: "Right next door, with a walkable village and a livelier pace.",
     img: "/images/studio-city.jpg",
     href: "/real-estate-agent-in-studio-city",
+    cta: "Explore Studio City",
   },
   {
     coords: "Los Angeles · 91403",
@@ -96,6 +97,7 @@ const NEARBY = [
     desc: "Just around the corner, with Ventura Boulevard's shops and restaurants close by.",
     img: "/images/sold-sherman-oaks.jpg",
     href: "/real-estate-agent-in-sherman-oaks",
+    cta: "Explore Sherman Oaks",
   },
 ];
 
