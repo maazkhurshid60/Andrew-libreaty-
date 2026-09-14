@@ -8,11 +8,26 @@ export const metadata: Metadata = {
   alternates: { canonical: "/neighborhoods" },
 };
 
+/* Places, not properties. This band ran four listing photos before — modern
+   houses shot against blank sky, the kind that could be in any city in the
+   world, and one of them (sold-sherman-oaks) was the same file as a card
+   further down the page. Under the word "Neighborhoods" that said nothing
+   about these neighborhoods.
+   These four are the images in the library that are recognisably Los Angeles:
+   the reservoir in the hills, a shaded stretch of village sidewalk, the Valley
+   under the San Gabriels, and the canyon from above. Three of them also appear
+   in the grid below, which is the point rather than an oversight — the band
+   previews the areas the grid then lets you open. Ordered so that no tile sits
+   directly above its own card: the grid opens on Studio City, so the Studio
+   City frame is third here, not first.
+   The real fix for the repetition is photography of these areas that the site
+   does not have yet; everything else in /public/images is a listing shot of a
+   modern house against blank sky, which is what this band was using. */
 const HERO_GALLERY = [
-  { src: "/images/sold-studio-city.jpg", alt: "Modern residence, Studio City" },
-  { src: "/images/sold-sherman-oaks.jpg", alt: "Traditional home, Sherman Oaks" },
-  { src: "/images/sold-toluca-lake.jpg", alt: "Architectural glass home, Toluca Lake" },
-  { src: "/images/sold-hollywood-hills.jpg", alt: "Hillside estate, Hollywood Hills" },
+  { src: "/images/hollywood-hills.jpg", alt: "Lake Hollywood and the ridge line of the Hollywood Hills" },
+  { src: "/images/hero-poster.jpg", alt: "A shaded sidewalk on a walkable Los Angeles village street" },
+  { src: "/images/studio-city.jpg", alt: "The Valley below the San Gabriel Mountains, seen from Studio City" },
+  { src: "/images/laurel-canyon.jpg", alt: "Homes tucked into the hillside above Laurel Canyon" },
 ];
 
 type Area = { name: string; img: string; alt: string; href: string; tall?: boolean };
