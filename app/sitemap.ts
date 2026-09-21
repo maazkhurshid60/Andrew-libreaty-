@@ -44,6 +44,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.S
   { path: "/real-estate-agent-in-hollywood-hills", priority: 0.9, changeFrequency: "monthly" },
   { path: "/real-estate-agent-in-laurel-canyon", priority: 0.9, changeFrequency: "monthly" },
   { path: "/real-estate-agent-in-valley-village", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/property/active", priority: 0.7, changeFrequency: "daily" },
   { path: "/property/sold", priority: 0.6, changeFrequency: "weekly" },
 ];
 
