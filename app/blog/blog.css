@@ -188,8 +188,15 @@
   border-radius: 8px; padding: 5px 10px; box-shadow: var(--shadow-float);
 }
 
-.ar-hero-img { max-width: 1000px; margin: 0 auto; padding: 8px 0 0; }
-.ar-hero-img img { width: 100%; height: auto; aspect-ratio: 16 / 8; object-fit: cover; border-radius: var(--radius-lg); display: block; }
+/* Full container width. The cap was 1000px, but this element wraps a .container
+   of its own, which takes another 48px of gutter off the inside — so the hero
+   actually rendered at 952px, narrower than every section below it. */
+.ar-hero-img { max-width: var(--container); margin: 0 auto; padding: 8px 0 0; }
+/* 5/3 is the artwork's own shape (1619x971 = 1.667). It was 16/8, which is
+   2.000 — a 16.6% crop off a hero that carries its title inside the image, so
+   the type was the first thing to go. Matching the source means nothing is cut,
+   and the taller box is what makes it read bigger: 952x476 -> 1152x691. */
+.ar-hero-img img { width: 100%; height: auto; aspect-ratio: 5 / 3; object-fit: cover; border-radius: var(--radius-lg); display: block; }
 
 /* Prose */
 .ar-body { padding: 44px 0 8px; }
@@ -207,6 +214,30 @@
   font-family: var(--font-display); font-style: italic; font-weight: 400;
   font-size: clamp(20px, 2.4vw, 27px); line-height: 1.45; color: var(--ink);
 }
+
+/* In-article image. Full width of the reading column; the intrinsic
+   width/height on the <img> itself reserves the box, so nothing below it
+   shifts as the file arrives. */
+.ar-figure { margin: 30px 0; }
+.ar-figure img {
+  display: block; width: 100%; height: auto;
+  border-radius: var(--radius-lg); border: 1px solid var(--line-soft);
+}
+
+/* In-article CTA. Sits between sections of body copy, so it is deliberately
+   quieter than the page-level CTAs — an ivory panel rather than a full band,
+   which would cut the article in half every time it appears. */
+.ar-cta {
+  background: var(--ivory); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--gold);
+  border-radius: var(--radius-lg); padding: 24px 26px; margin: 34px 0;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px;
+}
+.ar-cta p {
+  font-family: var(--font-display); font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.5; color: var(--ink); margin: 0; flex: 1 1 260px;
+}
+.ar-cta .btn { flex: none; }
 
 .ar-tags { display: flex; flex-wrap: wrap; gap: 9px; margin: 36px 0 8px; }
 .ar-tags span { font-size: 12.5px; color: var(--ink-soft); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--ivory); }

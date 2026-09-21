@@ -32,14 +32,83 @@ export const AGENT = {
   brokerageLicence: "CA DRE# 01991628",
   phone: "+1-310-709-0581",
   email: "andrew.liberty@compass.com",
+  /**
+   * `image` stays the portrait, not the logo.
+   *
+   * The supplied schema sets image and logo to the same /logo.png. That file is
+   * 50x57px — below Google's documented 112x112 minimum for `logo`, and nowhere
+   * near the high-resolution image it wants for `image` — so following it
+   * literally would swap a valid 900x900 photo for one Google discards. The
+   * portrait is also the more useful thing to show: `image` on a LocalBusiness
+   * is the picture a searcher sees, and a 50px icon is not it.
+   */
   image: "/images/andrew-liberty.jpg",
+  /**
+   * Was /logo.png, which at 50x57 fails the 112x112 minimum — meaning the logo
+   * property has been silently ignored all along. This is the same mark at
+   * 1024x533, which passes. /logo.png is still the favicon-scale asset and is
+   * fine for that; it was only ever wrong as structured data.
+   */
+  logo: "/al-logo-lockup.png",
+  /**
+   * The list supplied with the SEO schema, with two deliberate differences:
+   *
+   * - Instagram points at the profile root rather than .../reels/. sameAs is an
+   *   identity claim — "this entity is that profile" — so it wants the profile,
+   *   not one tab inside it. The reels URL resolves, so this is a refinement
+   *   rather than a fix.
+   * - Facebook is GONE because the supplied list omits it. Flagging it here
+   *   rather than quietly keeping it: if that was an oversight rather than a
+   *   decision, restoring the line is the whole fix.
+   *     "https://www.facebook.com/andrew.liberty.90",
+   */
   sameAs: [
     "https://www.instagram.com/iamandrewliberty",
-    "https://www.facebook.com/andrew.liberty.90",
-    "https://www.linkedin.com/in/andrew-liberty-55aa612a",
+    "https://www.linkedin.com/in/andrew-liberty-7768431a9",
+    "https://www.youtube.com/@andrewlibertyrealestate",
     "https://www.compass.com/agents/andrew-liberty/",
   ],
 } as const;
+
+/**
+ * The office address, matching what the Footer and Contact page display.
+ * Google cross-checks PostalAddress against the address rendered on the page,
+ * so these have to stay in sync with app/components/Footer.tsx and
+ * app/contact/page.tsx.
+ */
+export const ADDRESS = {
+  "@type": "PostalAddress",
+  streetAddress: "12001 Ventura Pl Ste 100",
+  addressLocality: "Studio City",
+  addressRegion: "CA",
+  postalCode: "91604",
+  addressCountry: "US",
+} as const;
+
+/**
+ * Open hours in schema form, 08:00-19:00 every day.
+ *
+ * These mirror the "Monday - Sunday / 8:00 AM - 7:00 PM" copy in the Footer and
+ * on the Contact page. The SEO brief we were sent listed 07:00-20:00 Mon-Sat
+ * and 07:00-19:00 Sun, which contradicts the visible hours; the visible copy is
+ * the one the client confirmed, and schema hours that disagree with the page get
+ * discounted, so the page wins. If the real hours ever change, change the copy
+ * in both components and this constant together.
+ */
+export const OPENING_HOURS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+].map((dayOfWeek) => ({
+  "@type": "OpeningHoursSpecification" as const,
+  dayOfWeek,
+  opens: "08:00",
+  closes: "19:00",
+}));
 
 /** Everywhere the team actually works — used for schema areaServed. */
 export const AREAS_SERVED = [

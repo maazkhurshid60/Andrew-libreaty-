@@ -12,6 +12,7 @@ import "./compass-concierge/concierge.css";
 import "./blog/blog.css";
 import "./detail.css";
 import "./neighborhood.css";
+import "./neighborhoods/studio-city/studio-city.css";
 import "./my-search-portal/portal.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -20,7 +21,7 @@ import MobileCtaBar from "./components/MobileCtaBar";
 import AuthModal from "./components/AuthModal";
 import JsonLd from "./components/JsonLd";
 import { LeadProvider } from "@/hooks/useLead";
-import { SITE_URL, SITE_NAME, AGENT, AREAS_SERVED, abs } from "@/lib/site";
+import { SITE_URL, SITE_NAME, AGENT, AREAS_SERVED, ADDRESS, OPENING_HOURS, abs } from "@/lib/site";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -114,11 +115,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             "@context": "https://schema.org",
             "@type": "RealEstateAgent",
             "@id": `${SITE_URL}/#agent`,
-            name: SITE_NAME,
+            /* "Andrew Liberty", per the supplied schema — not SITE_NAME
+               ("Andrew Liberty Team"). The entity Google is being asked to
+               recognise is the agent, and that is the name on the licence, the
+               Compass profile and every sameAs below. SITE_NAME still drives
+               page titles and Open Graph, which is a different job. */
+            name: AGENT.name,
+            /* The supplied schema has https://andrewliberty.com — the APEX.
+               Kept as www on purpose: the apex 308s to www, every canonical tag
+               and every sitemap entry on the site is www, and pointing the
+               entity's url at a host that immediately redirects contradicts
+               all of them. Same site, correct form. */
             url: SITE_URL,
             image: abs(AGENT.image),
+            logo: abs(AGENT.logo),
             telephone: AGENT.phone,
             email: AGENT.email,
+            address: ADDRESS,
+            openingHoursSpecification: OPENING_HOURS,
             areaServed: AREAS_SERVED.map((name) => ({
               "@type": "Place",
               name: `${name}, Los Angeles, CA`,

@@ -185,6 +185,10 @@ ul, ol { list-style: none; }
   touch-action: manipulation;
 }
 
+/* The icon carries its own 16px width/height (see app/components/icons.tsx).
+   This only stops a tight flex row from shrinking it below that — the sizing
+   rules below still win wherever a component wants a different size. */
+.btn-arrow { flex: none; }
 .btn .btn-arrow { width: 16px; height: 16px; flex: none; transition: transform var(--dur) var(--ease-out); }
 .btn:hover .btn-arrow { transform: translateX(4px); }
 

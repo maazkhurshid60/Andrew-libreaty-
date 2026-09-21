@@ -1,10 +1,25 @@
 import type { SVGProps } from "react";
 
-/** Right arrow used on nearly every CTA button. */
+/**
+ * Right arrow used on nearly every CTA button.
+ *
+ * width/height are set here rather than left to CSS. The only rules sizing
+ * `.btn-arrow` are descendant selectors — `.btn .btn-arrow`, `.hood-cta
+ * .btn-arrow`, `.page-btn .btn-arrow` — so the icon was correct inside a
+ * button and nowhere else. An <svg> with a viewBox and no dimensions falls
+ * back to the replaced-element default of 300x150, which is how the Studio
+ * City page ended up with 18 arrows the size of the headings beside them,
+ * squeezing every flex row they sat in.
+ *
+ * They come before the prop spread, so a caller passing its own width/height
+ * still wins, as does any CSS rule.
+ */
 export function ArrowRight(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       className="btn-arrow"
+      width={16}
+      height={16}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

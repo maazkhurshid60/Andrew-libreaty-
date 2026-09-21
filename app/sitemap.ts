@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { ALL as ALL_POSTS } from "./blog/posts";
+import { isPublished } from "./blog/bodies";
 
 /**
  * Static routes only. Property detail pages are driven by IDX at request time
@@ -10,20 +11,24 @@ import { ALL as ALL_POSTS } from "./blog/posts";
  * /my-search-portal is excluded on purpose: it's a signed-in area.
  *
  * Priorities and frequencies below are the ones the SEO consultant supplied.
- * Four entries are marked "not in the supplied list" — the two neighbourhood
- * landing pages, /property/sold, and the blog posts. They are kept rather
- * than dropped: the list we were sent covers 11 URLs against the 25 this site
- * actually publishes, and the pages it leaves out include the two built to
- * rank for "real estate agent in <neighbourhood>", which are the ones with
- * the most to lose from being left out of the sitemap. Worth confirming with
- * him whether they were omitted deliberately or simply not known about — the
- * Valley Village page is recent.
+ * The entries marked "not in the supplied list" — the neighbourhood landing
+ * pages and /property/sold — are kept rather than dropped: the list we were
+ * sent covers 11 URLs against the 25 this site actually publishes, and the
+ * pages it leaves out include the ones built to rank for "real estate agent in
+ * <neighbourhood>", which have the most to lose from being left out of the
+ * sitemap. Worth confirming with him whether they were omitted deliberately or
+ * simply not known about — the Valley Village page is recent.
+ *
+ * Blog posts are the exception: only those with an authored body are listed
+ * (see isPublished in ./blog/bodies). The "Coming Soon" stubs are noindex, so
+ * sitemapping them would contradict the page's own robots tag.
  */
 const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" },
   { path: "/property", priority: 0.9, changeFrequency: "weekly" },
   { path: "/home-search", priority: 0.9, changeFrequency: "daily" },
   { path: "/neighborhoods", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/neighborhoods/studio-city", priority: 0.9, changeFrequency: "monthly" },
   { path: "/home-valuation", priority: 0.9, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
   { path: "/team", priority: 0.7, changeFrequency: "monthly" },
@@ -58,7 +63,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency,
       priority,
     })),
-    ...ALL_POSTS.map((post) => ({
+    /* Only posts with an authored body. The rest render a "Coming Soon" stub
+       and are noindex, so sitemapping them would be asking Google to crawl a
+       URL we then tell it not to index. They reappear here automatically once
+       isPublished() covers them. */
+    ...ALL_POSTS.filter((post) => isPublished(post.slug)).map((post) => ({
       url: `${SITE_URL}/blog/${post.slug}`,
       lastModified: parsed(post.date, now),
       changeFrequency: "yearly" as const,

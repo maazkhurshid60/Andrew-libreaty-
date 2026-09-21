@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ArrowRight } from "../components/icons";
 import BlogList from "./BlogList";
 import NewsletterForm from "./NewsletterForm";
-import { FEATURED, POSTS } from "./posts";
+import { ALL, FEATURED, POSTS } from "./posts";
 
 const ClockIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -33,8 +33,8 @@ export default function BlogPage() {
             </p>
           </div>
           <div className="bl-hero-stat">
-            <b>{POSTS.length}</b>
-            <span>Articles</span>
+            <b>{ALL.length}</b>
+            <span>{ALL.length === 1 ? "Article" : "Articles"}</span>
           </div>
         </div>
       </section>
@@ -71,7 +71,10 @@ export default function BlogPage() {
       </section>
 
       {/* ============ FILTER + GRID ============ */}
-      <BlogList posts={POSTS} />
+      {/* Skipped entirely while the featured article is the only one. Rendering
+          it would put category tabs and "No articles in this category yet"
+          directly beneath the single article the page just showed. */}
+      {POSTS.length > 0 ? <BlogList posts={POSTS} /> : null}
 
       {/* ============ NEWSLETTER ============ */}
       <section className="bl-news-wrap">

@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 import { ArrowRight } from "../../components/icons";
 import NewsletterForm from "../NewsletterForm";
 import ArticleShare from "./ArticleShare";
-import { ALL, POSTS, getPost, DEMO_SLUG } from "../posts";
+import JsonLd from "../../components/JsonLd";
+import { ALL, POSTS, getPost } from "../posts";
+import { BODIES, FAQS_BY_SLUG, isPublished } from "../bodies";
 
 export function generateStaticParams() {
   return ALL.map((p) => ({ slug: p.slug }));
@@ -12,24 +14,32 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Article — The Liberty Journal" };
-  const title = `${post.title} — The Liberty Journal | Andrew Liberty Team`;
+  // Unknown slug: this renders notFound(), so keep it out of the index too.
+  if (!post) return { title: "Article — The Liberty Journal", robots: { index: false, follow: false } };
+  /* An article can ship with its own SERP copy; fall back to the house pattern
+     and the card excerpt when it does not. See Post.metaTitle in ../posts. */
+  const title = post.metaTitle ?? `${post.title} — The Liberty Journal | Andrew Liberty Team`;
+  const description = post.metaDescription ?? post.excerpt;
   const url = `/blog/${post.slug}`;
   return {
     title,
-    description: post.excerpt,
+    description,
     alternates: { canonical: url },
+    // Posts still showing the "Coming Soon" stub have no body worth ranking, so
+    // they are noindex until written — but `follow` so Google still crawls
+    // through to /blog and the posts that do have content. See isPublished().
+    ...(isPublished(post.slug) ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       type: "article",
       title,
-      description: post.excerpt,
+      description,
       url,
       images: post.img ? [post.img] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description: post.excerpt,
+      description,
       images: post.img ? [post.img] : undefined,
     },
   };
@@ -53,10 +63,28 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   if (!post) notFound();
 
   const related = POSTS.filter((p) => p.slug !== slug).slice(0, 3);
-  const isDemo = slug === DEMO_SLUG;
+  const Body = BODIES[slug];
+  const faqs = FAQS_BY_SLUG[slug];
 
   return (
     <article className="ar-page">
+      {/* FAQPage schema, for posts that carry an FAQ section. The answers below
+          are the same array the body renders as visible copy — schema whose
+          answers are not on the page is a violation, not a free rich result. */}
+      {faqs && faqs.length > 0 ? (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }}
+        />
+      ) : null}
+
       {/* ============ HEAD ============ */}
       <header className="ar-head">
         <div className="container">
@@ -76,7 +104,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/team/IMG-42.png" alt="Andrew Liberty" />
                 <div>
-                  <p className="ar-meta-name">Andrew Liberty</p>
+                  <p className="">Andrew Liberty</p>
                   <p className="ar-meta-sub">Founder &amp; Lead Agent · {post.read}</p>
                 </div>
               </div>
@@ -95,98 +123,24 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* ============ BODY ============ */}
-      {isDemo ? (
+      {Body ? (
         <div className="ar-body">
           <div className="container">
             <div className="ar-narrow">
-              <p>
-                Studio City has spent the last decade being talked about as one place. But anyone who
-                actually lives and works here knows the truth: it&rsquo;s a collection of distinct
-                pockets, each with its own personality, buyer, and price trajectory. As we head into
-                the back half of 2026, the gaps between those pockets are widening — and knowing which
-                is which has never mattered more.
-              </p>
-              <p>
-                We pulled the last eighteen months of transactions, walked the streets, and compared
-                notes with the buyers actually competing for these homes. Here&rsquo;s where demand is
-                quietly concentrating, and why.
-              </p>
+              {/* Bodies render as direct children of .ar-narrow on purpose:
+                  blog.css styles body copy with `.ar-body .ar-narrow > p`. */}
+              <Body />
 
-              <h2>Colfax Meadows: The Quiet Powerhouse</h2>
-              <p>
-                Tucked south of the boulevard and framed by mature trees, Colfax Meadows keeps topping
-                buyers&rsquo; lists for a simple reason: it delivers the flat, walkable, family-friendly
-                grid everyone says they want, without the highway noise that undercuts nearby streets.
-                Inventory is thin and turnover is slow, which keeps competition high whenever a home
-                does list.
-              </p>
-              <ul>
-                <li>Flat, walkable streets inside the Carpenter Community Charter boundary</li>
-                <li>Strong land value — buyers are paying for the lot as much as the house</li>
-                <li>Renovated single-stories trade at a persistent premium over the area median</li>
-              </ul>
+              {post.tags && post.tags.length > 0 ? (
+                <div className="ar-tags">
+                  {post.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              ) : null}
 
-              <blockquote className="ar-quote">
-                &ldquo;Studio City isn&rsquo;t cooling — it&rsquo;s recalibrating. That&rsquo;s exactly
-                why serious buyers are focusing on specific pockets rather than the market as a
-                whole.&rdquo;
-              </blockquote>
-
-              <h2>Wrightwood Estates: Where Space Meets Character</h2>
-              <p>
-                Head up into the hills and Wrightwood Estates offers what the flats can&rsquo;t: room to
-                breathe. Larger lots, architectural variety, and privacy draw buyers trading a bit of
-                walkability for space and view. The trade-off is a wider range of conditions — from
-                mid-century originals to full modern rebuilds — so pricing rewards buyers who know how
-                to read a renovation.
-              </p>
-              <p>
-                Homes with real outdoor flow — flat pads, pools, and usable yards — are the ones setting
-                new highs. Sloped, tear-down-adjacent lots still sit unless they&rsquo;re priced for what
-                they are.
-              </p>
-
-              <h2>The Hills: Privacy, Views, and Premium Positioning</h2>
-              <p>
-                At the top of the market, the Hills continue to command a premium that has less to do
-                with square footage and more to do with what you can&rsquo;t add later: a view, a gate,
-                and genuine seclusion. This is the pocket where staging, timing, and representation move
-                the number the most.
-              </p>
-              <ul>
-                <li>View and privacy carry the value — finishes are the tiebreaker</li>
-                <li>Longer marketing windows are normal and often strategic</li>
-                <li>Off-market activity is heaviest here — relationships matter</li>
-              </ul>
-
-              <h2>Other Pockets Worth Watching</h2>
-              <p>Two areas are quietly gathering momentum that we expect to show up in the numbers next year.</p>
-              <h3>Woodbridge Park</h3>
-              <p>
-                Still a relative value on a price-per-foot basis, with a mix of original ranches and
-                thoughtful remodels attracting buyers priced out of Colfax Meadows.
-              </p>
-              <h3>Radford-Adjacent</h3>
-              <p>
-                Proximity to the studios keeps a steady floor of demand, and newer construction is
-                slowly resetting expectations for the blocks closest to the lot.
-              </p>
-
-              <h2>The Bottom Line</h2>
-              <p>
-                &ldquo;Studio City&rdquo; is no longer a single market, and pricing a home — or making an
-                offer — as if it were is the fastest way to leave money on the table. Whether you&rsquo;re
-                buying or selling, the pocket you&rsquo;re in should shape the strategy. If you want a
-                candid read on your specific block, that&rsquo;s exactly the conversation we love to have.
-              </p>
-
-              <div className="ar-tags">
-                <span>Studio City</span>
-                <span>Neighborhoods</span>
-                <span>Market Perspective</span>
-                <span>2026 Outlook</span>
-              </div>
-
+              {/* Shared, not per-article. It used to sit inside the one hardcoded
+                  body, which would have meant copying it into every new post. */}
               <div className="ar-author">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/team/IMG-42.png" alt="Andrew Liberty" />
@@ -221,39 +175,43 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       )}
 
       {/* ============ CONTINUE READING ============ */}
-      <section className="ar-related">
-        <div className="container">
-          <div className="ar-related-head">
-            <h2>Continue Reading</h2>
-            <a href="/blog">View all articles →</a>
-          </div>
-          <div className="bl-grid">
-            {related.map((p) => (
-              <a className="bl-card" key={p.slug} href={`/blog/${p.slug}`} aria-label={p.title}>
-                <div className="bl-card-media">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.img} alt="" loading="lazy" />
-                </div>
-                <div className="bl-card-body">
-                  <div className="bl-card-top">
-                    <span className="bl-cat">{p.category}</span>
-                    <span className="bl-dot" />
-                    <span className="bl-card-date">{p.date}</span>
+      {/* Hidden when this is the only article — an empty "Continue
+          Reading" rail is worse than no rail. */}
+      {related.length > 0 ? (
+        <section className="ar-related">
+          <div className="container">
+            <div className="ar-related-head">
+              <h2>Continue Reading</h2>
+              <a href="/blog">View all articles →</a>
+            </div>
+            <div className="bl-grid">
+              {related.map((p) => (
+                <a className="bl-card" key={p.slug} href={`/blog/${p.slug}`} aria-label={p.title}>
+                  <div className="bl-card-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.img} alt="" loading="lazy" />
                   </div>
-                  <h3 className="bl-card-title">{p.title}</h3>
-                  <p className="bl-card-excerpt">{p.excerpt}</p>
-                  <div className="bl-card-foot">
-                    <span className="bl-readmeta">
-                      <ClockIcon />
-                      {p.read}
-                    </span>
+                  <div className="bl-card-body">
+                    <div className="bl-card-top">
+                      <span className="bl-cat">{p.category}</span>
+                      <span className="bl-dot" />
+                      <span className="bl-card-date">{p.date}</span>
+                    </div>
+                    <h3 className="bl-card-title">{p.title}</h3>
+                    <p className="bl-card-excerpt">{p.excerpt}</p>
+                    <div className="bl-card-foot">
+                      <span className="bl-readmeta">
+                        <ClockIcon />
+                        {p.read}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </a>
-            ))}
+                </a>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* ============ NEWSLETTER ============ */}
       <section className="bl-news-wrap">

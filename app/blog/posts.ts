@@ -6,7 +6,30 @@ export type Post = {
   read: string;
   img: string;
   slug: string;
+  /**
+   * SEO copy supplied with the article, when it differs from what the page
+   * would otherwise build. `metaTitle` replaces the "<title> — The Liberty
+   * Journal | Andrew Liberty Team" pattern outright; `metaDescription`
+   * replaces the excerpt in the description and the social cards.
+   *
+   * These exist because the supplied copy is written for the SERP, where the
+   * excerpt is written for the card on /blog. They are different jobs and the
+   * same sentence rarely does both well.
+   */
+  metaTitle?: string;
+  metaDescription?: string;
+  tags?: string[];
 };
+
+/**
+ * Titles that something outside this file needs to identify a post by.
+ *
+ * app/blog/bodies keys its registry on slugify() of these, so a title edited
+ * here follows through to the body lookup instead of silently orphaning it.
+ */
+export const TITLES = {
+  tipsForShowing: "Tips for Showing Your House",
+} as const;
 
 export function slugify(s: string): string {
   return s
@@ -18,98 +41,40 @@ export function slugify(s: string): string {
 
 type RawPost = Omit<Post, "slug">;
 
+/**
+ * The Journal's first real article, and currently its only one.
+ *
+ * Everything that used to sit here and in POSTS_RAW was placeholder copy
+ * written to populate the design. It was removed rather than left alongside
+ * this: ten "Coming Soon" stubs around one genuine post reads as a site that
+ * launched empty, and every one of them was a thin page Google would have been
+ * asked to crawl.
+ */
 const FEATURED_RAW: RawPost = {
-  category: "Neighborhood Guides",
-  title: "The Most Sought-After Micro-Neighborhoods in Studio City for 2026",
+  category: "Selling Strategy",
+  title: TITLES.tipsForShowing,
+  /* Written for the card. The SERP copy supplied with the article is in
+     metaDescription — it leads with the keyword, which is right for a search
+     result and wrong for a card someone is browsing. */
   excerpt:
-    "Colfax Meadows, Wrightwood Estates, the Hills — what defines each pocket, who they attract, and where value is quietly climbing.",
-  date: "Jul 18, 2026",
-  read: "6 min read",
-  img: "/images/hero-la-aerial.jpg",
+    "Clean, bright, clutter-free, and safe — how to get your home ready before buyers walk in, plus a 30-minute checklist you can reuse for every showing.",
+  metaTitle: "Tips for Showing Your House | Sell With Confidence",
+  metaDescription:
+    "Tips for Showing Your House to make a strong first impression. Learn how to clean, declutter, stage, and prepare your home so buyers see its value.",
+  date: "Sep 21, 2026",
+  read: "9 min read",
+  img: "/images/blog/tips-for-showing-your-house.webp",
+  tags: ["Selling Strategy", "Home Showings", "Open House", "Seller Checklist"],
 };
 
-const POSTS_RAW: RawPost[] = [
-  {
-    category: "Market Updates",
-    title: "What the $10M+ Market Surge Means for Sellers in the Hollywood Hills",
-    excerpt: "The upward trend in ultra-luxury transactions signals a shift. Here's what it means if you're considering a sale.",
-    date: "Jul 12, 2026",
-    read: "5 min read",
-    img: "/images/sold-hollywood-hills.jpg",
-  },
-  {
-    category: "Neighborhoods",
-    title: "Laurel Canyon vs. Studio City: Which Neighborhood Fits Your Lifestyle?",
-    excerpt: "Walkability, schools, lot sizes, privacy, and price-per-square-foot — a side-by-side for buyers weighing both.",
-    date: "Jul 5, 2026",
-    read: "7 min read",
-    img: "/images/laurel-canyon.jpg",
-  },
-  {
-    category: "Selling Strategy",
-    title: "Why Some Luxury Homes Shouldn't Sell Right Away",
-    excerpt: "Patience and strategic timing often yield better results than rushing to market, especially in the $3M–$8M range.",
-    date: "Jun 28, 2026",
-    read: "5 min read",
-    img: "/images/sold-toluca-lake.jpg",
-  },
-  {
-    category: "Buying Tips",
-    title: "5 Things First-Time Luxury Buyers in LA Get Wrong",
-    excerpt: "Skipping pre-approval at higher tiers, underestimating renovation timelines, and misreading comps — the common missteps.",
-    date: "Jun 20, 2026",
-    read: "4 min read",
-    img: "/images/studio-city.jpg",
-  },
-  {
-    category: "Lifestyle",
-    title: "Studio City's Best-Kept Dining and Weekend Spots",
-    excerpt: "A curated guide to local restaurants, coffee shops, and weekend activities that make Studio City feel like home.",
-    date: "Jun 14, 2026",
-    read: "5 min read",
-    img: "/images/valuation-interior.jpg",
-  },
-  {
-    category: "Buying Tips",
-    title: "Off-Market Listings in LA: How They Work and Why They Matter",
-    excerpt: "Pocket listings demystified — how connected buyers access properties that never hit the MLS.",
-    date: "Jun 6, 2026",
-    read: "6 min read",
-    img: "/images/hollywood-hills.jpg",
-  },
-  {
-    category: "Market Updates",
-    title: "Q2 2026 Market Snapshot: Studio City, Sherman Oaks & Encino",
-    excerpt: "Quarterly data on median prices, days on market, and inventory levels across three key Valley neighborhoods.",
-    date: "May 28, 2026",
-    read: "4 min read",
-    img: "/images/sold-studio-city.jpg",
-  },
-  {
-    category: "Selling Strategy",
-    title: "When Pulling Your Listing Is Actually the Smartest Move",
-    excerpt: "Sometimes withdrawing a property resets buyer perception and leads to stronger offers on relaunch.",
-    date: "May 20, 2026",
-    read: "5 min read",
-    img: "/images/sold-canyon-midcentury.jpg",
-  },
-  {
-    category: "Investment",
-    title: "Is Studio City Still a Good Investment? What the Numbers Say",
-    excerpt: "Five-year appreciation trends, rental yield potential, and how Studio City compares for long-term value.",
-    date: "May 10, 2026",
-    read: "6 min read",
-    img: "/images/sold-valley-village.jpg",
-  },
-  {
-    category: "Investment",
-    title: "From Duplex to Development: Scaling a Los Angeles Portfolio",
-    excerpt: "How to think about your next step once a single rental isn't moving the needle anymore.",
-    date: "May 2, 2026",
-    read: "8 min read",
-    img: "/images/sold-sherman-oaks.jpg",
-  },
-];
+/**
+ * Additional articles, beyond the featured one. Empty while the Journal has a
+ * single post: /blog skips the filter-and-grid section entirely rather than
+ * render an empty state under the one article it just showed, and the article
+ * page hides "Continue Reading" for the same reason. Add the second post here
+ * and both come back on their own.
+ */
+const POSTS_RAW: RawPost[] = [];
 
 const withSlug = (p: RawPost): Post => ({ ...p, slug: slugify(p.title) });
 
@@ -119,5 +84,8 @@ export const ALL: Post[] = [FEATURED, ...POSTS];
 
 export const getPost = (slug: string): Post | undefined => ALL.find((p) => p.slug === slug);
 
-/** The one slug that has full demo content authored; everything else is "coming soon". */
-export const DEMO_SLUG = FEATURED.slug;
+/* `isPublished` used to live here as a hand-kept list of slugs. It now derives
+   from the body registry instead — see isPublished() in app/blog/bodies. A post
+   is published because it HAS an article, which is the fact the SEO rules
+   actually care about; keeping a second list in step with the first was a bug
+   waiting to happen. */
