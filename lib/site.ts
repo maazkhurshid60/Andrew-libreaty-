@@ -6,15 +6,29 @@
  * overrides this if it is set in the deploy environment.
  *
  * The fallback used to be andrewlibertyteam.com, which does not resolve — no
- * DNS at all. And because NEXT_PUBLIC_SITE_URL was never set in the deploy,
- * the fallback was what shipped: every canonical tag and every sitemap entry
- * on the live site pointed at a dead host, telling Google the real pages were
- * duplicates of URLs that do not exist. The site answers on andrewliberty.com
- * (the apex 308s to www, so www is the canonical form), which is what the
- * sitemap we were sent uses too.
+ * DNS at all. And because NEXT_PUBLIC_SITE_URL is still not set in the deploy,
+ * the fallback is what ships: every canonical tag and every sitemap entry on
+ * the live site pointed at a dead host, telling Google the real pages were
+ * duplicates of URLs that do not exist.
+ *
+ * It was then corrected to www on the belief that the apex redirects there.
+ * That was backwards, and it was never measured — it came from the sitemap we
+ * were sent rather than from the site. Checked against production:
+ *
+ *     https://andrewliberty.com/       -> 200
+ *     https://www.andrewliberty.com/   -> 308  https://andrewliberty.com/
+ *
+ * and the same on /contact, /blog and /property. The APEX is canonical and www
+ * redirects to it. So every canonical tag was naming a URL that immediately
+ * redirects, and every sitemap entry was a redirect for Google to follow —
+ * which is what Search Console reports as "Page with redirect".
+ *
+ * If the hosting is ever flipped to prefer www, this constant is the one place
+ * to change, and it is worth re-running the two curls above rather than
+ * trusting this comment.
  */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.andrewliberty.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://andrewliberty.com"
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Andrew Liberty Team";

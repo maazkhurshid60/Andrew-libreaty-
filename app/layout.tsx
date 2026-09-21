@@ -121,11 +121,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                Compass profile and every sameAs below. SITE_NAME still drives
                page titles and Open Graph, which is a different job. */
             name: AGENT.name,
-            /* The supplied schema has https://andrewliberty.com — the APEX.
-               Kept as www on purpose: the apex 308s to www, every canonical tag
-               and every sitemap entry on the site is www, and pointing the
-               entity's url at a host that immediately redirects contradicts
-               all of them. Same site, correct form. */
+            /* The supplied schema has https://andrewliberty.com — the APEX —
+               and that was right. This briefly forced www on the mistaken
+               belief that the apex redirects there; production says the
+               opposite (see SITE_URL in lib/site.ts). SITE_URL is now the apex,
+               so this matches both the supplied schema and every canonical. */
             url: SITE_URL,
             image: abs(AGENT.image),
             logo: abs(AGENT.logo),
