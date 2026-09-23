@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { slugify, TITLES } from "../posts";
 import TipsForShowingYourHouse, { FAQS as TIPS_FAQS } from "./tips-for-showing-your-house";
+import TipsToSellYourHomeInTheFall, { FAQS as FALL_FAQS } from "./tips-to-sell-your-home-in-the-fall";
 
 /**
  * Slug -> article body.
@@ -15,6 +16,7 @@ import TipsForShowingYourHouse, { FAQS as TIPS_FAQS } from "./tips-for-showing-y
  */
 export const BODIES: Record<string, ComponentType> = {
   [slugify(TITLES.tipsForShowing)]: TipsForShowingYourHouse,
+  [slugify(TITLES.sellInFall)]: TipsToSellYourHomeInTheFall,
 };
 
 /**
@@ -27,6 +29,7 @@ export const BODIES: Record<string, ComponentType> = {
  */
 export const FAQS_BY_SLUG: Record<string, { q: string; a: string }[]> = {
   [slugify(TITLES.tipsForShowing)]: TIPS_FAQS,
+  [slugify(TITLES.sellInFall)]: FALL_FAQS,
 };
 
 /**

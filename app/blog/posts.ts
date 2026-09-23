@@ -29,6 +29,7 @@ export type Post = {
  */
 export const TITLES = {
   tipsForShowing: "Tips for Showing Your House",
+  sellInFall: "Tips to Sell Your Home in the Fall",
 } as const;
 
 export function slugify(s: string): string {
@@ -68,13 +69,33 @@ const FEATURED_RAW: RawPost = {
 };
 
 /**
- * Additional articles, beyond the featured one. Empty while the Journal has a
- * single post: /blog skips the filter-and-grid section entirely rather than
- * render an empty state under the one article it just showed, and the article
- * page hides "Continue Reading" for the same reason. Add the second post here
- * and both come back on their own.
+ * Additional articles, beyond the featured one.
+ *
+ * This is the list /blog's filter-and-grid section and the article page's
+ * "Continue Reading" rail read from; both hide themselves while it is empty,
+ * and both came back on their own when the second article landed here.
  */
-const POSTS_RAW: RawPost[] = [];
+const POSTS_RAW: RawPost[] = [
+  {
+    category: "Selling Strategy",
+    title: TITLES.sellInFall,
+    /* Written for the card, where someone is browsing and deciding whether to
+       open it. The SERP copy supplied with the article is in metaDescription —
+       it leads with the keyword, which is right for a search result and wrong
+       here. See the note on Post.metaTitle above. */
+    excerpt:
+      "Shorter days, falling leaves, and busy holiday calendars change how a home shows. How to price, prepare, light, and photograph yours so autumn works in your favour.",
+    metaTitle: "Tips to Sell Your Home in the Fall | Seller Guide",
+    metaDescription:
+      "Tips to Sell Your Home in the Fall with practical advice on pricing, repairs, staging, curb appeal, photos, and showings to attract buyers.",
+    date: "Sep 23, 2026",
+    /* Same label as the featured post: the two bodies are within ~1% of each
+       other on word count, so a different number would just read as noise. */
+    read: "9 min read",
+    img: "/images/blog/tips-to-sell-your-home-in-the-fall.webp",
+    tags: ["Selling Strategy", "Fall Market", "Home Staging", "Curb Appeal", "Seller Checklist"],
+  },
+];
 
 const withSlug = (p: RawPost): Post => ({ ...p, slug: slugify(p.title) });
 

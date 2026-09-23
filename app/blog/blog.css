@@ -239,6 +239,43 @@
 }
 .ar-cta .btn { flex: none; }
 
+/* CTA with a heading line. The plain CTA is a single display-face sentence; once
+   there is a heading above it the sentence below becomes supporting copy, so it
+   steps down to body type. Both selectors outrank `.ar-cta p` on class count. */
+.ar-cta .ar-cta-copy { flex: 1 1 260px; }
+.ar-cta .ar-cta-copy p {
+  font-family: var(--font-body); font-size: 15px; line-height: 1.65;
+  color: var(--ink-soft); margin: 0;
+}
+.ar-cta .ar-cta-copy .ar-cta-title {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(18px, 2.2vw, 21px); line-height: 1.3;
+  color: var(--ink); margin: 0 0 7px;
+}
+
+/* Pros and cons. Two lists rather than a table — see ProsCons in
+   app/blog/bodies/_parts.tsx for why. Gold marks the pros, muted grey the
+   cons, which is the only thing separating them once they stack on a phone. */
+.ar-proscon { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 30px 0; }
+.ar-proscon > div {
+  background: var(--ivory); border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg); padding: 22px 24px;
+}
+.ar-proscon-pros { border-left: 3px solid var(--gold); }
+.ar-proscon-cons { border-left: 3px solid var(--line); }
+.ar-proscon-head {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold-deep); margin: 0 0 14px;
+}
+.ar-proscon-cons .ar-proscon-head { color: var(--muted); }
+/* `.ar-body ul` carries a 22px bottom margin for prose; inside the panel the
+   list is the last thing in the box, so it would pad the box unevenly. */
+.ar-body .ar-proscon ul { margin: 0; }
+.ar-body .ar-proscon li { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
+.ar-body .ar-proscon li:last-child { margin-bottom: 0; }
+.ar-body .ar-proscon li strong { color: var(--ink); font-weight: 600; }
+.ar-body .ar-proscon-cons li::before { background: var(--muted); }
+
 .ar-tags { display: flex; flex-wrap: wrap; gap: 9px; margin: 36px 0 8px; }
 .ar-tags span { font-size: 12.5px; color: var(--ink-soft); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--ivory); }
 
@@ -271,6 +308,11 @@
   .bl-featured-media { min-height: 220px; aspect-ratio: 16 / 9; }
   .bl-grid { grid-template-columns: repeat(2, 1fr); }
   .bl-news { grid-template-columns: 1fr; gap: 22px; }
+}
+@media (max-width: 700px) {
+  /* Two columns of sentence-length copy inside a 760px reading column is
+     already tight; below this it stops being readable, so the panels stack. */
+  .ar-proscon { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
   .bl-hero-inner { flex-direction: column; }

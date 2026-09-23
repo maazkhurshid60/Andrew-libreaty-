@@ -11,6 +11,7 @@ import OfficeMap from "./components/home/OfficeMap";
 import Newsletter from "./components/home/Newsletter";
 import FinalCta from "./components/home/FinalCta";
 import Faq from "./components/home/Faq";
+import Header from "./components/Header";
 
 export const metadata: Metadata = {
   title: "Real Estate Agent in Los Angeles | Certified Negotiator",

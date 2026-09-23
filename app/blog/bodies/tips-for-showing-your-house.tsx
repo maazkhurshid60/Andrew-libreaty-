@@ -1,5 +1,5 @@
-import { Fragment, type ReactNode } from "react";
-import { ArrowRight } from "../../components/icons";
+import { Fragment } from "react";
+import { Cta, Figure } from "./_parts";
 
 /**
  * Body for "Tips for Showing Your House", supplied as Andrew Blog.docx.
@@ -70,33 +70,6 @@ export const FAQS: { q: string; a: string }[] = [
     a: "Not always. Start with cleaning, decluttering, basic repairs, lighting, and curb appeal. Ask your real estate agent which improvements are most likely to help before spending money on a major project.",
   },
 ];
-
-/**
- * An in-article image. `width`/`height` are the asset's real pixel dimensions
- * so the browser reserves the right box before the file arrives — without them
- * the copy below jumps down as each image loads, which is the layout shift
- * Core Web Vitals measures.
- */
-function Figure({ src, alt, width, height }: { src: string; alt: string; width: number; height: number }) {
-  return (
-    <figure className="ar-figure">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
-    </figure>
-  );
-}
-
-function Cta({ children, label }: { children: ReactNode; label: string }) {
-  return (
-    <div className="ar-cta">
-      <p>{children}</p>
-      <a href="/contact" className="btn btn-gold btn-magnetic">
-        <span>{label}</span>
-        <ArrowRight />
-      </a>
-    </div>
-  );
-}
 
 export default function TipsForShowingYourHouse() {
   return (
